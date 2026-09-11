@@ -1,0 +1,17 @@
+Namespace(model='pointnet2', exp_name='pointnet2_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='pointcept', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointnet2_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.1819
+  IoU [branch  ]: 0.8903
+  IoU [wire    ]: 0.3841
+
+Test results — mIoU: 0.4854  mAcc: 0.5421  allAcc: 0.8893
+
+Class           IoU      Acc
+----------------------------
+  trunk        0.1819   0.2067
+  branch       0.8903   0.9855
+  wire         0.3841   0.4341
+Namespace(model='pointnet2', exp_name='pointnet2_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, save_preds=False, save_preds_split='val', loss='ce', focal_gamma=2.0, focal_alpha=[0.5], class_weights=[1.0, 1.0, 1.0], eval=True, no_cuda=False, wandb_project='pointcept', wandb_id=None, no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointnet2_scratch-combined/best_mIoU_model.pth

@@ -1,0 +1,380 @@
+[2026-05-09 18:29:11,051 INFO train.py line 135 28554] => Loading config ...
+[2026-05-09 18:29:11,051 INFO train.py line 137 28554] Save path: exp/custom_trees/PTv3-Scannet200-Backbone-3ch
+[2026-05-09 18:29:11,681 INFO train.py line 138 28554] Config:
+weight = 'weights/scannet200-backbone-3ch.pth'
+resume = False
+evaluate = True
+test_only = False
+seed = 10504113
+save_path = 'exp/custom_trees/PTv3-Scannet200-Backbone-3ch'
+num_worker = 12
+batch_size = 2
+gradient_accumulation_steps = 1
+batch_size_val = None
+batch_size_test = None
+epoch = 800
+eval_epoch = 100
+clip_grad = None
+sync_bn = False
+enable_amp = False
+amp_dtype = 'float16'
+empty_cache = True
+empty_cache_per_epoch = False
+find_unused_parameters = False
+enable_wandb = True
+wandb_project = 'pointcept'
+wandb_key = None
+mix_prob = 0.8
+param_dicts = [dict(keyword='block', lr=0.0006)]
+hooks = [
+    dict(type='CheckpointLoader'),
+    dict(type='ModelHook'),
+    dict(type='IterationTimer', warmup_iter=2),
+    dict(type='InformationWriter'),
+    dict(type='SemSegEvaluator'),
+    dict(type='CheckpointSaver', save_freq=None),
+    dict(type='PreciseEvaluator', test_last=False)
+]
+train = dict(type='DefaultTrainer')
+test = dict(type='SemSegTester', verbose=True)
+CLASS_LABELS_200 = (
+    'wall', 'chair', 'floor', 'table', 'door', 'couch', 'cabinet', 'shelf',
+    'desk', 'office chair', 'bed', 'pillow', 'sink', 'picture', 'window',
+    'toilet', 'bookshelf', 'monitor', 'curtain', 'book', 'armchair',
+    'coffee table', 'box', 'refrigerator', 'lamp', 'kitchen cabinet', 'towel',
+    'clothes', 'tv', 'nightstand', 'counter', 'dresser', 'stool', 'cushion',
+    'plant', 'ceiling', 'bathtub', 'end table', 'dining table', 'keyboard',
+    'bag', 'backpack', 'toilet paper', 'printer', 'tv stand', 'whiteboard',
+    'blanket', 'shower curtain', 'trash can', 'closet', 'stairs', 'microwave',
+    'stove', 'shoe', 'computer tower', 'bottle', 'bin', 'ottoman', 'bench',
+    'board', 'washing machine', 'mirror', 'copier', 'basket', 'sofa chair',
+    'file cabinet', 'fan', 'laptop', 'shower', 'paper', 'person',
+    'paper towel dispenser', 'oven', 'blinds', 'rack', 'plate', 'blackboard',
+    'piano', 'suitcase', 'rail', 'radiator', 'recycling bin', 'container',
+    'wardrobe', 'soap dispenser', 'telephone', 'bucket', 'clock', 'stand',
+    'light', 'laundry basket', 'pipe', 'clothes dryer', 'guitar',
+    'toilet paper holder', 'seat', 'speaker', 'column', 'bicycle', 'ladder',
+    'bathroom stall', 'shower wall', 'cup', 'jacket', 'storage bin',
+    'coffee maker', 'dishwasher', 'paper towel roll', 'machine', 'mat',
+    'windowsill', 'bar', 'toaster', 'bulletin board', 'ironing board',
+    'fireplace', 'soap dish', 'kitchen counter', 'doorframe',
+    'toilet paper dispenser', 'mini fridge', 'fire extinguisher', 'ball',
+    'hat', 'shower curtain rod', 'water cooler', 'paper cutter', 'tray',
+    'shower door', 'pillar', 'ledge', 'toaster oven', 'mouse',
+    'toilet seat cover dispenser', 'furniture', 'cart', 'storage container',
+    'scale', 'tissue box', 'light switch', 'crate', 'power outlet',
+    'decoration', 'sign', 'projector', 'closet door', 'vacuum cleaner',
+    'candle', 'plunger', 'stuffed animal', 'headphones', 'dish rack', 'broom',
+    'guitar case', 'range hood', 'dustpan', 'hair dryer', 'water bottle',
+    'handicap bar', 'purse', 'vent', 'shower floor', 'water pitcher',
+    'mailbox', 'bowl', 'paper bag', 'alarm clock', 'music stand',
+    'projector screen', 'divider', 'laundry detergent', 'bathroom counter',
+    'object', 'bathroom vanity', 'closet wall', 'laundry hamper',
+    'bathroom stall door', 'ceiling light', 'trash bin', 'dumbbell',
+    'stair rail', 'tube', 'bathroom cabinet', 'cd case', 'closet rod',
+    'coffee kettle', 'structure', 'shower head', 'keyboard piano',
+    'case of water bottles', 'coat rack', 'storage organizer', 'folded chair',
+    'fire alarm', 'power strip', 'calendar', 'poster', 'potted plant',
+    'luggage', 'mattress')
+model = dict(
+    type='DefaultSegmentorV2',
+    num_classes=3,
+    backbone_out_channels=64,
+    backbone=dict(
+        type='PT-v3m1',
+        in_channels=3,
+        order=['z', 'z-trans', 'hilbert', 'hilbert-trans'],
+        stride=(2, 2, 2, 2),
+        enc_depths=(2, 2, 2, 6, 2),
+        enc_channels=(32, 64, 128, 256, 512),
+        enc_num_head=(2, 4, 8, 16, 32),
+        enc_patch_size=(1024, 1024, 1024, 1024, 1024),
+        dec_depths=(2, 2, 2, 2),
+        dec_channels=(64, 64, 128, 256),
+        dec_num_head=(4, 4, 8, 16),
+        dec_patch_size=(1024, 1024, 1024, 1024),
+        mlp_ratio=4,
+        qkv_bias=True,
+        qk_scale=None,
+        attn_drop=0.0,
+        proj_drop=0.0,
+        drop_path=0.3,
+        shuffle_orders=True,
+        pre_norm=True,
+        enable_rpe=False,
+        enable_flash=False,
+        upcast_attention=False,
+        upcast_softmax=False,
+        enc_mode=False,
+        pdnorm_bn=False,
+        pdnorm_ln=False,
+        pdnorm_decouple=True,
+        pdnorm_adaptive=False,
+        pdnorm_affine=True,
+        pdnorm_conditions=('ScanNet', 'S3DIS', 'Structured3D')),
+    criteria=[
+        dict(type='CrossEntropyLoss', loss_weight=1.0, ignore_index=-1),
+        dict(
+            type='LovaszLoss',
+            mode='multiclass',
+            loss_weight=1.0,
+            ignore_index=-1)
+    ])
+optimizer = dict(type='AdamW', lr=0.006, weight_decay=0.05)
+scheduler = dict(
+    type='OneCycleLR',
+    max_lr=[0.006, 0.0006],
+    pct_start=0.05,
+    anneal_strategy='cos',
+    div_factor=10.0,
+    final_div_factor=1000.0)
+dataset_type = 'DefaultDataset'
+data_root = 'data/BRANCH_v2/numpy_dataset'
+data = dict(
+    num_classes=3,
+    ignore_index=-1,
+    names=['trunk', 'branch', 'wire'],
+    train=dict(
+        type='DefaultDataset',
+        split='train',
+        data_root='data/BRANCH_v2/numpy_dataset',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(
+                type='RandomDropout',
+                dropout_ratio=0.2,
+                dropout_application_ratio=0.2),
+            dict(
+                type='RandomRotate',
+                angle=[-1, 1],
+                axis='z',
+                center=[0, 0, 0],
+                p=0.5),
+            dict(
+                type='RandomRotate',
+                angle=[-0.015625, 0.015625],
+                axis='x',
+                p=0.5),
+            dict(
+                type='RandomRotate',
+                angle=[-0.015625, 0.015625],
+                axis='y',
+                p=0.5),
+            dict(type='RandomScale', scale=[0.9, 1.1]),
+            dict(type='RandomFlip', p=0.5),
+            dict(type='RandomJitter', sigma=0.005, clip=0.02),
+            dict(
+                type='ElasticDistortion',
+                distortion_params=[[0.2, 0.4], [0.8, 1.6]]),
+            dict(type='ChromaticAutoContrast', p=0.2, blend_factor=None),
+            dict(type='ChromaticTranslation', p=0.95, ratio=0.05),
+            dict(type='ChromaticJitter', p=0.95, std=0.05),
+            dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='train',
+                return_grid_coord=True),
+            dict(type='SphereCrop', point_max=102400, mode='random'),
+            dict(type='CenterShift', apply_z=False),
+            dict(type='NormalizeColor'),
+            dict(type='ToTensor'),
+            dict(
+                type='Collect',
+                keys=('coord', 'grid_coord', 'segment'),
+                feat_keys=('color', 'normal'))
+        ],
+        test_mode=False,
+        loop=8),
+    val=dict(
+        type='DefaultDataset',
+        split='val',
+        data_root='data/BRANCH_v2/numpy_dataset',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(type='Copy', keys_dict=dict(segment='origin_segment')),
+            dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='train',
+                return_grid_coord=True,
+                return_inverse=True),
+            dict(type='CenterShift', apply_z=False),
+            dict(type='NormalizeColor'),
+            dict(type='ToTensor'),
+            dict(
+                type='Collect',
+                keys=('coord', 'grid_coord', 'segment', 'origin_segment',
+                      'inverse'),
+                feat_keys=('color', 'normal'))
+        ],
+        test_mode=False),
+    test=dict(
+        type='DefaultDataset',
+        split='val',
+        data_root='data/BRANCH_v2/numpy_dataset',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(type='NormalizeColor')
+        ],
+        test_mode=True,
+        test_cfg=dict(
+            voxelize=dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='test',
+                return_grid_coord=True),
+            crop=None,
+            post_transform=[
+                dict(type='CenterShift', apply_z=False),
+                dict(type='ToTensor'),
+                dict(
+                    type='Collect',
+                    keys=('coord', 'grid_coord', 'index'),
+                    feat_keys=('color', 'normal'))
+            ],
+            aug_transform=[[{
+                'type': 'RandomRotateTargetAngle',
+                'angle': [0],
+                'axis': 'z',
+                'center': [0, 0, 0],
+                'p': 1
+            }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }], [{
+                               'type': 'RandomFlip',
+                               'p': 1
+                           }]])))
+num_worker_per_gpu = 12
+batch_size_per_gpu = 2
+batch_size_val_per_gpu = 1
+batch_size_test_per_gpu = 1
+
+[2026-05-09 18:29:11,681 INFO train.py line 139 28554] => Building model ...
+[2026-05-09 18:29:11,794 INFO train.py line 259 28554] Num params: 46154467
+[2026-05-09 18:29:11,905 INFO train.py line 141 28554] => Building writer ...
+[2026-05-09 18:29:11,906 INFO train.py line 269 28554] Tensorboard writer logging dir: exp/custom_trees/PTv3-Scannet200-Backbone-3ch
+[2026-05-09 18:29:13,430 INFO train.py line 143 28554] => Building train dataset & dataloader ...
+[2026-05-09 18:29:13,431 INFO defaults.py line 80 28554] Totally 505 x 8 samples in numpy_dataset train set.
+[2026-05-09 18:29:13,431 INFO train.py line 145 28554] => Building val dataset & dataloader ...
+[2026-05-09 18:29:13,432 INFO defaults.py line 80 28554] Totally 131 x 1 samples in numpy_dataset val set.
+[2026-05-09 18:29:13,432 INFO train.py line 147 28554] => Building optimize, scheduler, scaler(amp) ...
+[2026-05-09 18:29:13,433 INFO optimizer.py line 58 28554] Params Group 1 - lr: 0.006; Params: ['seg_head.weight', 'seg_head.bias', 'backbone.embedding.stem.conv.weight', 'backbone.embedding.stem.norm.weight', 'backbone.embedding.stem.norm.bias', 'backbone.enc.enc1.down.proj.weight', 'backbone.enc.enc1.down.proj.bias', 'backbone.enc.enc1.down.norm.0.weight', 'backbone.enc.enc1.down.norm.0.bias', 'backbone.enc.enc2.down.proj.weight', 'backbone.enc.enc2.down.proj.bias', 'backbone.enc.enc2.down.norm.0.weight', 'backbone.enc.enc2.down.norm.0.bias', 'backbone.enc.enc3.down.proj.weight', 'backbone.enc.enc3.down.proj.bias', 'backbone.enc.enc3.down.norm.0.weight', 'backbone.enc.enc3.down.norm.0.bias', 'backbone.enc.enc4.down.proj.weight', 'backbone.enc.enc4.down.proj.bias', 'backbone.enc.enc4.down.norm.0.weight', 'backbone.enc.enc4.down.norm.0.bias', 'backbone.dec.dec3.up.proj.0.weight', 'backbone.dec.dec3.up.proj.0.bias', 'backbone.dec.dec3.up.proj.1.weight', 'backbone.dec.dec3.up.proj.1.bias', 'backbone.dec.dec3.up.proj_skip.0.weight', 'backbone.dec.dec3.up.proj_skip.0.bias', 'backbone.dec.dec3.up.proj_skip.1.weight', 'backbone.dec.dec3.up.proj_skip.1.bias', 'backbone.dec.dec2.up.proj.0.weight', 'backbone.dec.dec2.up.proj.0.bias', 'backbone.dec.dec2.up.proj.1.weight', 'backbone.dec.dec2.up.proj.1.bias', 'backbone.dec.dec2.up.proj_skip.0.weight', 'backbone.dec.dec2.up.proj_skip.0.bias', 'backbone.dec.dec2.up.proj_skip.1.weight', 'backbone.dec.dec2.up.proj_skip.1.bias', 'backbone.dec.dec1.up.proj.0.weight', 'backbone.dec.dec1.up.proj.0.bias', 'backbone.dec.dec1.up.proj.1.weight', 'backbone.dec.dec1.up.proj.1.bias', 'backbone.dec.dec1.up.proj_skip.0.weight', 'backbone.dec.dec1.up.proj_skip.0.bias', 'backbone.dec.dec1.up.proj_skip.1.weight', 'backbone.dec.dec1.up.proj_skip.1.bias', 'backbone.dec.dec0.up.proj.0.weight', 'backbone.dec.dec0.up.proj.0.bias', 'backbone.dec.dec0.up.proj.1.weight', 'backbone.dec.dec0.up.proj.1.bias', 'backbone.dec.dec0.up.proj_skip.0.weight', 'backbone.dec.dec0.up.proj_skip.0.bias', 'backbone.dec.dec0.up.proj_skip.1.weight', 'backbone.dec.dec0.up.proj_skip.1.bias'].
+[2026-05-09 18:29:13,433 INFO optimizer.py line 58 28554] Params Group 2 - lr: 0.0006; Params: ['backbone.enc.enc0.block0.cpe.0.weight', 'backbone.enc.enc0.block0.cpe.0.bias', 'backbone.enc.enc0.block0.cpe.1.weight', 'backbone.enc.enc0.block0.cpe.1.bias', 'backbone.enc.enc0.block0.cpe.2.weight', 'backbone.enc.enc0.block0.cpe.2.bias', 'backbone.enc.enc0.block0.norm1.0.weight', 'backbone.enc.enc0.block0.norm1.0.bias', 'backbone.enc.enc0.block0.attn.qkv.weight', 'backbone.enc.enc0.block0.attn.qkv.bias', 'backbone.enc.enc0.block0.attn.proj.weight', 'backbone.enc.enc0.block0.attn.proj.bias', 'backbone.enc.enc0.block0.norm2.0.weight', 'backbone.enc.enc0.block0.norm2.0.bias', 'backbone.enc.enc0.block0.mlp.0.fc1.weight', 'backbone.enc.enc0.block0.mlp.0.fc1.bias', 'backbone.enc.enc0.block0.mlp.0.fc2.weight', 'backbone.enc.enc0.block0.mlp.0.fc2.bias', 'backbone.enc.enc0.block1.cpe.0.weight', 'backbone.enc.enc0.block1.cpe.0.bias', 'backbone.enc.enc0.block1.cpe.1.weight', 'backbone.enc.enc0.block1.cpe.1.bias', 'backbone.enc.enc0.block1.cpe.2.weight', 'backbone.enc.enc0.block1.cpe.2.bias', 'backbone.enc.enc0.block1.norm1.0.weight', 'backbone.enc.enc0.block1.norm1.0.bias', 'backbone.enc.enc0.block1.attn.qkv.weight', 'backbone.enc.enc0.block1.attn.qkv.bias', 'backbone.enc.enc0.block1.attn.proj.weight', 'backbone.enc.enc0.block1.attn.proj.bias', 'backbone.enc.enc0.block1.norm2.0.weight', 'backbone.enc.enc0.block1.norm2.0.bias', 'backbone.enc.enc0.block1.mlp.0.fc1.weight', 'backbone.enc.enc0.block1.mlp.0.fc1.bias', 'backbone.enc.enc0.block1.mlp.0.fc2.weight', 'backbone.enc.enc0.block1.mlp.0.fc2.bias', 'backbone.enc.enc1.block0.cpe.0.weight', 'backbone.enc.enc1.block0.cpe.0.bias', 'backbone.enc.enc1.block0.cpe.1.weight', 'backbone.enc.enc1.block0.cpe.1.bias', 'backbone.enc.enc1.block0.cpe.2.weight', 'backbone.enc.enc1.block0.cpe.2.bias', 'backbone.enc.enc1.block0.norm1.0.weight', 'backbone.enc.enc1.block0.norm1.0.bias', 'backbone.enc.enc1.block0.attn.qkv.weight', 'backbone.enc.enc1.block0.attn.qkv.bias', 'backbone.enc.enc1.block0.attn.proj.weight', 'backbone.enc.enc1.block0.attn.proj.bias', 'backbone.enc.enc1.block0.norm2.0.weight', 'backbone.enc.enc1.block0.norm2.0.bias', 'backbone.enc.enc1.block0.mlp.0.fc1.weight', 'backbone.enc.enc1.block0.mlp.0.fc1.bias', 'backbone.enc.enc1.block0.mlp.0.fc2.weight', 'backbone.enc.enc1.block0.mlp.0.fc2.bias', 'backbone.enc.enc1.block1.cpe.0.weight', 'backbone.enc.enc1.block1.cpe.0.bias', 'backbone.enc.enc1.block1.cpe.1.weight', 'backbone.enc.enc1.block1.cpe.1.bias', 'backbone.enc.enc1.block1.cpe.2.weight', 'backbone.enc.enc1.block1.cpe.2.bias', 'backbone.enc.enc1.block1.norm1.0.weight', 'backbone.enc.enc1.block1.norm1.0.bias', 'backbone.enc.enc1.block1.attn.qkv.weight', 'backbone.enc.enc1.block1.attn.qkv.bias', 'backbone.enc.enc1.block1.attn.proj.weight', 'backbone.enc.enc1.block1.attn.proj.bias', 'backbone.enc.enc1.block1.norm2.0.weight', 'backbone.enc.enc1.block1.norm2.0.bias', 'backbone.enc.enc1.block1.mlp.0.fc1.weight', 'backbone.enc.enc1.block1.mlp.0.fc1.bias', 'backbone.enc.enc1.block1.mlp.0.fc2.weight', 'backbone.enc.enc1.block1.mlp.0.fc2.bias', 'backbone.enc.enc2.block0.cpe.0.weight', 'backbone.enc.enc2.block0.cpe.0.bias', 'backbone.enc.enc2.block0.cpe.1.weight', 'backbone.enc.enc2.block0.cpe.1.bias', 'backbone.enc.enc2.block0.cpe.2.weight', 'backbone.enc.enc2.block0.cpe.2.bias', 'backbone.enc.enc2.block0.norm1.0.weight', 'backbone.enc.enc2.block0.norm1.0.bias', 'backbone.enc.enc2.block0.attn.qkv.weight', 'backbone.enc.enc2.block0.attn.qkv.bias', 'backbone.enc.enc2.block0.attn.proj.weight', 'backbone.enc.enc2.block0.attn.proj.bias', 'backbone.enc.enc2.block0.norm2.0.weight', 'backbone.enc.enc2.block0.norm2.0.bias', 'backbone.enc.enc2.block0.mlp.0.fc1.weight', 'backbone.enc.enc2.block0.mlp.0.fc1.bias', 'backbone.enc.enc2.block0.mlp.0.fc2.weight', 'backbone.enc.enc2.block0.mlp.0.fc2.bias', 'backbone.enc.enc2.block1.cpe.0.weight', 'backbone.enc.enc2.block1.cpe.0.bias', 'backbone.enc.enc2.block1.cpe.1.weight', 'backbone.enc.enc2.block1.cpe.1.bias', 'backbone.enc.enc2.block1.cpe.2.weight', 'backbone.enc.enc2.block1.cpe.2.bias', 'backbone.enc.enc2.block1.norm1.0.weight', 'backbone.enc.enc2.block1.norm1.0.bias', 'backbone.enc.enc2.block1.attn.qkv.weight', 'backbone.enc.enc2.block1.attn.qkv.bias', 'backbone.enc.enc2.block1.attn.proj.weight', 'backbone.enc.enc2.block1.attn.proj.bias', 'backbone.enc.enc2.block1.norm2.0.weight', 'backbone.enc.enc2.block1.norm2.0.bias', 'backbone.enc.enc2.block1.mlp.0.fc1.weight', 'backbone.enc.enc2.block1.mlp.0.fc1.bias', 'backbone.enc.enc2.block1.mlp.0.fc2.weight', 'backbone.enc.enc2.block1.mlp.0.fc2.bias', 'backbone.enc.enc3.block0.cpe.0.weight', 'backbone.enc.enc3.block0.cpe.0.bias', 'backbone.enc.enc3.block0.cpe.1.weight', 'backbone.enc.enc3.block0.cpe.1.bias', 'backbone.enc.enc3.block0.cpe.2.weight', 'backbone.enc.enc3.block0.cpe.2.bias', 'backbone.enc.enc3.block0.norm1.0.weight', 'backbone.enc.enc3.block0.norm1.0.bias', 'backbone.enc.enc3.block0.attn.qkv.weight', 'backbone.enc.enc3.block0.attn.qkv.bias', 'backbone.enc.enc3.block0.attn.proj.weight', 'backbone.enc.enc3.block0.attn.proj.bias', 'backbone.enc.enc3.block0.norm2.0.weight', 'backbone.enc.enc3.block0.norm2.0.bias', 'backbone.enc.enc3.block0.mlp.0.fc1.weight', 'backbone.enc.enc3.block0.mlp.0.fc1.bias', 'backbone.enc.enc3.block0.mlp.0.fc2.weight', 'backbone.enc.enc3.block0.mlp.0.fc2.bias', 'backbone.enc.enc3.block1.cpe.0.weight', 'backbone.enc.enc3.block1.cpe.0.bias', 'backbone.enc.enc3.block1.cpe.1.weight', 'backbone.enc.enc3.block1.cpe.1.bias', 'backbone.enc.enc3.block1.cpe.2.weight', 'backbone.enc.enc3.block1.cpe.2.bias', 'backbone.enc.enc3.block1.norm1.0.weight', 'backbone.enc.enc3.block1.norm1.0.bias', 'backbone.enc.enc3.block1.attn.qkv.weight', 'backbone.enc.enc3.block1.attn.qkv.bias', 'backbone.enc.enc3.block1.attn.proj.weight', 'backbone.enc.enc3.block1.attn.proj.bias', 'backbone.enc.enc3.block1.norm2.0.weight', 'backbone.enc.enc3.block1.norm2.0.bias', 'backbone.enc.enc3.block1.mlp.0.fc1.weight', 'backbone.enc.enc3.block1.mlp.0.fc1.bias', 'backbone.enc.enc3.block1.mlp.0.fc2.weight', 'backbone.enc.enc3.block1.mlp.0.fc2.bias', 'backbone.enc.enc3.block2.cpe.0.weight', 'backbone.enc.enc3.block2.cpe.0.bias', 'backbone.enc.enc3.block2.cpe.1.weight', 'backbone.enc.enc3.block2.cpe.1.bias', 'backbone.enc.enc3.block2.cpe.2.weight', 'backbone.enc.enc3.block2.cpe.2.bias', 'backbone.enc.enc3.block2.norm1.0.weight', 'backbone.enc.enc3.block2.norm1.0.bias', 'backbone.enc.enc3.block2.attn.qkv.weight', 'backbone.enc.enc3.block2.attn.qkv.bias', 'backbone.enc.enc3.block2.attn.proj.weight', 'backbone.enc.enc3.block2.attn.proj.bias', 'backbone.enc.enc3.block2.norm2.0.weight', 'backbone.enc.enc3.block2.norm2.0.bias', 'backbone.enc.enc3.block2.mlp.0.fc1.weight', 'backbone.enc.enc3.block2.mlp.0.fc1.bias', 'backbone.enc.enc3.block2.mlp.0.fc2.weight', 'backbone.enc.enc3.block2.mlp.0.fc2.bias', 'backbone.enc.enc3.block3.cpe.0.weight', 'backbone.enc.enc3.block3.cpe.0.bias', 'backbone.enc.enc3.block3.cpe.1.weight', 'backbone.enc.enc3.block3.cpe.1.bias', 'backbone.enc.enc3.block3.cpe.2.weight', 'backbone.enc.enc3.block3.cpe.2.bias', 'backbone.enc.enc3.block3.norm1.0.weight', 'backbone.enc.enc3.block3.norm1.0.bias', 'backbone.enc.enc3.block3.attn.qkv.weight', 'backbone.enc.enc3.block3.attn.qkv.bias', 'backbone.enc.enc3.block3.attn.proj.weight', 'backbone.enc.enc3.block3.attn.proj.bias', 'backbone.enc.enc3.block3.norm2.0.weight', 'backbone.enc.enc3.block3.norm2.0.bias', 'backbone.enc.enc3.block3.mlp.0.fc1.weight', 'backbone.enc.enc3.block3.mlp.0.fc1.bias', 'backbone.enc.enc3.block3.mlp.0.fc2.weight', 'backbone.enc.enc3.block3.mlp.0.fc2.bias', 'backbone.enc.enc3.block4.cpe.0.weight', 'backbone.enc.enc3.block4.cpe.0.bias', 'backbone.enc.enc3.block4.cpe.1.weight', 'backbone.enc.enc3.block4.cpe.1.bias', 'backbone.enc.enc3.block4.cpe.2.weight', 'backbone.enc.enc3.block4.cpe.2.bias', 'backbone.enc.enc3.block4.norm1.0.weight', 'backbone.enc.enc3.block4.norm1.0.bias', 'backbone.enc.enc3.block4.attn.qkv.weight', 'backbone.enc.enc3.block4.attn.qkv.bias', 'backbone.enc.enc3.block4.attn.proj.weight', 'backbone.enc.enc3.block4.attn.proj.bias', 'backbone.enc.enc3.block4.norm2.0.weight', 'backbone.enc.enc3.block4.norm2.0.bias', 'backbone.enc.enc3.block4.mlp.0.fc1.weight', 'backbone.enc.enc3.block4.mlp.0.fc1.bias', 'backbone.enc.enc3.block4.mlp.0.fc2.weight', 'backbone.enc.enc3.block4.mlp.0.fc2.bias', 'backbone.enc.enc3.block5.cpe.0.weight', 'backbone.enc.enc3.block5.cpe.0.bias', 'backbone.enc.enc3.block5.cpe.1.weight', 'backbone.enc.enc3.block5.cpe.1.bias', 'backbone.enc.enc3.block5.cpe.2.weight', 'backbone.enc.enc3.block5.cpe.2.bias', 'backbone.enc.enc3.block5.norm1.0.weight', 'backbone.enc.enc3.block5.norm1.0.bias', 'backbone.enc.enc3.block5.attn.qkv.weight', 'backbone.enc.enc3.block5.attn.qkv.bias', 'backbone.enc.enc3.block5.attn.proj.weight', 'backbone.enc.enc3.block5.attn.proj.bias', 'backbone.enc.enc3.block5.norm2.0.weight', 'backbone.enc.enc3.block5.norm2.0.bias', 'backbone.enc.enc3.block5.mlp.0.fc1.weight', 'backbone.enc.enc3.block5.mlp.0.fc1.bias', 'backbone.enc.enc3.block5.mlp.0.fc2.weight', 'backbone.enc.enc3.block5.mlp.0.fc2.bias', 'backbone.enc.enc4.block0.cpe.0.weight', 'backbone.enc.enc4.block0.cpe.0.bias', 'backbone.enc.enc4.block0.cpe.1.weight', 'backbone.enc.enc4.block0.cpe.1.bias', 'backbone.enc.enc4.block0.cpe.2.weight', 'backbone.enc.enc4.block0.cpe.2.bias', 'backbone.enc.enc4.block0.norm1.0.weight', 'backbone.enc.enc4.block0.norm1.0.bias', 'backbone.enc.enc4.block0.attn.qkv.weight', 'backbone.enc.enc4.block0.attn.qkv.bias', 'backbone.enc.enc4.block0.attn.proj.weight', 'backbone.enc.enc4.block0.attn.proj.bias', 'backbone.enc.enc4.block0.norm2.0.weight', 'backbone.enc.enc4.block0.norm2.0.bias', 'backbone.enc.enc4.block0.mlp.0.fc1.weight', 'backbone.enc.enc4.block0.mlp.0.fc1.bias', 'backbone.enc.enc4.block0.mlp.0.fc2.weight', 'backbone.enc.enc4.block0.mlp.0.fc2.bias', 'backbone.enc.enc4.block1.cpe.0.weight', 'backbone.enc.enc4.block1.cpe.0.bias', 'backbone.enc.enc4.block1.cpe.1.weight', 'backbone.enc.enc4.block1.cpe.1.bias', 'backbone.enc.enc4.block1.cpe.2.weight', 'backbone.enc.enc4.block1.cpe.2.bias', 'backbone.enc.enc4.block1.norm1.0.weight', 'backbone.enc.enc4.block1.norm1.0.bias', 'backbone.enc.enc4.block1.attn.qkv.weight', 'backbone.enc.enc4.block1.attn.qkv.bias', 'backbone.enc.enc4.block1.attn.proj.weight', 'backbone.enc.enc4.block1.attn.proj.bias', 'backbone.enc.enc4.block1.norm2.0.weight', 'backbone.enc.enc4.block1.norm2.0.bias', 'backbone.enc.enc4.block1.mlp.0.fc1.weight', 'backbone.enc.enc4.block1.mlp.0.fc1.bias', 'backbone.enc.enc4.block1.mlp.0.fc2.weight', 'backbone.enc.enc4.block1.mlp.0.fc2.bias', 'backbone.dec.dec3.block0.cpe.0.weight', 'backbone.dec.dec3.block0.cpe.0.bias', 'backbone.dec.dec3.block0.cpe.1.weight', 'backbone.dec.dec3.block0.cpe.1.bias', 'backbone.dec.dec3.block0.cpe.2.weight', 'backbone.dec.dec3.block0.cpe.2.bias', 'backbone.dec.dec3.block0.norm1.0.weight', 'backbone.dec.dec3.block0.norm1.0.bias', 'backbone.dec.dec3.block0.attn.qkv.weight', 'backbone.dec.dec3.block0.attn.qkv.bias', 'backbone.dec.dec3.block0.attn.proj.weight', 'backbone.dec.dec3.block0.attn.proj.bias', 'backbone.dec.dec3.block0.norm2.0.weight', 'backbone.dec.dec3.block0.norm2.0.bias', 'backbone.dec.dec3.block0.mlp.0.fc1.weight', 'backbone.dec.dec3.block0.mlp.0.fc1.bias', 'backbone.dec.dec3.block0.mlp.0.fc2.weight', 'backbone.dec.dec3.block0.mlp.0.fc2.bias', 'backbone.dec.dec3.block1.cpe.0.weight', 'backbone.dec.dec3.block1.cpe.0.bias', 'backbone.dec.dec3.block1.cpe.1.weight', 'backbone.dec.dec3.block1.cpe.1.bias', 'backbone.dec.dec3.block1.cpe.2.weight', 'backbone.dec.dec3.block1.cpe.2.bias', 'backbone.dec.dec3.block1.norm1.0.weight', 'backbone.dec.dec3.block1.norm1.0.bias', 'backbone.dec.dec3.block1.attn.qkv.weight', 'backbone.dec.dec3.block1.attn.qkv.bias', 'backbone.dec.dec3.block1.attn.proj.weight', 'backbone.dec.dec3.block1.attn.proj.bias', 'backbone.dec.dec3.block1.norm2.0.weight', 'backbone.dec.dec3.block1.norm2.0.bias', 'backbone.dec.dec3.block1.mlp.0.fc1.weight', 'backbone.dec.dec3.block1.mlp.0.fc1.bias', 'backbone.dec.dec3.block1.mlp.0.fc2.weight', 'backbone.dec.dec3.block1.mlp.0.fc2.bias', 'backbone.dec.dec2.block0.cpe.0.weight', 'backbone.dec.dec2.block0.cpe.0.bias', 'backbone.dec.dec2.block0.cpe.1.weight', 'backbone.dec.dec2.block0.cpe.1.bias', 'backbone.dec.dec2.block0.cpe.2.weight', 'backbone.dec.dec2.block0.cpe.2.bias', 'backbone.dec.dec2.block0.norm1.0.weight', 'backbone.dec.dec2.block0.norm1.0.bias', 'backbone.dec.dec2.block0.attn.qkv.weight', 'backbone.dec.dec2.block0.attn.qkv.bias', 'backbone.dec.dec2.block0.attn.proj.weight', 'backbone.dec.dec2.block0.attn.proj.bias', 'backbone.dec.dec2.block0.norm2.0.weight', 'backbone.dec.dec2.block0.norm2.0.bias', 'backbone.dec.dec2.block0.mlp.0.fc1.weight', 'backbone.dec.dec2.block0.mlp.0.fc1.bias', 'backbone.dec.dec2.block0.mlp.0.fc2.weight', 'backbone.dec.dec2.block0.mlp.0.fc2.bias', 'backbone.dec.dec2.block1.cpe.0.weight', 'backbone.dec.dec2.block1.cpe.0.bias', 'backbone.dec.dec2.block1.cpe.1.weight', 'backbone.dec.dec2.block1.cpe.1.bias', 'backbone.dec.dec2.block1.cpe.2.weight', 'backbone.dec.dec2.block1.cpe.2.bias', 'backbone.dec.dec2.block1.norm1.0.weight', 'backbone.dec.dec2.block1.norm1.0.bias', 'backbone.dec.dec2.block1.attn.qkv.weight', 'backbone.dec.dec2.block1.attn.qkv.bias', 'backbone.dec.dec2.block1.attn.proj.weight', 'backbone.dec.dec2.block1.attn.proj.bias', 'backbone.dec.dec2.block1.norm2.0.weight', 'backbone.dec.dec2.block1.norm2.0.bias', 'backbone.dec.dec2.block1.mlp.0.fc1.weight', 'backbone.dec.dec2.block1.mlp.0.fc1.bias', 'backbone.dec.dec2.block1.mlp.0.fc2.weight', 'backbone.dec.dec2.block1.mlp.0.fc2.bias', 'backbone.dec.dec1.block0.cpe.0.weight', 'backbone.dec.dec1.block0.cpe.0.bias', 'backbone.dec.dec1.block0.cpe.1.weight', 'backbone.dec.dec1.block0.cpe.1.bias', 'backbone.dec.dec1.block0.cpe.2.weight', 'backbone.dec.dec1.block0.cpe.2.bias', 'backbone.dec.dec1.block0.norm1.0.weight', 'backbone.dec.dec1.block0.norm1.0.bias', 'backbone.dec.dec1.block0.attn.qkv.weight', 'backbone.dec.dec1.block0.attn.qkv.bias', 'backbone.dec.dec1.block0.attn.proj.weight', 'backbone.dec.dec1.block0.attn.proj.bias', 'backbone.dec.dec1.block0.norm2.0.weight', 'backbone.dec.dec1.block0.norm2.0.bias', 'backbone.dec.dec1.block0.mlp.0.fc1.weight', 'backbone.dec.dec1.block0.mlp.0.fc1.bias', 'backbone.dec.dec1.block0.mlp.0.fc2.weight', 'backbone.dec.dec1.block0.mlp.0.fc2.bias', 'backbone.dec.dec1.block1.cpe.0.weight', 'backbone.dec.dec1.block1.cpe.0.bias', 'backbone.dec.dec1.block1.cpe.1.weight', 'backbone.dec.dec1.block1.cpe.1.bias', 'backbone.dec.dec1.block1.cpe.2.weight', 'backbone.dec.dec1.block1.cpe.2.bias', 'backbone.dec.dec1.block1.norm1.0.weight', 'backbone.dec.dec1.block1.norm1.0.bias', 'backbone.dec.dec1.block1.attn.qkv.weight', 'backbone.dec.dec1.block1.attn.qkv.bias', 'backbone.dec.dec1.block1.attn.proj.weight', 'backbone.dec.dec1.block1.attn.proj.bias', 'backbone.dec.dec1.block1.norm2.0.weight', 'backbone.dec.dec1.block1.norm2.0.bias', 'backbone.dec.dec1.block1.mlp.0.fc1.weight', 'backbone.dec.dec1.block1.mlp.0.fc1.bias', 'backbone.dec.dec1.block1.mlp.0.fc2.weight', 'backbone.dec.dec1.block1.mlp.0.fc2.bias', 'backbone.dec.dec0.block0.cpe.0.weight', 'backbone.dec.dec0.block0.cpe.0.bias', 'backbone.dec.dec0.block0.cpe.1.weight', 'backbone.dec.dec0.block0.cpe.1.bias', 'backbone.dec.dec0.block0.cpe.2.weight', 'backbone.dec.dec0.block0.cpe.2.bias', 'backbone.dec.dec0.block0.norm1.0.weight', 'backbone.dec.dec0.block0.norm1.0.bias', 'backbone.dec.dec0.block0.attn.qkv.weight', 'backbone.dec.dec0.block0.attn.qkv.bias', 'backbone.dec.dec0.block0.attn.proj.weight', 'backbone.dec.dec0.block0.attn.proj.bias', 'backbone.dec.dec0.block0.norm2.0.weight', 'backbone.dec.dec0.block0.norm2.0.bias', 'backbone.dec.dec0.block0.mlp.0.fc1.weight', 'backbone.dec.dec0.block0.mlp.0.fc1.bias', 'backbone.dec.dec0.block0.mlp.0.fc2.weight', 'backbone.dec.dec0.block0.mlp.0.fc2.bias', 'backbone.dec.dec0.block1.cpe.0.weight', 'backbone.dec.dec0.block1.cpe.0.bias', 'backbone.dec.dec0.block1.cpe.1.weight', 'backbone.dec.dec0.block1.cpe.1.bias', 'backbone.dec.dec0.block1.cpe.2.weight', 'backbone.dec.dec0.block1.cpe.2.bias', 'backbone.dec.dec0.block1.norm1.0.weight', 'backbone.dec.dec0.block1.norm1.0.bias', 'backbone.dec.dec0.block1.attn.qkv.weight', 'backbone.dec.dec0.block1.attn.qkv.bias', 'backbone.dec.dec0.block1.attn.proj.weight', 'backbone.dec.dec0.block1.attn.proj.bias', 'backbone.dec.dec0.block1.norm2.0.weight', 'backbone.dec.dec0.block1.norm2.0.bias', 'backbone.dec.dec0.block1.mlp.0.fc1.weight', 'backbone.dec.dec0.block1.mlp.0.fc1.bias', 'backbone.dec.dec0.block1.mlp.0.fc2.weight', 'backbone.dec.dec0.block1.mlp.0.fc2.bias'].
+[2026-05-09 18:29:13,434 INFO train.py line 151 28554] => Building hooks ...
+[2026-05-09 18:29:13,434 INFO misc.py line 237 28554] => Loading checkpoint & weight ...
+[2026-05-09 18:29:13,434 INFO misc.py line 239 28554] Loading weight at: weights/scannet200-backbone-3ch.pth
+[2026-05-09 18:29:13,537 INFO misc.py line 245 28554] Loading layer weights with keyword: , replace keyword with: 
+[2026-05-09 18:29:13,547 ERROR events.py line 611 28554] Traceback (most recent call last):
+  File "/home/len/Diplomski/Pointcept/exp/custom_trees/PTv3-Scannet200-Backbone-3ch/code/pointcept/engines/train.py", line 158, in train
+    self.before_train()
+  File "/home/len/Diplomski/Pointcept/exp/custom_trees/PTv3-Scannet200-Backbone-3ch/code/pointcept/engines/train.py", line 92, in before_train
+    h.before_train()
+  File "/home/len/Diplomski/Pointcept/exp/custom_trees/PTv3-Scannet200-Backbone-3ch/code/pointcept/engines/hooks/misc.py", line 259, in before_train
+    load_state_info = self.trainer.model.load_state_dict(
+  File "/home/len/anaconda3/envs/pointcept/lib/python3.10/site-packages/torch/nn/modules/module.py", line 2584, in load_state_dict
+    raise RuntimeError(
+RuntimeError: Error(s) in loading state_dict for DefaultSegmentorV2:
+	While copying the parameter named "backbone.embedding.stem.conv.weight", whose dimensions in the model are torch.Size([32, 5, 5, 5, 3]) and whose dimensions in the checkpoint are torch.Size([32, 5, 5, 5, 3]), an exception occurred : ('CUDA error: no kernel image is available for execution on the device\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n',).
+

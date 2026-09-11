@@ -1,0 +1,14 @@
+Namespace(model='pointnet2', exp_name='pointnet2_scratch-combined-wce', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, loss='ce', focal_gamma=2.0, focal_alpha=[0.5], class_weights=[1.0, 1.0, 1.0], eval=True, no_cuda=False, wandb_project='pointcept', wandb_id=None, no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointnet2_scratch-combined-wce/best_mIoU_model.pth
+  [trunk   ]  IoU: 0.1464   Acc: 0.1612
+  [branch  ]  IoU: 0.8878   Acc: 0.9888
+  [wire    ]  IoU: 0.4164   Acc: 0.4501
+
+Test results — mIoU: 0.4835  mAcc: 0.5334  allAcc: 0.8893
+
+Class             IoU      Acc
+------------------------------
+  trunk          0.1464   0.1612
+  branch         0.8878   0.9888
+  wire           0.4164   0.4501

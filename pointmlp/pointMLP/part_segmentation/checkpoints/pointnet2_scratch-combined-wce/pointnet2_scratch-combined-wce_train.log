@@ -1,0 +1,3161 @@
+Namespace(model='pointnet2', exp_name='pointnet2_scratch-combined-wce', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=8, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, loss='weighted_ce', focal_gamma=2.0, focal_alpha=[0.5], class_weights=[1.1704899, 0.17648609, 1.65302401], eval=False, no_cuda=False, wandb_project='pointcept', wandb_id=None, no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loss: weighted_ce  weights=[1.1704899, 0.17648609, 1.65302401]
+Train samples: 604  |  Val samples: 207
+Using 1 GPU(s)  |  log_softmax=True
+  [trunk   ]  IoU: 0.0000   Acc: 0.0000
+  [branch  ]  IoU: 0.8589   Acc: 1.0000
+  [wire    ]  IoU: 0.0000   Acc: 0.0000
+Epoch    1 | train_loss=0.6708 train_mIoU=0.2829 | val_loss=0.5529 val_mIoU=0.2863 val_mAcc=0.3333 val_allAcc=0.8589
+  ↑ New best mIoU: 0.2863
+  [trunk   ]  IoU: 0.0002   Acc: 0.0002
+  [branch  ]  IoU: 0.8589   Acc: 1.0000
+  [wire    ]  IoU: 0.0000   Acc: 0.0000
+Epoch    2 | train_loss=0.5146 train_mIoU=0.2824 | val_loss=0.5273 val_mIoU=0.2864 val_mAcc=0.3334 val_allAcc=0.8589
+  ↑ New best mIoU: 0.2864
+  [trunk   ]  IoU: 0.0001   Acc: 0.0001
+  [branch  ]  IoU: 0.8636   Acc: 0.9964
+  [wire    ]  IoU: 0.1234   Acc: 0.1319
+Epoch    3 | train_loss=0.4790 train_mIoU=0.3050 | val_loss=0.5021 val_mIoU=0.3290 val_mAcc=0.3761 val_allAcc=0.8637
+  ↑ New best mIoU: 0.3290
+  [trunk   ]  IoU: 0.0022   Acc: 0.0022
+  [branch  ]  IoU: 0.8662   Acc: 0.9960
+  [wire    ]  IoU: 0.1638   Acc: 0.1775
+Epoch    4 | train_loss=0.4438 train_mIoU=0.3697 | val_loss=0.4526 val_mIoU=0.3441 val_mAcc=0.3919 val_allAcc=0.8663
+  ↑ New best mIoU: 0.3441
+  [trunk   ]  IoU: 0.0022   Acc: 0.0022
+  [branch  ]  IoU: 0.8709   Acc: 0.9878
+  [wire    ]  IoU: 0.2620   Acc: 0.3330
+Epoch    5 | train_loss=0.4188 train_mIoU=0.4076 | val_loss=0.4673 val_mIoU=0.3784 val_mAcc=0.4410 val_allAcc=0.8685
+  ↑ New best mIoU: 0.3784
+  [trunk   ]  IoU: 0.0070   Acc: 0.0071
+  [branch  ]  IoU: 0.8729   Acc: 0.9799
+  [wire    ]  IoU: 0.2980   Acc: 0.4309
+Epoch    6 | train_loss=0.3841 train_mIoU=0.4549 | val_loss=0.4677 val_mIoU=0.3927 val_mAcc=0.4726 val_allAcc=0.8680
+  ↑ New best mIoU: 0.3927
+  [trunk   ]  IoU: 0.0037   Acc: 0.0037
+  [branch  ]  IoU: 0.8667   Acc: 0.9994
+  [wire    ]  IoU: 0.1365   Acc: 0.1397
+Epoch    7 | train_loss=0.3591 train_mIoU=0.4951 | val_loss=0.5205 val_mIoU=0.3356 val_mAcc=0.3809 val_allAcc=0.8670
+  [trunk   ]  IoU: 0.0558   Acc: 0.0577
+  [branch  ]  IoU: 0.8780   Acc: 0.9923
+  [wire    ]  IoU: 0.3095   Acc: 0.3485
+Epoch    8 | train_loss=0.3472 train_mIoU=0.5092 | val_loss=0.3999 val_mIoU=0.4144 val_mAcc=0.4662 val_allAcc=0.8778
+  ↑ New best mIoU: 0.4144
+  [trunk   ]  IoU: 0.0763   Acc: 0.0813
+  [branch  ]  IoU: 0.8849   Acc: 0.9802
+  [wire    ]  IoU: 0.3835   Acc: 0.5261
+Epoch    9 | train_loss=0.3319 train_mIoU=0.5357 | val_loss=0.4012 val_mIoU=0.4482 val_mAcc=0.5292 val_allAcc=0.8800
+  ↑ New best mIoU: 0.4482
+  [trunk   ]  IoU: 0.0159   Acc: 0.0160
+  [branch  ]  IoU: 0.8751   Acc: 0.9952
+  [wire    ]  IoU: 0.2596   Acc: 0.2941
+Epoch   10 | train_loss=0.3178 train_mIoU=0.5545 | val_loss=0.4549 val_mIoU=0.3836 val_mAcc=0.4351 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0427   Acc: 0.0436
+  [branch  ]  IoU: 0.8776   Acc: 0.9957
+  [wire    ]  IoU: 0.2771   Acc: 0.3037
+Epoch   11 | train_loss=0.3051 train_mIoU=0.5734 | val_loss=0.4298 val_mIoU=0.3992 val_mAcc=0.4477 val_allAcc=0.8769
+  [trunk   ]  IoU: 0.0617   Acc: 0.0650
+  [branch  ]  IoU: 0.8727   Acc: 0.9951
+  [wire    ]  IoU: 0.2090   Acc: 0.2169
+Epoch   12 | train_loss=0.2942 train_mIoU=0.5865 | val_loss=0.4751 val_mIoU=0.3811 val_mAcc=0.4257 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.0193   Acc: 0.0195
+  [branch  ]  IoU: 0.8685   Acc: 0.9989
+  [wire    ]  IoU: 0.1563   Acc: 0.1591
+Epoch   13 | train_loss=0.2803 train_mIoU=0.6058 | val_loss=0.4791 val_mIoU=0.3480 val_mAcc=0.3925 val_allAcc=0.8691
+  [trunk   ]  IoU: 0.1484   Acc: 0.1805
+  [branch  ]  IoU: 0.8755   Acc: 0.9801
+  [wire    ]  IoU: 0.2622   Acc: 0.2887
+Epoch   14 | train_loss=0.2751 train_mIoU=0.6125 | val_loss=0.4039 val_mIoU=0.4287 val_mAcc=0.4831 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0265   Acc: 0.0273
+  [branch  ]  IoU: 0.8772   Acc: 0.9949
+  [wire    ]  IoU: 0.3071   Acc: 0.3341
+Epoch   15 | train_loss=0.2682 train_mIoU=0.6240 | val_loss=0.4579 val_mIoU=0.4036 val_mAcc=0.4521 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.0831   Acc: 0.0881
+  [branch  ]  IoU: 0.8711   Acc: 0.9958
+  [wire    ]  IoU: 0.1516   Acc: 0.1528
+Epoch   16 | train_loss=0.2630 train_mIoU=0.6350 | val_loss=0.4707 val_mIoU=0.3686 val_mAcc=0.4123 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0508   Acc: 0.0520
+  [branch  ]  IoU: 0.8783   Acc: 0.9961
+  [wire    ]  IoU: 0.2927   Acc: 0.3140
+Epoch   17 | train_loss=0.2610 train_mIoU=0.6374 | val_loss=0.4184 val_mIoU=0.4073 val_mAcc=0.4540 val_allAcc=0.8786
+  [trunk   ]  IoU: 0.1116   Acc: 0.1226
+  [branch  ]  IoU: 0.8870   Acc: 0.9862
+  [wire    ]  IoU: 0.4452   Acc: 0.5081
+Epoch   18 | train_loss=0.2603 train_mIoU=0.6397 | val_loss=0.3534 val_mIoU=0.4813 val_mAcc=0.5390 val_allAcc=0.8874
+  ↑ New best mIoU: 0.4813
+  [trunk   ]  IoU: 0.0553   Acc: 0.0578
+  [branch  ]  IoU: 0.8688   Acc: 0.9960
+  [wire    ]  IoU: 0.1584   Acc: 0.1603
+Epoch   19 | train_loss=0.2503 train_mIoU=0.6521 | val_loss=0.5205 val_mIoU=0.3608 val_mAcc=0.4047 val_allAcc=0.8698
+  [trunk   ]  IoU: 0.0462   Acc: 0.0468
+  [branch  ]  IoU: 0.8657   Acc: 0.9987
+  [wire    ]  IoU: 0.0775   Acc: 0.0783
+Epoch   20 | train_loss=0.2485 train_mIoU=0.6532 | val_loss=0.4781 val_mIoU=0.3298 val_mAcc=0.3746 val_allAcc=0.8663
+  [trunk   ]  IoU: 0.0858   Acc: 0.0911
+  [branch  ]  IoU: 0.8759   Acc: 0.9932
+  [wire    ]  IoU: 0.2462   Acc: 0.2621
+Epoch   21 | train_loss=0.2342 train_mIoU=0.6750 | val_loss=0.4258 val_mIoU=0.4026 val_mAcc=0.4488 val_allAcc=0.8761
+  [trunk   ]  IoU: 0.0713   Acc: 0.0770
+  [branch  ]  IoU: 0.8721   Acc: 0.9961
+  [wire    ]  IoU: 0.1404   Acc: 0.1426
+Epoch   22 | train_loss=0.2439 train_mIoU=0.6625 | val_loss=0.5384 val_mIoU=0.3613 val_mAcc=0.4053 val_allAcc=0.8704
+  [trunk   ]  IoU: 0.1075   Acc: 0.1157
+  [branch  ]  IoU: 0.8770   Acc: 0.9942
+  [wire    ]  IoU: 0.2432   Acc: 0.2469
+Epoch   23 | train_loss=0.2390 train_mIoU=0.6682 | val_loss=0.3720 val_mIoU=0.4092 val_mAcc=0.4523 val_allAcc=0.8781
+  [trunk   ]  IoU: 0.0510   Acc: 0.0525
+  [branch  ]  IoU: 0.8644   Acc: 0.9990
+  [wire    ]  IoU: 0.0237   Acc: 0.0237
+Epoch   24 | train_loss=0.2296 train_mIoU=0.6802 | val_loss=0.6382 val_mIoU=0.3131 val_mAcc=0.3584 val_allAcc=0.8638
+  [trunk   ]  IoU: 0.0159   Acc: 0.0159
+  [branch  ]  IoU: 0.8751   Acc: 0.9990
+  [wire    ]  IoU: 0.2663   Acc: 0.2757
+Epoch   25 | train_loss=0.2264 train_mIoU=0.6813 | val_loss=0.5296 val_mIoU=0.3857 val_mAcc=0.4302 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.0795   Acc: 0.0815
+  [branch  ]  IoU: 0.8725   Acc: 0.9978
+  [wire    ]  IoU: 0.1731   Acc: 0.1746
+Epoch   26 | train_loss=0.2280 train_mIoU=0.6826 | val_loss=0.4882 val_mIoU=0.3751 val_mAcc=0.4180 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.0516   Acc: 0.0527
+  [branch  ]  IoU: 0.8766   Acc: 0.9970
+  [wire    ]  IoU: 0.2754   Acc: 0.2868
+Epoch   27 | train_loss=0.2243 train_mIoU=0.6866 | val_loss=0.4628 val_mIoU=0.4012 val_mAcc=0.4455 val_allAcc=0.8778
+  [trunk   ]  IoU: 0.0139   Acc: 0.0140
+  [branch  ]  IoU: 0.8688   Acc: 0.9988
+  [wire    ]  IoU: 0.1743   Acc: 0.1782
+Epoch   28 | train_loss=0.2283 train_mIoU=0.6814 | val_loss=0.6590 val_mIoU=0.3523 val_mAcc=0.3970 val_allAcc=0.8696
+  [trunk   ]  IoU: 0.0612   Acc: 0.0623
+  [branch  ]  IoU: 0.8675   Acc: 0.9986
+  [wire    ]  IoU: 0.0911   Acc: 0.0917
+Epoch   29 | train_loss=0.2317 train_mIoU=0.6761 | val_loss=0.6128 val_mIoU=0.3399 val_mAcc=0.3842 val_allAcc=0.8683
+  [trunk   ]  IoU: 0.0818   Acc: 0.0884
+  [branch  ]  IoU: 0.8830   Acc: 0.9857
+  [wire    ]  IoU: 0.3887   Acc: 0.4652
+Epoch   30 | train_loss=0.2124 train_mIoU=0.7023 | val_loss=0.3873 val_mIoU=0.4512 val_mAcc=0.5131 val_allAcc=0.8817
+  [trunk   ]  IoU: 0.1058   Acc: 0.1161
+  [branch  ]  IoU: 0.8744   Acc: 0.9912
+  [wire    ]  IoU: 0.2442   Acc: 0.2506
+Epoch   31 | train_loss=0.2143 train_mIoU=0.7015 | val_loss=0.4974 val_mIoU=0.4081 val_mAcc=0.4526 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.1477   Acc: 0.1711
+  [branch  ]  IoU: 0.8752   Acc: 0.9886
+  [wire    ]  IoU: 0.2061   Acc: 0.2075
+Epoch   32 | train_loss=0.2117 train_mIoU=0.7065 | val_loss=0.4817 val_mIoU=0.4097 val_mAcc=0.4557 val_allAcc=0.8754
+  [trunk   ]  IoU: 0.0534   Acc: 0.0537
+  [branch  ]  IoU: 0.8700   Acc: 0.9996
+  [wire    ]  IoU: 0.1389   Acc: 0.1395
+Epoch   33 | train_loss=0.2082 train_mIoU=0.7076 | val_loss=0.5381 val_mIoU=0.3541 val_mAcc=0.3976 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0932   Acc: 0.0964
+  [branch  ]  IoU: 0.8755   Acc: 0.9969
+  [wire    ]  IoU: 0.2197   Acc: 0.2226
+Epoch   34 | train_loss=0.2120 train_mIoU=0.7056 | val_loss=0.5428 val_mIoU=0.3962 val_mAcc=0.4386 val_allAcc=0.8774
+  [trunk   ]  IoU: 0.0360   Acc: 0.0366
+  [branch  ]  IoU: 0.8742   Acc: 0.9971
+  [wire    ]  IoU: 0.2370   Acc: 0.2511
+Epoch   35 | train_loss=0.2038 train_mIoU=0.7155 | val_loss=0.5015 val_mIoU=0.3824 val_mAcc=0.4283 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0855   Acc: 0.0874
+  [branch  ]  IoU: 0.8690   Acc: 0.9985
+  [wire    ]  IoU: 0.0877   Acc: 0.0879
+Epoch   36 | train_loss=0.2018 train_mIoU=0.7211 | val_loss=0.6357 val_mIoU=0.3474 val_mAcc=0.3913 val_allAcc=0.8700
+  [trunk   ]  IoU: 0.0736   Acc: 0.0763
+  [branch  ]  IoU: 0.8725   Acc: 0.9976
+  [wire    ]  IoU: 0.1537   Acc: 0.1572
+Epoch   37 | train_loss=0.1939 train_mIoU=0.7305 | val_loss=0.5658 val_mIoU=0.3666 val_mAcc=0.4104 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0758   Acc: 0.0780
+  [branch  ]  IoU: 0.8684   Acc: 0.9990
+  [wire    ]  IoU: 0.0669   Acc: 0.0670
+Epoch   38 | train_loss=0.2039 train_mIoU=0.7164 | val_loss=0.6752 val_mIoU=0.3370 val_mAcc=0.3813 val_allAcc=0.8684
+  [trunk   ]  IoU: 0.0713   Acc: 0.0728
+  [branch  ]  IoU: 0.8752   Acc: 0.9982
+  [wire    ]  IoU: 0.2241   Acc: 0.2274
+Epoch   39 | train_loss=0.1976 train_mIoU=0.7260 | val_loss=0.4404 val_mIoU=0.3902 val_mAcc=0.4328 val_allAcc=0.8768
+  [trunk   ]  IoU: 0.0082   Acc: 0.0083
+  [branch  ]  IoU: 0.8719   Acc: 0.9988
+  [wire    ]  IoU: 0.2275   Acc: 0.2353
+Epoch   40 | train_loss=0.1947 train_mIoU=0.7258 | val_loss=0.5366 val_mIoU=0.3692 val_mAcc=0.4141 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0855   Acc: 0.0888
+  [branch  ]  IoU: 0.8684   Acc: 0.9971
+  [wire    ]  IoU: 0.0960   Acc: 0.0963
+Epoch   41 | train_loss=0.1897 train_mIoU=0.7357 | val_loss=0.5051 val_mIoU=0.3500 val_mAcc=0.3941 val_allAcc=0.8694
+  [trunk   ]  IoU: 0.0479   Acc: 0.0486
+  [branch  ]  IoU: 0.8745   Acc: 0.9989
+  [wire    ]  IoU: 0.2294   Acc: 0.2322
+Epoch   42 | train_loss=0.2026 train_mIoU=0.7190 | val_loss=0.5067 val_mIoU=0.3839 val_mAcc=0.4266 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.0281   Acc: 0.0283
+  [branch  ]  IoU: 0.8785   Acc: 0.9968
+  [wire    ]  IoU: 0.3111   Acc: 0.3374
+Epoch   43 | train_loss=0.1872 train_mIoU=0.7425 | val_loss=0.5396 val_mIoU=0.4059 val_mAcc=0.4542 val_allAcc=0.8786
+  [trunk   ]  IoU: 0.0401   Acc: 0.0403
+  [branch  ]  IoU: 0.8694   Acc: 0.9991
+  [wire    ]  IoU: 0.1563   Acc: 0.1576
+Epoch   44 | train_loss=0.1856 train_mIoU=0.7401 | val_loss=0.5989 val_mIoU=0.3552 val_mAcc=0.3990 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.1287   Acc: 0.1357
+  [branch  ]  IoU: 0.8784   Acc: 0.9969
+  [wire    ]  IoU: 0.1984   Acc: 0.1998
+Epoch   45 | train_loss=0.1917 train_mIoU=0.7308 | val_loss=0.5214 val_mIoU=0.4018 val_mAcc=0.4441 val_allAcc=0.8792
+  [trunk   ]  IoU: 0.0555   Acc: 0.0565
+  [branch  ]  IoU: 0.8770   Acc: 0.9974
+  [wire    ]  IoU: 0.2867   Acc: 0.2953
+Epoch   46 | train_loss=0.1748 train_mIoU=0.7562 | val_loss=0.4455 val_mIoU=0.4064 val_mAcc=0.4497 val_allAcc=0.8789
+  [trunk   ]  IoU: 0.1674   Acc: 0.2249
+  [branch  ]  IoU: 0.8714   Acc: 0.9785
+  [wire    ]  IoU: 0.1174   Acc: 0.1187
+Epoch   47 | train_loss=0.1789 train_mIoU=0.7509 | val_loss=0.5595 val_mIoU=0.3854 val_mAcc=0.4407 val_allAcc=0.8658
+  [trunk   ]  IoU: 0.1106   Acc: 0.1197
+  [branch  ]  IoU: 0.8731   Acc: 0.9938
+  [wire    ]  IoU: 0.1702   Acc: 0.1728
+Epoch   48 | train_loss=0.1796 train_mIoU=0.7523 | val_loss=0.4925 val_mIoU=0.3847 val_mAcc=0.4288 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1698   Acc: 0.2024
+  [branch  ]  IoU: 0.8778   Acc: 0.9900
+  [wire    ]  IoU: 0.1251   Acc: 0.1256
+Epoch   49 | train_loss=0.1810 train_mIoU=0.7503 | val_loss=0.4886 val_mIoU=0.3909 val_mAcc=0.4393 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0484   Acc: 0.0490
+  [branch  ]  IoU: 0.8679   Acc: 0.9992
+  [wire    ]  IoU: 0.1079   Acc: 0.1083
+Epoch   50 | train_loss=0.1911 train_mIoU=0.7348 | val_loss=0.5261 val_mIoU=0.3414 val_mAcc=0.3855 val_allAcc=0.8687
+  [trunk   ]  IoU: 0.0639   Acc: 0.0660
+  [branch  ]  IoU: 0.8791   Acc: 0.9940
+  [wire    ]  IoU: 0.3132   Acc: 0.3416
+Epoch   51 | train_loss=0.1765 train_mIoU=0.7558 | val_loss=0.4584 val_mIoU=0.4187 val_mAcc=0.4672 val_allAcc=0.8796
+  [trunk   ]  IoU: 0.0890   Acc: 0.0919
+  [branch  ]  IoU: 0.8668   Acc: 0.9982
+  [wire    ]  IoU: 0.0386   Acc: 0.0386
+Epoch   52 | train_loss=0.1927 train_mIoU=0.7353 | val_loss=0.5772 val_mIoU=0.3315 val_mAcc=0.3762 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.1009   Acc: 0.1100
+  [branch  ]  IoU: 0.8704   Acc: 0.9966
+  [wire    ]  IoU: 0.0538   Acc: 0.0539
+Epoch   53 | train_loss=0.1848 train_mIoU=0.7440 | val_loss=0.5656 val_mIoU=0.3417 val_mAcc=0.3868 val_allAcc=0.8681
+  [trunk   ]  IoU: 0.0492   Acc: 0.0503
+  [branch  ]  IoU: 0.8718   Acc: 0.9989
+  [wire    ]  IoU: 0.1721   Acc: 0.1736
+Epoch   54 | train_loss=0.1714 train_mIoU=0.7611 | val_loss=0.5858 val_mIoU=0.3643 val_mAcc=0.4076 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1024   Acc: 0.1102
+  [branch  ]  IoU: 0.8727   Acc: 0.9971
+  [wire    ]  IoU: 0.0983   Acc: 0.0985
+Epoch   55 | train_loss=0.1689 train_mIoU=0.7649 | val_loss=0.5609 val_mIoU=0.3578 val_mAcc=0.4019 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0549   Acc: 0.0558
+  [branch  ]  IoU: 0.8761   Acc: 0.9983
+  [wire    ]  IoU: 0.2480   Acc: 0.2551
+Epoch   56 | train_loss=0.1883 train_mIoU=0.7377 | val_loss=0.4880 val_mIoU=0.3930 val_mAcc=0.4364 val_allAcc=0.8772
+  [trunk   ]  IoU: 0.0343   Acc: 0.0347
+  [branch  ]  IoU: 0.8800   Acc: 0.9976
+  [wire    ]  IoU: 0.3454   Acc: 0.3629
+Epoch   57 | train_loss=0.1643 train_mIoU=0.7710 | val_loss=0.5387 val_mIoU=0.4199 val_mAcc=0.4651 val_allAcc=0.8814
+  [trunk   ]  IoU: 0.1061   Acc: 0.1130
+  [branch  ]  IoU: 0.8763   Acc: 0.9966
+  [wire    ]  IoU: 0.1863   Acc: 0.1874
+Epoch   58 | train_loss=0.1778 train_mIoU=0.7535 | val_loss=0.5103 val_mIoU=0.3896 val_mAcc=0.4323 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.0823   Acc: 0.0857
+  [branch  ]  IoU: 0.8758   Acc: 0.9982
+  [wire    ]  IoU: 0.1911   Acc: 0.1934
+Epoch   59 | train_loss=0.1629 train_mIoU=0.7728 | val_loss=0.5958 val_mIoU=0.3831 val_mAcc=0.4258 val_allAcc=0.8759
+  [trunk   ]  IoU: 0.1183   Acc: 0.1242
+  [branch  ]  IoU: 0.8790   Acc: 0.9950
+  [wire    ]  IoU: 0.2505   Acc: 0.2606
+Epoch   60 | train_loss=0.1725 train_mIoU=0.7594 | val_loss=0.5028 val_mIoU=0.4160 val_mAcc=0.4599 val_allAcc=0.8803
+  [trunk   ]  IoU: 0.0734   Acc: 0.0765
+  [branch  ]  IoU: 0.8649   Acc: 0.9974
+  [wire    ]  IoU: 0.0343   Acc: 0.0343
+Epoch   61 | train_loss=0.1659 train_mIoU=0.7684 | val_loss=0.8031 val_mIoU=0.3242 val_mAcc=0.3694 val_allAcc=0.8650
+  [trunk   ]  IoU: 0.0328   Acc: 0.0337
+  [branch  ]  IoU: 0.8771   Acc: 0.9953
+  [wire    ]  IoU: 0.3004   Acc: 0.3249
+Epoch   62 | train_loss=0.1680 train_mIoU=0.7650 | val_loss=0.6300 val_mIoU=0.4034 val_mAcc=0.4513 val_allAcc=0.8771
+  [trunk   ]  IoU: 0.0217   Acc: 0.0219
+  [branch  ]  IoU: 0.8639   Acc: 0.9995
+  [wire    ]  IoU: 0.0675   Acc: 0.0678
+Epoch   63 | train_loss=0.1651 train_mIoU=0.7705 | val_loss=0.8511 val_mIoU=0.3177 val_mAcc=0.3631 val_allAcc=0.8643
+  [trunk   ]  IoU: 0.0666   Acc: 0.0721
+  [branch  ]  IoU: 0.8747   Acc: 0.9962
+  [wire    ]  IoU: 0.1763   Acc: 0.1813
+Epoch   64 | train_loss=0.1657 train_mIoU=0.7679 | val_loss=0.5603 val_mIoU=0.3726 val_mAcc=0.4165 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0416   Acc: 0.0421
+  [branch  ]  IoU: 0.8734   Acc: 0.9992
+  [wire    ]  IoU: 0.2189   Acc: 0.2204
+Epoch   65 | train_loss=0.1770 train_mIoU=0.7525 | val_loss=0.5930 val_mIoU=0.3780 val_mAcc=0.4206 val_allAcc=0.8748
+  [trunk   ]  IoU: 0.0537   Acc: 0.0548
+  [branch  ]  IoU: 0.8648   Acc: 0.9983
+  [wire    ]  IoU: 0.0647   Acc: 0.0648
+Epoch   66 | train_loss=0.1592 train_mIoU=0.7789 | val_loss=0.8185 val_mIoU=0.3277 val_mAcc=0.3726 val_allAcc=0.8658
+  [trunk   ]  IoU: 0.1032   Acc: 0.1098
+  [branch  ]  IoU: 0.8786   Acc: 0.9961
+  [wire    ]  IoU: 0.2509   Acc: 0.2523
+Epoch   67 | train_loss=0.1618 train_mIoU=0.7737 | val_loss=0.4766 val_mIoU=0.4109 val_mAcc=0.4527 val_allAcc=0.8796
+  [trunk   ]  IoU: 0.0499   Acc: 0.0514
+  [branch  ]  IoU: 0.8717   Acc: 0.9973
+  [wire    ]  IoU: 0.1551   Acc: 0.1635
+Epoch   68 | train_loss=0.1693 train_mIoU=0.7632 | val_loss=0.5503 val_mIoU=0.3589 val_mAcc=0.4041 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.0140   Acc: 0.0140
+  [branch  ]  IoU: 0.8694   Acc: 0.9994
+  [wire    ]  IoU: 0.1818   Acc: 0.1839
+Epoch   69 | train_loss=0.1672 train_mIoU=0.7679 | val_loss=0.7550 val_mIoU=0.3550 val_mAcc=0.3991 val_allAcc=0.8705
+  [trunk   ]  IoU: 0.0573   Acc: 0.0585
+  [branch  ]  IoU: 0.8661   Acc: 0.9993
+  [wire    ]  IoU: 0.0522   Acc: 0.0522
+Epoch   70 | train_loss=0.1548 train_mIoU=0.7841 | val_loss=0.8003 val_mIoU=0.3252 val_mAcc=0.3700 val_allAcc=0.8662
+  [trunk   ]  IoU: 0.0697   Acc: 0.0719
+  [branch  ]  IoU: 0.8817   Acc: 0.9980
+  [wire    ]  IoU: 0.3207   Acc: 0.3283
+Epoch   71 | train_loss=0.1525 train_mIoU=0.7870 | val_loss=0.3897 val_mIoU=0.4240 val_mAcc=0.4661 val_allAcc=0.8827
+  [trunk   ]  IoU: 0.1115   Acc: 0.1242
+  [branch  ]  IoU: 0.8732   Acc: 0.9944
+  [wire    ]  IoU: 0.1199   Acc: 0.1203
+Epoch   72 | train_loss=0.1638 train_mIoU=0.7743 | val_loss=0.6116 val_mIoU=0.3682 val_mAcc=0.4130 val_allAcc=0.8714
+  [trunk   ]  IoU: 0.0676   Acc: 0.0692
+  [branch  ]  IoU: 0.8667   Acc: 0.9988
+  [wire    ]  IoU: 0.0610   Acc: 0.0611
+Epoch   73 | train_loss=0.1589 train_mIoU=0.7781 | val_loss=0.5699 val_mIoU=0.3318 val_mAcc=0.3764 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.0621   Acc: 0.0635
+  [branch  ]  IoU: 0.8733   Acc: 0.9987
+  [wire    ]  IoU: 0.1862   Acc: 0.1879
+Epoch   74 | train_loss=0.1653 train_mIoU=0.7696 | val_loss=0.5504 val_mIoU=0.3739 val_mAcc=0.4167 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1079   Acc: 0.1189
+  [branch  ]  IoU: 0.8750   Acc: 0.9967
+  [wire    ]  IoU: 0.1101   Acc: 0.1102
+Epoch   75 | train_loss=0.1641 train_mIoU=0.7720 | val_loss=0.7392 val_mIoU=0.3643 val_mAcc=0.4086 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.0495   Acc: 0.0500
+  [branch  ]  IoU: 0.8672   Acc: 0.9994
+  [wire    ]  IoU: 0.0929   Acc: 0.0931
+Epoch   76 | train_loss=0.1488 train_mIoU=0.7899 | val_loss=0.8287 val_mIoU=0.3365 val_mAcc=0.3809 val_allAcc=0.8680
+  [trunk   ]  IoU: 0.1644   Acc: 0.2326
+  [branch  ]  IoU: 0.8745   Acc: 0.9773
+  [wire    ]  IoU: 0.1102   Acc: 0.1107
+Epoch   77 | train_loss=0.1506 train_mIoU=0.7916 | val_loss=0.5219 val_mIoU=0.3830 val_mAcc=0.4402 val_allAcc=0.8650
+  [trunk   ]  IoU: 0.0389   Acc: 0.0392
+  [branch  ]  IoU: 0.8662   Acc: 0.9994
+  [wire    ]  IoU: 0.0900   Acc: 0.0903
+Epoch   78 | train_loss=0.1522 train_mIoU=0.7853 | val_loss=0.8051 val_mIoU=0.3317 val_mAcc=0.3763 val_allAcc=0.8670
+  [trunk   ]  IoU: 0.0405   Acc: 0.0408
+  [branch  ]  IoU: 0.8682   Acc: 0.9997
+  [wire    ]  IoU: 0.1224   Acc: 0.1226
+Epoch   79 | train_loss=0.1579 train_mIoU=0.7814 | val_loss=0.7796 val_mIoU=0.3437 val_mAcc=0.3877 val_allAcc=0.8693
+  [trunk   ]  IoU: 0.1088   Acc: 0.1174
+  [branch  ]  IoU: 0.8727   Acc: 0.9977
+  [wire    ]  IoU: 0.0673   Acc: 0.0674
+Epoch   80 | train_loss=0.1631 train_mIoU=0.7735 | val_loss=0.6220 val_mIoU=0.3496 val_mAcc=0.3942 val_allAcc=0.8705
+  [trunk   ]  IoU: 0.0258   Acc: 0.0259
+  [branch  ]  IoU: 0.8668   Acc: 0.9997
+  [wire    ]  IoU: 0.1114   Acc: 0.1118
+Epoch   81 | train_loss=0.1439 train_mIoU=0.8004 | val_loss=0.7245 val_mIoU=0.3347 val_mAcc=0.3792 val_allAcc=0.8675
+  [trunk   ]  IoU: 0.1018   Acc: 0.1063
+  [branch  ]  IoU: 0.8876   Acc: 0.9902
+  [wire    ]  IoU: 0.4026   Acc: 0.4697
+Epoch   82 | train_loss=0.1542 train_mIoU=0.7835 | val_loss=0.4706 val_mIoU=0.4640 val_mAcc=0.5221 val_allAcc=0.8872
+  [trunk   ]  IoU: 0.0650   Acc: 0.0679
+  [branch  ]  IoU: 0.8767   Acc: 0.9984
+  [wire    ]  IoU: 0.2240   Acc: 0.2264
+Epoch   83 | train_loss=0.1592 train_mIoU=0.7782 | val_loss=0.5231 val_mIoU=0.3886 val_mAcc=0.4309 val_allAcc=0.8766
+  [trunk   ]  IoU: 0.0683   Acc: 0.0693
+  [branch  ]  IoU: 0.8714   Acc: 0.9991
+  [wire    ]  IoU: 0.1493   Acc: 0.1497
+Epoch   84 | train_loss=0.1466 train_mIoU=0.7950 | val_loss=0.7008 val_mIoU=0.3630 val_mAcc=0.4060 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0369   Acc: 0.0376
+  [branch  ]  IoU: 0.8728   Acc: 0.9988
+  [wire    ]  IoU: 0.2178   Acc: 0.2193
+Epoch   85 | train_loss=0.1460 train_mIoU=0.7970 | val_loss=0.6852 val_mIoU=0.3758 val_mAcc=0.4186 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1266   Acc: 0.1408
+  [branch  ]  IoU: 0.8712   Acc: 0.9926
+  [wire    ]  IoU: 0.1018   Acc: 0.1036
+Epoch   86 | train_loss=0.1505 train_mIoU=0.7886 | val_loss=0.6342 val_mIoU=0.3665 val_mAcc=0.4123 val_allAcc=0.8702
+  [trunk   ]  IoU: 0.0861   Acc: 0.0906
+  [branch  ]  IoU: 0.8772   Acc: 0.9972
+  [wire    ]  IoU: 0.2054   Acc: 0.2112
+Epoch   87 | train_loss=0.1670 train_mIoU=0.7676 | val_loss=0.5476 val_mIoU=0.3896 val_mAcc=0.4330 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.1306   Acc: 0.1394
+  [branch  ]  IoU: 0.8706   Acc: 0.9954
+  [wire    ]  IoU: 0.0846   Acc: 0.0847
+Epoch   88 | train_loss=0.1535 train_mIoU=0.7864 | val_loss=0.6611 val_mIoU=0.3619 val_mAcc=0.4065 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0140   Acc: 0.0141
+  [branch  ]  IoU: 0.8625   Acc: 1.0000
+  [wire    ]  IoU: 0.0426   Acc: 0.0427
+Epoch   89 | train_loss=0.1536 train_mIoU=0.7856 | val_loss=0.9541 val_mIoU=0.3064 val_mAcc=0.3523 val_allAcc=0.8626
+  [trunk   ]  IoU: 0.1231   Acc: 0.1405
+  [branch  ]  IoU: 0.8804   Acc: 0.9929
+  [wire    ]  IoU: 0.2214   Acc: 0.2251
+Epoch   90 | train_loss=0.1543 train_mIoU=0.7822 | val_loss=0.4668 val_mIoU=0.4083 val_mAcc=0.4528 val_allAcc=0.8777
+  [trunk   ]  IoU: 0.0429   Acc: 0.0443
+  [branch  ]  IoU: 0.8673   Acc: 0.9991
+  [wire    ]  IoU: 0.0826   Acc: 0.0829
+Epoch   91 | train_loss=0.1417 train_mIoU=0.8016 | val_loss=0.6460 val_mIoU=0.3309 val_mAcc=0.3754 val_allAcc=0.8667
+  [trunk   ]  IoU: 0.0697   Acc: 0.0734
+  [branch  ]  IoU: 0.8699   Acc: 0.9983
+  [wire    ]  IoU: 0.0873   Acc: 0.0877
+Epoch   92 | train_loss=0.1406 train_mIoU=0.8021 | val_loss=0.7019 val_mIoU=0.3423 val_mAcc=0.3865 val_allAcc=0.8687
+  [trunk   ]  IoU: 0.1011   Acc: 0.1076
+  [branch  ]  IoU: 0.8777   Acc: 0.9970
+  [wire    ]  IoU: 0.1985   Acc: 0.2016
+Epoch   93 | train_loss=0.1471 train_mIoU=0.7917 | val_loss=0.5402 val_mIoU=0.3924 val_mAcc=0.4354 val_allAcc=0.8771
+  [trunk   ]  IoU: 0.1093   Acc: 0.1213
+  [branch  ]  IoU: 0.8758   Acc: 0.9964
+  [wire    ]  IoU: 0.1200   Acc: 0.1201
+Epoch   94 | train_loss=0.1446 train_mIoU=0.7982 | val_loss=0.5580 val_mIoU=0.3684 val_mAcc=0.4126 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.0964   Acc: 0.0994
+  [branch  ]  IoU: 0.8808   Acc: 0.9980
+  [wire    ]  IoU: 0.2832   Acc: 0.2869
+Epoch   95 | train_loss=0.1397 train_mIoU=0.8056 | val_loss=0.5892 val_mIoU=0.4201 val_mAcc=0.4614 val_allAcc=0.8824
+  [trunk   ]  IoU: 0.1073   Acc: 0.1107
+  [branch  ]  IoU: 0.8756   Acc: 0.9974
+  [wire    ]  IoU: 0.1987   Acc: 0.2001
+Epoch   96 | train_loss=0.1424 train_mIoU=0.8008 | val_loss=0.5892 val_mIoU=0.3939 val_mAcc=0.4360 val_allAcc=0.8776
+  [trunk   ]  IoU: 0.1567   Acc: 0.1823
+  [branch  ]  IoU: 0.8759   Acc: 0.9879
+  [wire    ]  IoU: 0.2207   Acc: 0.2221
+Epoch   97 | train_loss=0.1355 train_mIoU=0.8122 | val_loss=0.5582 val_mIoU=0.4178 val_mAcc=0.4641 val_allAcc=0.8766
+  [trunk   ]  IoU: 0.1351   Acc: 0.1479
+  [branch  ]  IoU: 0.8746   Acc: 0.9935
+  [wire    ]  IoU: 0.1597   Acc: 0.1608
+Epoch   98 | train_loss=0.1406 train_mIoU=0.8005 | val_loss=0.5382 val_mIoU=0.3898 val_mAcc=0.4341 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.1030   Acc: 0.1085
+  [branch  ]  IoU: 0.8706   Acc: 0.9972
+  [wire    ]  IoU: 0.0885   Acc: 0.0887
+Epoch   99 | train_loss=0.1420 train_mIoU=0.8012 | val_loss=0.7488 val_mIoU=0.3540 val_mAcc=0.3981 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.0464   Acc: 0.0486
+  [branch  ]  IoU: 0.8770   Acc: 0.9982
+  [wire    ]  IoU: 0.2444   Acc: 0.2497
+Epoch  100 | train_loss=0.1434 train_mIoU=0.7980 | val_loss=0.6558 val_mIoU=0.3893 val_mAcc=0.4322 val_allAcc=0.8762
+  [trunk   ]  IoU: 0.0916   Acc: 0.0943
+  [branch  ]  IoU: 0.8776   Acc: 0.9978
+  [wire    ]  IoU: 0.2310   Acc: 0.2353
+Epoch  101 | train_loss=0.1422 train_mIoU=0.8012 | val_loss=0.6374 val_mIoU=0.4001 val_mAcc=0.4425 val_allAcc=0.8788
+  [trunk   ]  IoU: 0.0666   Acc: 0.0678
+  [branch  ]  IoU: 0.8709   Acc: 0.9988
+  [wire    ]  IoU: 0.1288   Acc: 0.1310
+Epoch  102 | train_loss=0.1562 train_mIoU=0.7827 | val_loss=0.6685 val_mIoU=0.3554 val_mAcc=0.3992 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0095   Acc: 0.0095
+  [branch  ]  IoU: 0.8616   Acc: 1.0000
+  [wire    ]  IoU: 0.0370   Acc: 0.0370
+Epoch  103 | train_loss=0.1481 train_mIoU=0.7902 | val_loss=1.0442 val_mIoU=0.3027 val_mAcc=0.3488 val_allAcc=0.8619
+  [trunk   ]  IoU: 0.0470   Acc: 0.0487
+  [branch  ]  IoU: 0.8743   Acc: 0.9982
+  [wire    ]  IoU: 0.2042   Acc: 0.2094
+Epoch  104 | train_loss=0.1386 train_mIoU=0.8055 | val_loss=0.6600 val_mIoU=0.3752 val_mAcc=0.4188 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.0378   Acc: 0.0385
+  [branch  ]  IoU: 0.8655   Acc: 0.9985
+  [wire    ]  IoU: 0.0948   Acc: 0.0949
+Epoch  105 | train_loss=0.1498 train_mIoU=0.7880 | val_loss=0.9809 val_mIoU=0.3327 val_mAcc=0.3773 val_allAcc=0.8664
+  [trunk   ]  IoU: 0.1032   Acc: 0.1083
+  [branch  ]  IoU: 0.8715   Acc: 0.9968
+  [wire    ]  IoU: 0.1227   Acc: 0.1232
+Epoch  106 | train_loss=0.1323 train_mIoU=0.8156 | val_loss=0.7107 val_mIoU=0.3658 val_mAcc=0.4094 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1040   Acc: 0.1104
+  [branch  ]  IoU: 0.8771   Acc: 0.9966
+  [wire    ]  IoU: 0.1974   Acc: 0.2006
+Epoch  107 | train_loss=0.1341 train_mIoU=0.8122 | val_loss=0.5711 val_mIoU=0.3928 val_mAcc=0.4359 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.0806   Acc: 0.0827
+  [branch  ]  IoU: 0.8735   Acc: 0.9987
+  [wire    ]  IoU: 0.1684   Acc: 0.1687
+Epoch  108 | train_loss=0.1475 train_mIoU=0.7948 | val_loss=0.6012 val_mIoU=0.3742 val_mAcc=0.4167 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.0300   Acc: 0.0304
+  [branch  ]  IoU: 0.8655   Acc: 0.9995
+  [wire    ]  IoU: 0.0848   Acc: 0.0849
+Epoch  109 | train_loss=0.1335 train_mIoU=0.8119 | val_loss=0.8179 val_mIoU=0.3268 val_mAcc=0.3716 val_allAcc=0.8660
+  [trunk   ]  IoU: 0.1268   Acc: 0.1337
+  [branch  ]  IoU: 0.8788   Acc: 0.9949
+  [wire    ]  IoU: 0.2465   Acc: 0.2532
+Epoch  110 | train_loss=0.1575 train_mIoU=0.7776 | val_loss=0.6676 val_mIoU=0.4174 val_mAcc=0.4606 val_allAcc=0.8805
+  [trunk   ]  IoU: 0.0496   Acc: 0.0509
+  [branch  ]  IoU: 0.8777   Acc: 0.9974
+  [wire    ]  IoU: 0.2927   Acc: 0.3018
+Epoch  111 | train_loss=0.1444 train_mIoU=0.7995 | val_loss=0.6405 val_mIoU=0.4067 val_mAcc=0.4500 val_allAcc=0.8789
+  [trunk   ]  IoU: 0.0760   Acc: 0.0791
+  [branch  ]  IoU: 0.8879   Acc: 0.9869
+  [wire    ]  IoU: 0.4151   Acc: 0.5231
+Epoch  112 | train_loss=0.1481 train_mIoU=0.7936 | val_loss=0.5103 val_mIoU=0.4597 val_mAcc=0.5297 val_allAcc=0.8854
+  [trunk   ]  IoU: 0.1517   Acc: 0.1736
+  [branch  ]  IoU: 0.8729   Acc: 0.9911
+  [wire    ]  IoU: 0.1079   Acc: 0.1081
+Epoch  113 | train_loss=0.1427 train_mIoU=0.8003 | val_loss=0.5442 val_mIoU=0.3775 val_mAcc=0.4243 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.1278   Acc: 0.1340
+  [branch  ]  IoU: 0.8817   Acc: 0.9963
+  [wire    ]  IoU: 0.2752   Acc: 0.2801
+Epoch  114 | train_loss=0.1342 train_mIoU=0.8118 | val_loss=0.5348 val_mIoU=0.4282 val_mAcc=0.4701 val_allAcc=0.8834
+  [trunk   ]  IoU: 0.0489   Acc: 0.0498
+  [branch  ]  IoU: 0.8696   Acc: 0.9982
+  [wire    ]  IoU: 0.1600   Acc: 0.1611
+Epoch  115 | train_loss=0.1302 train_mIoU=0.8170 | val_loss=0.7416 val_mIoU=0.3595 val_mAcc=0.4031 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.0837   Acc: 0.0886
+  [branch  ]  IoU: 0.8764   Acc: 0.9960
+  [wire    ]  IoU: 0.1953   Acc: 0.2049
+Epoch  116 | train_loss=0.1268 train_mIoU=0.8240 | val_loss=0.5856 val_mIoU=0.3851 val_mAcc=0.4299 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.0224   Acc: 0.0225
+  [branch  ]  IoU: 0.8608   Acc: 0.9999
+  [wire    ]  IoU: 0.0042   Acc: 0.0042
+Epoch  117 | train_loss=0.1320 train_mIoU=0.8157 | val_loss=1.2652 val_mIoU=0.2958 val_mAcc=0.3422 val_allAcc=0.8609
+  [trunk   ]  IoU: 0.1116   Acc: 0.1183
+  [branch  ]  IoU: 0.8690   Acc: 0.9977
+  [wire    ]  IoU: 0.0218   Acc: 0.0218
+Epoch  118 | train_loss=0.1292 train_mIoU=0.8182 | val_loss=0.7704 val_mIoU=0.3341 val_mAcc=0.3793 val_allAcc=0.8679
+  [trunk   ]  IoU: 0.0923   Acc: 0.0980
+  [branch  ]  IoU: 0.8823   Acc: 0.9898
+  [wire    ]  IoU: 0.3253   Acc: 0.3776
+Epoch  119 | train_loss=0.1430 train_mIoU=0.7989 | val_loss=0.5179 val_mIoU=0.4333 val_mAcc=0.4885 val_allAcc=0.8807
+  [trunk   ]  IoU: 0.0584   Acc: 0.0606
+  [branch  ]  IoU: 0.8775   Acc: 0.9685
+  [wire    ]  IoU: 0.3587   Acc: 0.5783
+Epoch  120 | train_loss=0.1629 train_mIoU=0.7721 | val_loss=0.5234 val_mIoU=0.4316 val_mAcc=0.5358 val_allAcc=0.8714
+  [trunk   ]  IoU: 0.1009   Acc: 0.1088
+  [branch  ]  IoU: 0.8765   Acc: 0.9942
+  [wire    ]  IoU: 0.2086   Acc: 0.2172
+Epoch  121 | train_loss=0.1401 train_mIoU=0.8052 | val_loss=0.5095 val_mIoU=0.3953 val_mAcc=0.4401 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.1018   Acc: 0.1078
+  [branch  ]  IoU: 0.8742   Acc: 0.9953
+  [wire    ]  IoU: 0.1830   Acc: 0.1872
+Epoch  122 | train_loss=0.1423 train_mIoU=0.7995 | val_loss=0.5442 val_mIoU=0.3863 val_mAcc=0.4301 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.1751   Acc: 0.2878
+  [branch  ]  IoU: 0.8719   Acc: 0.9656
+  [wire    ]  IoU: 0.0404   Acc: 0.0405
+Epoch  123 | train_loss=0.1333 train_mIoU=0.8099 | val_loss=0.7002 val_mIoU=0.3625 val_mAcc=0.4313 val_allAcc=0.8552
+  [trunk   ]  IoU: 0.1436   Acc: 0.1737
+  [branch  ]  IoU: 0.8815   Acc: 0.9934
+  [wire    ]  IoU: 0.1085   Acc: 0.1087
+Epoch  124 | train_loss=0.1415 train_mIoU=0.7993 | val_loss=0.5493 val_mIoU=0.3779 val_mAcc=0.4253 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1144   Acc: 0.1217
+  [branch  ]  IoU: 0.8775   Acc: 0.9970
+  [wire    ]  IoU: 0.1725   Acc: 0.1758
+Epoch  125 | train_loss=0.1246 train_mIoU=0.8243 | val_loss=0.6461 val_mIoU=0.3881 val_mAcc=0.4315 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.1222   Acc: 0.1480
+  [branch  ]  IoU: 0.8771   Acc: 0.9887
+  [wire    ]  IoU: 0.1845   Acc: 0.1879
+Epoch  126 | train_loss=0.1381 train_mIoU=0.8031 | val_loss=0.5827 val_mIoU=0.3946 val_mAcc=0.4415 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1448   Acc: 0.1859
+  [branch  ]  IoU: 0.8770   Acc: 0.9849
+  [wire    ]  IoU: 0.1485   Acc: 0.1513
+Epoch  127 | train_loss=0.1265 train_mIoU=0.8214 | val_loss=0.5693 val_mIoU=0.3901 val_mAcc=0.4407 val_allAcc=0.8701
+  [trunk   ]  IoU: 0.1068   Acc: 0.1122
+  [branch  ]  IoU: 0.8712   Acc: 0.9978
+  [wire    ]  IoU: 0.0768   Acc: 0.0772
+Epoch  128 | train_loss=0.1272 train_mIoU=0.8208 | val_loss=0.8465 val_mIoU=0.3516 val_mAcc=0.3957 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.1414   Acc: 0.1581
+  [branch  ]  IoU: 0.8724   Acc: 0.9919
+  [wire    ]  IoU: 0.1115   Acc: 0.1135
+Epoch  129 | train_loss=0.1300 train_mIoU=0.8180 | val_loss=0.6894 val_mIoU=0.3751 val_mAcc=0.4212 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0612   Acc: 0.0631
+  [branch  ]  IoU: 0.8750   Acc: 0.9979
+  [wire    ]  IoU: 0.2051   Acc: 0.2116
+Epoch  130 | train_loss=0.1485 train_mIoU=0.7915 | val_loss=0.6481 val_mIoU=0.3804 val_mAcc=0.4242 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.0862   Acc: 0.0918
+  [branch  ]  IoU: 0.8717   Acc: 0.9964
+  [wire    ]  IoU: 0.1374   Acc: 0.1380
+Epoch  131 | train_loss=0.1298 train_mIoU=0.8178 | val_loss=0.6531 val_mIoU=0.3651 val_mAcc=0.4087 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.1210   Acc: 0.1324
+  [branch  ]  IoU: 0.8717   Acc: 0.9946
+  [wire    ]  IoU: 0.0998   Acc: 0.1001
+Epoch  132 | train_loss=0.1311 train_mIoU=0.8152 | val_loss=0.7263 val_mIoU=0.3641 val_mAcc=0.4090 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.0822   Acc: 0.0851
+  [branch  ]  IoU: 0.8735   Acc: 0.9974
+  [wire    ]  IoU: 0.1889   Acc: 0.1897
+Epoch  133 | train_loss=0.1254 train_mIoU=0.8228 | val_loss=0.7284 val_mIoU=0.3815 val_mAcc=0.4241 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.0848   Acc: 0.0882
+  [branch  ]  IoU: 0.8716   Acc: 0.9973
+  [wire    ]  IoU: 0.1494   Acc: 0.1499
+Epoch  134 | train_loss=0.1266 train_mIoU=0.8214 | val_loss=0.7127 val_mIoU=0.3686 val_mAcc=0.4118 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.1816   Acc: 0.2282
+  [branch  ]  IoU: 0.8737   Acc: 0.9802
+  [wire    ]  IoU: 0.2102   Acc: 0.2142
+Epoch  135 | train_loss=0.1273 train_mIoU=0.8213 | val_loss=0.5596 val_mIoU=0.4218 val_mAcc=0.4742 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.0518   Acc: 0.0524
+  [branch  ]  IoU: 0.8766   Acc: 0.9982
+  [wire    ]  IoU: 0.2564   Acc: 0.2663
+Epoch  136 | train_loss=0.1267 train_mIoU=0.8210 | val_loss=0.7368 val_mIoU=0.3949 val_mAcc=0.4390 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.0478   Acc: 0.0486
+  [branch  ]  IoU: 0.8657   Acc: 0.9993
+  [wire    ]  IoU: 0.0632   Acc: 0.0633
+Epoch  137 | train_loss=0.1233 train_mIoU=0.8273 | val_loss=0.9102 val_mIoU=0.3256 val_mAcc=0.3704 val_allAcc=0.8661
+  [trunk   ]  IoU: 0.1407   Acc: 0.1627
+  [branch  ]  IoU: 0.8686   Acc: 0.9899
+  [wire    ]  IoU: 0.0603   Acc: 0.0605
+Epoch  138 | train_loss=0.1408 train_mIoU=0.8020 | val_loss=0.8399 val_mIoU=0.3565 val_mAcc=0.4044 val_allAcc=0.8671
+  [trunk   ]  IoU: 0.0720   Acc: 0.0732
+  [branch  ]  IoU: 0.8735   Acc: 0.9982
+  [wire    ]  IoU: 0.1995   Acc: 0.2016
+Epoch  139 | train_loss=0.1428 train_mIoU=0.7982 | val_loss=0.7211 val_mIoU=0.3816 val_mAcc=0.4243 val_allAcc=0.8754
+  [trunk   ]  IoU: 0.1030   Acc: 0.1094
+  [branch  ]  IoU: 0.8781   Acc: 0.9947
+  [wire    ]  IoU: 0.2559   Acc: 0.2640
+Epoch  140 | train_loss=0.1273 train_mIoU=0.8213 | val_loss=0.5810 val_mIoU=0.4123 val_mAcc=0.4560 val_allAcc=0.8790
+  [trunk   ]  IoU: 0.0706   Acc: 0.0730
+  [branch  ]  IoU: 0.8665   Acc: 0.9986
+  [wire    ]  IoU: 0.0402   Acc: 0.0403
+Epoch  141 | train_loss=0.1260 train_mIoU=0.8228 | val_loss=1.0214 val_mIoU=0.3258 val_mAcc=0.3707 val_allAcc=0.8661
+  [trunk   ]  IoU: 0.1033   Acc: 0.1091
+  [branch  ]  IoU: 0.8776   Acc: 0.9971
+  [wire    ]  IoU: 0.2092   Acc: 0.2112
+Epoch  142 | train_loss=0.1304 train_mIoU=0.8150 | val_loss=0.6074 val_mIoU=0.3967 val_mAcc=0.4391 val_allAcc=0.8779
+  [trunk   ]  IoU: 0.1516   Acc: 0.1687
+  [branch  ]  IoU: 0.8688   Acc: 0.9904
+  [wire    ]  IoU: 0.1034   Acc: 0.1035
+Epoch  143 | train_loss=0.1304 train_mIoU=0.8140 | val_loss=0.6733 val_mIoU=0.3746 val_mAcc=0.4209 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.1515   Acc: 0.1726
+  [branch  ]  IoU: 0.8688   Acc: 0.9912
+  [wire    ]  IoU: 0.0361   Acc: 0.0362
+Epoch  144 | train_loss=0.1350 train_mIoU=0.8113 | val_loss=0.6060 val_mIoU=0.3522 val_mAcc=0.4000 val_allAcc=0.8676
+  [trunk   ]  IoU: 0.1376   Acc: 0.1524
+  [branch  ]  IoU: 0.8823   Acc: 0.9949
+  [wire    ]  IoU: 0.2343   Acc: 0.2365
+Epoch  145 | train_loss=0.1269 train_mIoU=0.8215 | val_loss=0.5677 val_mIoU=0.4181 val_mAcc=0.4613 val_allAcc=0.8811
+  [trunk   ]  IoU: 0.1599   Acc: 0.1828
+  [branch  ]  IoU: 0.8795   Acc: 0.9921
+  [wire    ]  IoU: 0.1821   Acc: 0.1831
+Epoch  146 | train_loss=0.1319 train_mIoU=0.8156 | val_loss=0.5176 val_mIoU=0.4071 val_mAcc=0.4527 val_allAcc=0.8780
+  [trunk   ]  IoU: 0.0698   Acc: 0.0746
+  [branch  ]  IoU: 0.8717   Acc: 0.9977
+  [wire    ]  IoU: 0.1145   Acc: 0.1152
+Epoch  147 | train_loss=0.1421 train_mIoU=0.7998 | val_loss=0.7152 val_mIoU=0.3520 val_mAcc=0.3958 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.0445   Acc: 0.0449
+  [branch  ]  IoU: 0.8737   Acc: 0.9977
+  [wire    ]  IoU: 0.1950   Acc: 0.2093
+Epoch  148 | train_loss=0.1247 train_mIoU=0.8240 | val_loss=0.7072 val_mIoU=0.3711 val_mAcc=0.4173 val_allAcc=0.8731
+  [trunk   ]  IoU: 0.1247   Acc: 0.1325
+  [branch  ]  IoU: 0.8770   Acc: 0.9966
+  [wire    ]  IoU: 0.1742   Acc: 0.1757
+Epoch  149 | train_loss=0.1186 train_mIoU=0.8320 | val_loss=0.6473 val_mIoU=0.3920 val_mAcc=0.4349 val_allAcc=0.8772
+  [trunk   ]  IoU: 0.0659   Acc: 0.0670
+  [branch  ]  IoU: 0.8651   Acc: 0.9991
+  [wire    ]  IoU: 0.0331   Acc: 0.0331
+Epoch  150 | train_loss=0.1146 train_mIoU=0.8381 | val_loss=1.0657 val_mIoU=0.3213 val_mAcc=0.3664 val_allAcc=0.8655
+  [trunk   ]  IoU: 0.1302   Acc: 0.1599
+  [branch  ]  IoU: 0.8755   Acc: 0.9846
+  [wire    ]  IoU: 0.2105   Acc: 0.2198
+Epoch  151 | train_loss=0.1248 train_mIoU=0.8232 | val_loss=0.5585 val_mIoU=0.4054 val_mAcc=0.4548 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.0717   Acc: 0.0777
+  [branch  ]  IoU: 0.8695   Acc: 0.9943
+  [wire    ]  IoU: 0.1255   Acc: 0.1291
+Epoch  152 | train_loss=0.1382 train_mIoU=0.8021 | val_loss=0.7466 val_mIoU=0.3555 val_mAcc=0.4004 val_allAcc=0.8681
+  [trunk   ]  IoU: 0.1254   Acc: 0.1402
+  [branch  ]  IoU: 0.8697   Acc: 0.9939
+  [wire    ]  IoU: 0.0410   Acc: 0.0411
+Epoch  153 | train_loss=0.1266 train_mIoU=0.8213 | val_loss=0.6754 val_mIoU=0.3453 val_mAcc=0.3917 val_allAcc=0.8675
+  [trunk   ]  IoU: 0.1630   Acc: 0.2455
+  [branch  ]  IoU: 0.8679   Acc: 0.9701
+  [wire    ]  IoU: 0.0633   Acc: 0.0641
+Epoch  154 | train_loss=0.1259 train_mIoU=0.8223 | val_loss=0.5464 val_mIoU=0.3647 val_mAcc=0.4265 val_allAcc=0.8570
+  [trunk   ]  IoU: 0.0766   Acc: 0.0782
+  [branch  ]  IoU: 0.8703   Acc: 0.9985
+  [wire    ]  IoU: 0.1300   Acc: 0.1303
+Epoch  155 | train_loss=0.1202 train_mIoU=0.8302 | val_loss=0.8507 val_mIoU=0.3590 val_mAcc=0.4023 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.0926   Acc: 0.0977
+  [branch  ]  IoU: 0.8698   Acc: 0.9977
+  [wire    ]  IoU: 0.0690   Acc: 0.0692
+Epoch  156 | train_loss=0.1171 train_mIoU=0.8338 | val_loss=0.8169 val_mIoU=0.3438 val_mAcc=0.3882 val_allAcc=0.8690
+  [trunk   ]  IoU: 0.1163   Acc: 0.1237
+  [branch  ]  IoU: 0.8701   Acc: 0.9970
+  [wire    ]  IoU: 0.0543   Acc: 0.0544
+Epoch  157 | train_loss=0.1119 train_mIoU=0.8426 | val_loss=0.7748 val_mIoU=0.3469 val_mAcc=0.3917 val_allAcc=0.8696
+  [trunk   ]  IoU: 0.0690   Acc: 0.0721
+  [branch  ]  IoU: 0.8675   Acc: 0.9990
+  [wire    ]  IoU: 0.0353   Acc: 0.0354
+Epoch  158 | train_loss=0.1275 train_mIoU=0.8195 | val_loss=0.8869 val_mIoU=0.3239 val_mAcc=0.3688 val_allAcc=0.8660
+  [trunk   ]  IoU: 0.0291   Acc: 0.0293
+  [branch  ]  IoU: 0.8628   Acc: 0.9997
+  [wire    ]  IoU: 0.0346   Acc: 0.0346
+Epoch  159 | train_loss=0.1479 train_mIoU=0.7938 | val_loss=0.8116 val_mIoU=0.3088 val_mAcc=0.3546 val_allAcc=0.8631
+  [trunk   ]  IoU: 0.0945   Acc: 0.1014
+  [branch  ]  IoU: 0.8739   Acc: 0.9974
+  [wire    ]  IoU: 0.1225   Acc: 0.1231
+Epoch  160 | train_loss=0.1261 train_mIoU=0.8220 | val_loss=0.5957 val_mIoU=0.3636 val_mAcc=0.4073 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1326   Acc: 0.1541
+  [branch  ]  IoU: 0.8791   Acc: 0.9916
+  [wire    ]  IoU: 0.1927   Acc: 0.1960
+Epoch  161 | train_loss=0.1212 train_mIoU=0.8306 | val_loss=0.5143 val_mIoU=0.4015 val_mAcc=0.4472 val_allAcc=0.8759
+  [trunk   ]  IoU: 0.0638   Acc: 0.0653
+  [branch  ]  IoU: 0.8673   Acc: 0.9988
+  [wire    ]  IoU: 0.0733   Acc: 0.0735
+Epoch  162 | train_loss=0.1245 train_mIoU=0.8242 | val_loss=0.8620 val_mIoU=0.3348 val_mAcc=0.3792 val_allAcc=0.8676
+  [trunk   ]  IoU: 0.0655   Acc: 0.0675
+  [branch  ]  IoU: 0.8667   Acc: 0.9993
+  [wire    ]  IoU: 0.0375   Acc: 0.0375
+Epoch  163 | train_loss=0.1167 train_mIoU=0.8353 | val_loss=0.8591 val_mIoU=0.3232 val_mAcc=0.3681 val_allAcc=0.8660
+  [trunk   ]  IoU: 0.1499   Acc: 0.1726
+  [branch  ]  IoU: 0.8761   Acc: 0.9900
+  [wire    ]  IoU: 0.1732   Acc: 0.1765
+Epoch  164 | train_loss=0.1206 train_mIoU=0.8295 | val_loss=0.5514 val_mIoU=0.3997 val_mAcc=0.4464 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.0436   Acc: 0.0441
+  [branch  ]  IoU: 0.8860   Acc: 0.9950
+  [wire    ]  IoU: 0.3437   Acc: 0.4066
+Epoch  165 | train_loss=0.1301 train_mIoU=0.8158 | val_loss=0.5083 val_mIoU=0.4244 val_mAcc=0.4819 val_allAcc=0.8825
+  [trunk   ]  IoU: 0.1163   Acc: 0.1220
+  [branch  ]  IoU: 0.8719   Acc: 0.9970
+  [wire    ]  IoU: 0.1077   Acc: 0.1080
+Epoch  166 | train_loss=0.1238 train_mIoU=0.8248 | val_loss=0.7888 val_mIoU=0.3653 val_mAcc=0.4090 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0707   Acc: 0.0723
+  [branch  ]  IoU: 0.8680   Acc: 0.9992
+  [wire    ]  IoU: 0.0691   Acc: 0.0693
+Epoch  167 | train_loss=0.1202 train_mIoU=0.8297 | val_loss=0.7764 val_mIoU=0.3359 val_mAcc=0.3803 val_allAcc=0.8682
+  [trunk   ]  IoU: 0.1296   Acc: 0.1885
+  [branch  ]  IoU: 0.8828   Acc: 0.9780
+  [wire    ]  IoU: 0.1999   Acc: 0.2088
+Epoch  168 | train_loss=0.1268 train_mIoU=0.8221 | val_loss=0.5227 val_mIoU=0.4041 val_mAcc=0.4584 val_allAcc=0.8678
+  [trunk   ]  IoU: 0.1002   Acc: 0.1135
+  [branch  ]  IoU: 0.8734   Acc: 0.9922
+  [wire    ]  IoU: 0.1468   Acc: 0.1514
+Epoch  169 | train_loss=0.1257 train_mIoU=0.8228 | val_loss=0.5824 val_mIoU=0.3735 val_mAcc=0.4190 val_allAcc=0.8705
+  [trunk   ]  IoU: 0.0880   Acc: 0.0944
+  [branch  ]  IoU: 0.8724   Acc: 0.9978
+  [wire    ]  IoU: 0.0979   Acc: 0.0980
+Epoch  170 | train_loss=0.1195 train_mIoU=0.8316 | val_loss=0.7174 val_mIoU=0.3528 val_mAcc=0.3968 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.1246   Acc: 0.1332
+  [branch  ]  IoU: 0.8814   Acc: 0.9938
+  [wire    ]  IoU: 0.2733   Acc: 0.2878
+Epoch  171 | train_loss=0.1172 train_mIoU=0.8322 | val_loss=0.5661 val_mIoU=0.4264 val_mAcc=0.4716 val_allAcc=0.8816
+  [trunk   ]  IoU: 0.0854   Acc: 0.0890
+  [branch  ]  IoU: 0.8740   Acc: 0.9976
+  [wire    ]  IoU: 0.1753   Acc: 0.1766
+Epoch  172 | train_loss=0.1204 train_mIoU=0.8316 | val_loss=0.6296 val_mIoU=0.3782 val_mAcc=0.4211 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.0763   Acc: 0.0780
+  [branch  ]  IoU: 0.8644   Acc: 0.9989
+  [wire    ]  IoU: 0.0047   Acc: 0.0047
+Epoch  173 | train_loss=0.1206 train_mIoU=0.8279 | val_loss=1.0303 val_mIoU=0.3151 val_mAcc=0.3605 val_allAcc=0.8646
+  [trunk   ]  IoU: 0.1514   Acc: 0.1666
+  [branch  ]  IoU: 0.8773   Acc: 0.9915
+  [wire    ]  IoU: 0.2029   Acc: 0.2106
+Epoch  174 | train_loss=0.1259 train_mIoU=0.8207 | val_loss=0.5917 val_mIoU=0.4105 val_mAcc=0.4563 val_allAcc=0.8777
+  [trunk   ]  IoU: 0.0687   Acc: 0.0705
+  [branch  ]  IoU: 0.8681   Acc: 0.9985
+  [wire    ]  IoU: 0.0927   Acc: 0.0927
+Epoch  175 | train_loss=0.1289 train_mIoU=0.8166 | val_loss=0.7399 val_mIoU=0.3432 val_mAcc=0.3872 val_allAcc=0.8689
+  [trunk   ]  IoU: 0.0896   Acc: 0.0941
+  [branch  ]  IoU: 0.8727   Acc: 0.9971
+  [wire    ]  IoU: 0.1527   Acc: 0.1534
+Epoch  176 | train_loss=0.1235 train_mIoU=0.8239 | val_loss=0.7773 val_mIoU=0.3717 val_mAcc=0.4149 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0532   Acc: 0.0542
+  [branch  ]  IoU: 0.8663   Acc: 0.9991
+  [wire    ]  IoU: 0.0692   Acc: 0.0695
+Epoch  177 | train_loss=0.1297 train_mIoU=0.8168 | val_loss=0.7518 val_mIoU=0.3296 val_mAcc=0.3742 val_allAcc=0.8667
+  [trunk   ]  IoU: 0.0465   Acc: 0.0470
+  [branch  ]  IoU: 0.8666   Acc: 0.9996
+  [wire    ]  IoU: 0.0794   Acc: 0.0797
+Epoch  178 | train_loss=0.1184 train_mIoU=0.8323 | val_loss=0.8917 val_mIoU=0.3308 val_mAcc=0.3754 val_allAcc=0.8671
+  [trunk   ]  IoU: 0.0983   Acc: 0.1046
+  [branch  ]  IoU: 0.8793   Acc: 0.9952
+  [wire    ]  IoU: 0.2511   Acc: 0.2621
+Epoch  179 | train_loss=0.1149 train_mIoU=0.8384 | val_loss=0.6113 val_mIoU=0.4096 val_mAcc=0.4540 val_allAcc=0.8790
+  [trunk   ]  IoU: 0.1430   Acc: 0.1599
+  [branch  ]  IoU: 0.8809   Acc: 0.9890
+  [wire    ]  IoU: 0.3292   Acc: 0.3409
+Epoch  180 | train_loss=0.1163 train_mIoU=0.8351 | val_loss=0.5613 val_mIoU=0.4510 val_mAcc=0.4966 val_allAcc=0.8829
+  [trunk   ]  IoU: 0.0550   Acc: 0.0593
+  [branch  ]  IoU: 0.8675   Acc: 0.9976
+  [wire    ]  IoU: 0.0508   Acc: 0.0508
+Epoch  181 | train_loss=0.1183 train_mIoU=0.8322 | val_loss=0.8556 val_mIoU=0.3244 val_mAcc=0.3692 val_allAcc=0.8647
+  [trunk   ]  IoU: 0.0498   Acc: 0.0520
+  [branch  ]  IoU: 0.8731   Acc: 0.9986
+  [wire    ]  IoU: 0.1716   Acc: 0.1730
+Epoch  182 | train_loss=0.1069 train_mIoU=0.8475 | val_loss=0.6818 val_mIoU=0.3648 val_mAcc=0.4079 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.0808   Acc: 0.0835
+  [branch  ]  IoU: 0.8676   Acc: 0.9981
+  [wire    ]  IoU: 0.0648   Acc: 0.0650
+Epoch  183 | train_loss=0.1160 train_mIoU=0.8340 | val_loss=0.8616 val_mIoU=0.3377 val_mAcc=0.3822 val_allAcc=0.8679
+  [trunk   ]  IoU: 0.1491   Acc: 0.1638
+  [branch  ]  IoU: 0.8884   Acc: 0.9889
+  [wire    ]  IoU: 0.4211   Acc: 0.4550
+Epoch  184 | train_loss=0.1148 train_mIoU=0.8369 | val_loss=0.3892 val_mIoU=0.4862 val_mAcc=0.5359 val_allAcc=0.8899
+  ↑ New best mIoU: 0.4862
+  [trunk   ]  IoU: 0.0162   Acc: 0.0162
+  [branch  ]  IoU: 0.8642   Acc: 0.9997
+  [wire    ]  IoU: 0.0829   Acc: 0.0831
+Epoch  185 | train_loss=0.1245 train_mIoU=0.8205 | val_loss=0.9583 val_mIoU=0.3211 val_mAcc=0.3663 val_allAcc=0.8650
+  [trunk   ]  IoU: 0.0573   Acc: 0.0586
+  [branch  ]  IoU: 0.8708   Acc: 0.9982
+  [wire    ]  IoU: 0.1674   Acc: 0.1678
+Epoch  186 | train_loss=0.1187 train_mIoU=0.8314 | val_loss=0.8626 val_mIoU=0.3652 val_mAcc=0.4082 val_allAcc=0.8722
+  [trunk   ]  IoU: 0.0937   Acc: 0.0965
+  [branch  ]  IoU: 0.8706   Acc: 0.9982
+  [wire    ]  IoU: 0.1057   Acc: 0.1059
+Epoch  187 | train_loss=0.1194 train_mIoU=0.8327 | val_loss=0.8655 val_mIoU=0.3566 val_mAcc=0.4002 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.1389   Acc: 0.1711
+  [branch  ]  IoU: 0.8757   Acc: 0.9874
+  [wire    ]  IoU: 0.1284   Acc: 0.1320
+Epoch  188 | train_loss=0.1259 train_mIoU=0.8207 | val_loss=0.5763 val_mIoU=0.3810 val_mAcc=0.4302 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.0864   Acc: 0.0913
+  [branch  ]  IoU: 0.8804   Acc: 0.9963
+  [wire    ]  IoU: 0.2367   Acc: 0.2527
+Epoch  189 | train_loss=0.1250 train_mIoU=0.8233 | val_loss=0.5951 val_mIoU=0.4012 val_mAcc=0.4468 val_allAcc=0.8783
+  [trunk   ]  IoU: 0.0960   Acc: 0.0991
+  [branch  ]  IoU: 0.8746   Acc: 0.9978
+  [wire    ]  IoU: 0.1873   Acc: 0.1878
+Epoch  190 | train_loss=0.1124 train_mIoU=0.8400 | val_loss=0.8055 val_mIoU=0.3860 val_mAcc=0.4282 val_allAcc=0.8763
+  [trunk   ]  IoU: 0.0772   Acc: 0.0829
+  [branch  ]  IoU: 0.8814   Acc: 0.9943
+  [wire    ]  IoU: 0.2671   Acc: 0.2926
+Epoch  191 | train_loss=0.1106 train_mIoU=0.8432 | val_loss=0.6789 val_mIoU=0.4086 val_mAcc=0.4566 val_allAcc=0.8782
+  [trunk   ]  IoU: 0.0770   Acc: 0.0807
+  [branch  ]  IoU: 0.8718   Acc: 0.9967
+  [wire    ]  IoU: 0.1565   Acc: 0.1590
+Epoch  192 | train_loss=0.1210 train_mIoU=0.8265 | val_loss=0.6618 val_mIoU=0.3685 val_mAcc=0.4121 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.0803   Acc: 0.0825
+  [branch  ]  IoU: 0.8703   Acc: 0.9988
+  [wire    ]  IoU: 0.1061   Acc: 0.1062
+Epoch  193 | train_loss=0.1169 train_mIoU=0.8344 | val_loss=0.7097 val_mIoU=0.3522 val_mAcc=0.3958 val_allAcc=0.8709
+  [trunk   ]  IoU: 0.0520   Acc: 0.0532
+  [branch  ]  IoU: 0.8699   Acc: 0.9987
+  [wire    ]  IoU: 0.1429   Acc: 0.1435
+Epoch  194 | train_loss=0.1161 train_mIoU=0.8365 | val_loss=0.8122 val_mIoU=0.3549 val_mAcc=0.3985 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.0856   Acc: 0.0890
+  [branch  ]  IoU: 0.8719   Acc: 0.9989
+  [wire    ]  IoU: 0.1074   Acc: 0.1075
+Epoch  195 | train_loss=0.1130 train_mIoU=0.8412 | val_loss=0.7990 val_mIoU=0.3549 val_mAcc=0.3985 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0878   Acc: 0.0934
+  [branch  ]  IoU: 0.8770   Acc: 0.9957
+  [wire    ]  IoU: 0.2018   Acc: 0.2123
+Epoch  196 | train_loss=0.1245 train_mIoU=0.8227 | val_loss=0.5676 val_mIoU=0.3889 val_mAcc=0.4338 val_allAcc=0.8755
+  [trunk   ]  IoU: 0.0722   Acc: 0.0760
+  [branch  ]  IoU: 0.8736   Acc: 0.9986
+  [wire    ]  IoU: 0.1320   Acc: 0.1337
+Epoch  197 | train_loss=0.1171 train_mIoU=0.8329 | val_loss=0.6327 val_mIoU=0.3592 val_mAcc=0.4028 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.1472   Acc: 0.1664
+  [branch  ]  IoU: 0.8772   Acc: 0.9931
+  [wire    ]  IoU: 0.1552   Acc: 0.1556
+Epoch  198 | train_loss=0.1189 train_mIoU=0.8286 | val_loss=0.5810 val_mIoU=0.3932 val_mAcc=0.4384 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.1705   Acc: 0.2328
+  [branch  ]  IoU: 0.8782   Acc: 0.9768
+  [wire    ]  IoU: 0.2200   Acc: 0.2284
+Epoch  199 | train_loss=0.1126 train_mIoU=0.8388 | val_loss=0.5097 val_mIoU=0.4229 val_mAcc=0.4793 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0729   Acc: 0.0811
+  [branch  ]  IoU: 0.8711   Acc: 0.9938
+  [wire    ]  IoU: 0.1417   Acc: 0.1443
+Epoch  200 | train_loss=0.1115 train_mIoU=0.8403 | val_loss=0.7360 val_mIoU=0.3619 val_mAcc=0.4064 val_allAcc=0.8688
+  [trunk   ]  IoU: 0.0218   Acc: 0.0218
+  [branch  ]  IoU: 0.8661   Acc: 0.9997
+  [wire    ]  IoU: 0.1102   Acc: 0.1105
+Epoch  201 | train_loss=0.1228 train_mIoU=0.8250 | val_loss=0.7772 val_mIoU=0.3327 val_mAcc=0.3773 val_allAcc=0.8670
+  [trunk   ]  IoU: 0.0250   Acc: 0.0253
+  [branch  ]  IoU: 0.8629   Acc: 0.9996
+  [wire    ]  IoU: 0.0382   Acc: 0.0382
+Epoch  202 | train_loss=0.1152 train_mIoU=0.8370 | val_loss=0.9244 val_mIoU=0.3087 val_mAcc=0.3543 val_allAcc=0.8629
+  [trunk   ]  IoU: 0.0412   Acc: 0.0419
+  [branch  ]  IoU: 0.8745   Acc: 0.9983
+  [wire    ]  IoU: 0.2221   Acc: 0.2314
+Epoch  203 | train_loss=0.1109 train_mIoU=0.8415 | val_loss=0.7321 val_mIoU=0.3793 val_mAcc=0.4239 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.0818   Acc: 0.0842
+  [branch  ]  IoU: 0.8772   Acc: 0.9980
+  [wire    ]  IoU: 0.2341   Acc: 0.2381
+Epoch  204 | train_loss=0.1129 train_mIoU=0.8397 | val_loss=0.6816 val_mIoU=0.3977 val_mAcc=0.4401 val_allAcc=0.8783
+  [trunk   ]  IoU: 0.0710   Acc: 0.0771
+  [branch  ]  IoU: 0.8778   Acc: 0.9953
+  [wire    ]  IoU: 0.2431   Acc: 0.2515
+Epoch  205 | train_loss=0.1095 train_mIoU=0.8450 | val_loss=0.6776 val_mIoU=0.3973 val_mAcc=0.4413 val_allAcc=0.8761
+  [trunk   ]  IoU: 0.0850   Acc: 0.0933
+  [branch  ]  IoU: 0.8850   Acc: 0.9902
+  [wire    ]  IoU: 0.2936   Acc: 0.3481
+Epoch  206 | train_loss=0.1123 train_mIoU=0.8395 | val_loss=0.5911 val_mIoU=0.4212 val_mAcc=0.4772 val_allAcc=0.8789
+  [trunk   ]  IoU: 0.0150   Acc: 0.0151
+  [branch  ]  IoU: 0.8731   Acc: 0.9974
+  [wire    ]  IoU: 0.2504   Acc: 0.2652
+Epoch  207 | train_loss=0.1180 train_mIoU=0.8316 | val_loss=0.6323 val_mIoU=0.3795 val_mAcc=0.4259 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0863   Acc: 0.0914
+  [branch  ]  IoU: 0.8714   Acc: 0.9980
+  [wire    ]  IoU: 0.0943   Acc: 0.0944
+Epoch  208 | train_loss=0.1298 train_mIoU=0.8121 | val_loss=0.7913 val_mIoU=0.3507 val_mAcc=0.3946 val_allAcc=0.8703
+  [trunk   ]  IoU: 0.0147   Acc: 0.0148
+  [branch  ]  IoU: 0.8630   Acc: 0.9999
+  [wire    ]  IoU: 0.0544   Acc: 0.0544
+Epoch  209 | train_loss=0.1215 train_mIoU=0.8280 | val_loss=1.2361 val_mIoU=0.3107 val_mAcc=0.3564 val_allAcc=0.8633
+  [trunk   ]  IoU: 0.0221   Acc: 0.0222
+  [branch  ]  IoU: 0.8644   Acc: 0.9998
+  [wire    ]  IoU: 0.0709   Acc: 0.0710
+Epoch  210 | train_loss=0.1102 train_mIoU=0.8450 | val_loss=0.9835 val_mIoU=0.3191 val_mAcc=0.3644 val_allAcc=0.8648
+  [trunk   ]  IoU: 0.1103   Acc: 0.1153
+  [branch  ]  IoU: 0.8722   Acc: 0.9976
+  [wire    ]  IoU: 0.1071   Acc: 0.1074
+Epoch  211 | train_loss=0.1151 train_mIoU=0.8364 | val_loss=0.6847 val_mIoU=0.3632 val_mAcc=0.4068 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0646   Acc: 0.0696
+  [branch  ]  IoU: 0.8663   Acc: 0.9959
+  [wire    ]  IoU: 0.0684   Acc: 0.0687
+Epoch  212 | train_loss=0.1104 train_mIoU=0.8432 | val_loss=0.7606 val_mIoU=0.3331 val_mAcc=0.3780 val_allAcc=0.8651
+  [trunk   ]  IoU: 0.0831   Acc: 0.0915
+  [branch  ]  IoU: 0.8735   Acc: 0.9948
+  [wire    ]  IoU: 0.1587   Acc: 0.1615
+Epoch  213 | train_loss=0.1149 train_mIoU=0.8369 | val_loss=0.7433 val_mIoU=0.3718 val_mAcc=0.4159 val_allAcc=0.8715
+  [trunk   ]  IoU: 0.0649   Acc: 0.0672
+  [branch  ]  IoU: 0.8725   Acc: 0.9988
+  [wire    ]  IoU: 0.1527   Acc: 0.1534
+Epoch  214 | train_loss=0.1121 train_mIoU=0.8403 | val_loss=0.7966 val_mIoU=0.3634 val_mAcc=0.4065 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0580   Acc: 0.0607
+  [branch  ]  IoU: 0.8705   Acc: 0.9978
+  [wire    ]  IoU: 0.1364   Acc: 0.1374
+Epoch  215 | train_loss=0.1116 train_mIoU=0.8398 | val_loss=0.8619 val_mIoU=0.3550 val_mAcc=0.3986 val_allAcc=0.8702
+  [trunk   ]  IoU: 0.0556   Acc: 0.0580
+  [branch  ]  IoU: 0.8716   Acc: 0.9975
+  [wire    ]  IoU: 0.1543   Acc: 0.1581
+Epoch  216 | train_loss=0.1259 train_mIoU=0.8200 | val_loss=0.6572 val_mIoU=0.3605 val_mAcc=0.4046 val_allAcc=0.8709
+  [trunk   ]  IoU: 0.0753   Acc: 0.0821
+  [branch  ]  IoU: 0.8737   Acc: 0.9979
+  [wire    ]  IoU: 0.1125   Acc: 0.1127
+Epoch  217 | train_loss=0.1151 train_mIoU=0.8354 | val_loss=0.7212 val_mIoU=0.3538 val_mAcc=0.3975 val_allAcc=0.8705
+  [trunk   ]  IoU: 0.0827   Acc: 0.0866
+  [branch  ]  IoU: 0.8728   Acc: 0.9970
+  [wire    ]  IoU: 0.1728   Acc: 0.1733
+Epoch  218 | train_loss=0.1092 train_mIoU=0.8437 | val_loss=0.6892 val_mIoU=0.3761 val_mAcc=0.4190 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1059   Acc: 0.1149
+  [branch  ]  IoU: 0.8734   Acc: 0.9962
+  [wire    ]  IoU: 0.1161   Acc: 0.1168
+Epoch  219 | train_loss=0.1090 train_mIoU=0.8425 | val_loss=0.7431 val_mIoU=0.3652 val_mAcc=0.4093 val_allAcc=0.8720
+  [trunk   ]  IoU: 0.1199   Acc: 0.1297
+  [branch  ]  IoU: 0.8775   Acc: 0.9956
+  [wire    ]  IoU: 0.1874   Acc: 0.1895
+Epoch  220 | train_loss=0.1096 train_mIoU=0.8429 | val_loss=0.6990 val_mIoU=0.3949 val_mAcc=0.4383 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.0812   Acc: 0.0848
+  [branch  ]  IoU: 0.8737   Acc: 0.9983
+  [wire    ]  IoU: 0.1537   Acc: 0.1545
+Epoch  221 | train_loss=0.1092 train_mIoU=0.8456 | val_loss=0.7269 val_mIoU=0.3695 val_mAcc=0.4125 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.0785   Acc: 0.0827
+  [branch  ]  IoU: 0.8706   Acc: 0.9969
+  [wire    ]  IoU: 0.1266   Acc: 0.1274
+Epoch  222 | train_loss=0.1184 train_mIoU=0.8314 | val_loss=0.7239 val_mIoU=0.3585 val_mAcc=0.4023 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.1346   Acc: 0.1494
+  [branch  ]  IoU: 0.8717   Acc: 0.9924
+  [wire    ]  IoU: 0.1233   Acc: 0.1237
+Epoch  223 | train_loss=0.1127 train_mIoU=0.8378 | val_loss=0.6196 val_mIoU=0.3765 val_mAcc=0.4218 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0667   Acc: 0.0683
+  [branch  ]  IoU: 0.8763   Acc: 0.9891
+  [wire    ]  IoU: 0.3167   Acc: 0.3708
+Epoch  224 | train_loss=0.1166 train_mIoU=0.8327 | val_loss=0.6728 val_mIoU=0.4199 val_mAcc=0.4761 val_allAcc=0.8773
+  [trunk   ]  IoU: 0.0200   Acc: 0.0201
+  [branch  ]  IoU: 0.8672   Acc: 0.9993
+  [wire    ]  IoU: 0.1367   Acc: 0.1378
+Epoch  225 | train_loss=0.1164 train_mIoU=0.8354 | val_loss=0.7916 val_mIoU=0.3413 val_mAcc=0.3857 val_allAcc=0.8682
+  [trunk   ]  IoU: 0.0345   Acc: 0.0350
+  [branch  ]  IoU: 0.8702   Acc: 0.9996
+  [wire    ]  IoU: 0.1572   Acc: 0.1578
+Epoch  226 | train_loss=0.1224 train_mIoU=0.8264 | val_loss=0.6839 val_mIoU=0.3540 val_mAcc=0.3975 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.0403   Acc: 0.0405
+  [branch  ]  IoU: 0.8717   Acc: 0.9993
+  [wire    ]  IoU: 0.1932   Acc: 0.1951
+Epoch  227 | train_loss=0.1096 train_mIoU=0.8432 | val_loss=0.9526 val_mIoU=0.3684 val_mAcc=0.4116 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0519   Acc: 0.0527
+  [branch  ]  IoU: 0.8693   Acc: 0.9986
+  [wire    ]  IoU: 0.1459   Acc: 0.1466
+Epoch  228 | train_loss=0.1019 train_mIoU=0.8542 | val_loss=1.0858 val_mIoU=0.3557 val_mAcc=0.3993 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.0621   Acc: 0.0633
+  [branch  ]  IoU: 0.8735   Acc: 0.9993
+  [wire    ]  IoU: 0.1844   Acc: 0.1853
+Epoch  229 | train_loss=0.1091 train_mIoU=0.8447 | val_loss=0.7808 val_mIoU=0.3733 val_mAcc=0.4160 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.0490   Acc: 0.0501
+  [branch  ]  IoU: 0.8699   Acc: 0.9990
+  [wire    ]  IoU: 0.1278   Acc: 0.1296
+Epoch  230 | train_loss=0.1099 train_mIoU=0.8423 | val_loss=0.8838 val_mIoU=0.3489 val_mAcc=0.3929 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.0818   Acc: 0.0861
+  [branch  ]  IoU: 0.8680   Acc: 0.9966
+  [wire    ]  IoU: 0.0907   Acc: 0.0909
+Epoch  231 | train_loss=0.1095 train_mIoU=0.8431 | val_loss=0.7199 val_mIoU=0.3468 val_mAcc=0.3912 val_allAcc=0.8684
+  [trunk   ]  IoU: 0.0595   Acc: 0.0604
+  [branch  ]  IoU: 0.8706   Acc: 0.9993
+  [wire    ]  IoU: 0.1427   Acc: 0.1430
+Epoch  232 | train_loss=0.1199 train_mIoU=0.8298 | val_loss=0.7412 val_mIoU=0.3576 val_mAcc=0.4009 val_allAcc=0.8717
+  [trunk   ]  IoU: 0.0840   Acc: 0.0885
+  [branch  ]  IoU: 0.8812   Acc: 0.9944
+  [wire    ]  IoU: 0.3407   Acc: 0.3560
+Epoch  233 | train_loss=0.1043 train_mIoU=0.8517 | val_loss=0.5665 val_mIoU=0.4353 val_mAcc=0.4796 val_allAcc=0.8826
+  [trunk   ]  IoU: 0.0835   Acc: 0.0900
+  [branch  ]  IoU: 0.8738   Acc: 0.9966
+  [wire    ]  IoU: 0.1511   Acc: 0.1525
+Epoch  234 | train_loss=0.1022 train_mIoU=0.8551 | val_loss=0.7736 val_mIoU=0.3695 val_mAcc=0.4130 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0672   Acc: 0.0703
+  [branch  ]  IoU: 0.8736   Acc: 0.9981
+  [wire    ]  IoU: 0.1563   Acc: 0.1599
+Epoch  235 | train_loss=0.1097 train_mIoU=0.8440 | val_loss=0.6694 val_mIoU=0.3657 val_mAcc=0.4094 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0333   Acc: 0.0337
+  [branch  ]  IoU: 0.8678   Acc: 0.9990
+  [wire    ]  IoU: 0.1100   Acc: 0.1127
+Epoch  236 | train_loss=0.1164 train_mIoU=0.8339 | val_loss=0.8679 val_mIoU=0.3370 val_mAcc=0.3818 val_allAcc=0.8676
+  [trunk   ]  IoU: 0.0481   Acc: 0.0498
+  [branch  ]  IoU: 0.8689   Acc: 0.9983
+  [wire    ]  IoU: 0.1204   Acc: 0.1215
+Epoch  237 | train_loss=0.1235 train_mIoU=0.8260 | val_loss=0.7237 val_mIoU=0.3458 val_mAcc=0.3899 val_allAcc=0.8688
+  [trunk   ]  IoU: 0.0326   Acc: 0.0333
+  [branch  ]  IoU: 0.8642   Acc: 0.9986
+  [wire    ]  IoU: 0.0701   Acc: 0.0702
+Epoch  238 | train_loss=0.1074 train_mIoU=0.8475 | val_loss=1.1611 val_mIoU=0.3223 val_mAcc=0.3674 val_allAcc=0.8646
+  [trunk   ]  IoU: 0.0758   Acc: 0.0794
+  [branch  ]  IoU: 0.8811   Acc: 0.9926
+  [wire    ]  IoU: 0.3562   Acc: 0.3880
+Epoch  239 | train_loss=0.1046 train_mIoU=0.8507 | val_loss=0.5551 val_mIoU=0.4377 val_mAcc=0.4867 val_allAcc=0.8822
+  [trunk   ]  IoU: 0.0443   Acc: 0.0457
+  [branch  ]  IoU: 0.8688   Acc: 0.9994
+  [wire    ]  IoU: 0.1009   Acc: 0.1012
+Epoch  240 | train_loss=0.1239 train_mIoU=0.8234 | val_loss=0.8493 val_mIoU=0.3380 val_mAcc=0.3821 val_allAcc=0.8681
+  [trunk   ]  IoU: 0.0629   Acc: 0.0651
+  [branch  ]  IoU: 0.8691   Acc: 0.9983
+  [wire    ]  IoU: 0.1026   Acc: 0.1033
+Epoch  241 | train_loss=0.1215 train_mIoU=0.8245 | val_loss=0.8229 val_mIoU=0.3449 val_mAcc=0.3889 val_allAcc=0.8690
+  [trunk   ]  IoU: 0.0417   Acc: 0.0423
+  [branch  ]  IoU: 0.8761   Acc: 0.9980
+  [wire    ]  IoU: 0.2618   Acc: 0.2719
+Epoch  242 | train_loss=0.1132 train_mIoU=0.8387 | val_loss=0.6490 val_mIoU=0.3932 val_mAcc=0.4374 val_allAcc=0.8769
+  [trunk   ]  IoU: 0.0631   Acc: 0.0647
+  [branch  ]  IoU: 0.8776   Acc: 0.9978
+  [wire    ]  IoU: 0.2723   Acc: 0.2785
+Epoch  243 | train_loss=0.1095 train_mIoU=0.8444 | val_loss=0.6642 val_mIoU=0.4043 val_mAcc=0.4470 val_allAcc=0.8789
+  [trunk   ]  IoU: 0.0624   Acc: 0.0652
+  [branch  ]  IoU: 0.8722   Acc: 0.9981
+  [wire    ]  IoU: 0.1530   Acc: 0.1546
+Epoch  244 | train_loss=0.1033 train_mIoU=0.8518 | val_loss=0.8218 val_mIoU=0.3625 val_mAcc=0.4060 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.0346   Acc: 0.0349
+  [branch  ]  IoU: 0.8652   Acc: 0.9995
+  [wire    ]  IoU: 0.0800   Acc: 0.0800
+Epoch  245 | train_loss=0.1033 train_mIoU=0.8527 | val_loss=1.1775 val_mIoU=0.3266 val_mAcc=0.3714 val_allAcc=0.8661
+  [trunk   ]  IoU: 0.1345   Acc: 0.1421
+  [branch  ]  IoU: 0.8709   Acc: 0.9957
+  [wire    ]  IoU: 0.0922   Acc: 0.0923
+Epoch  246 | train_loss=0.0990 train_mIoU=0.8578 | val_loss=0.9100 val_mIoU=0.3659 val_mAcc=0.4100 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.0736   Acc: 0.0756
+  [branch  ]  IoU: 0.8671   Acc: 0.9986
+  [wire    ]  IoU: 0.0548   Acc: 0.0550
+Epoch  247 | train_loss=0.1005 train_mIoU=0.8567 | val_loss=1.0268 val_mIoU=0.3318 val_mAcc=0.3764 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.1144   Acc: 0.1184
+  [branch  ]  IoU: 0.8775   Acc: 0.9961
+  [wire    ]  IoU: 0.2121   Acc: 0.2214
+Epoch  248 | train_loss=0.1297 train_mIoU=0.8110 | val_loss=0.5710 val_mIoU=0.4013 val_mAcc=0.4453 val_allAcc=0.8785
+  [trunk   ]  IoU: 0.0237   Acc: 0.0238
+  [branch  ]  IoU: 0.8711   Acc: 0.9991
+  [wire    ]  IoU: 0.2024   Acc: 0.2058
+Epoch  249 | train_loss=0.1062 train_mIoU=0.8479 | val_loss=0.8171 val_mIoU=0.3658 val_mAcc=0.4096 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0724   Acc: 0.0777
+  [branch  ]  IoU: 0.8760   Acc: 0.9968
+  [wire    ]  IoU: 0.1977   Acc: 0.2012
+Epoch  250 | train_loss=0.1124 train_mIoU=0.8385 | val_loss=0.7393 val_mIoU=0.3820 val_mAcc=0.4253 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.0549   Acc: 0.0561
+  [branch  ]  IoU: 0.8714   Acc: 0.9989
+  [wire    ]  IoU: 0.1607   Acc: 0.1617
+Epoch  251 | train_loss=0.1072 train_mIoU=0.8474 | val_loss=0.8517 val_mIoU=0.3623 val_mAcc=0.4056 val_allAcc=0.8722
+  [trunk   ]  IoU: 0.1069   Acc: 0.1147
+  [branch  ]  IoU: 0.8694   Acc: 0.9918
+  [wire    ]  IoU: 0.1143   Acc: 0.1232
+Epoch  252 | train_loss=0.1114 train_mIoU=0.8420 | val_loss=0.6205 val_mIoU=0.3636 val_mAcc=0.4099 val_allAcc=0.8685
+  [trunk   ]  IoU: 0.0767   Acc: 0.0787
+  [branch  ]  IoU: 0.8732   Acc: 0.9984
+  [wire    ]  IoU: 0.1729   Acc: 0.1739
+Epoch  253 | train_loss=0.1088 train_mIoU=0.8429 | val_loss=0.7340 val_mIoU=0.3743 val_mAcc=0.4170 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0902   Acc: 0.0947
+  [branch  ]  IoU: 0.8720   Acc: 0.9971
+  [wire    ]  IoU: 0.1356   Acc: 0.1365
+Epoch  254 | train_loss=0.1131 train_mIoU=0.8381 | val_loss=0.7837 val_mIoU=0.3659 val_mAcc=0.4094 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.0875   Acc: 0.0898
+  [branch  ]  IoU: 0.8716   Acc: 0.9981
+  [wire    ]  IoU: 0.1392   Acc: 0.1399
+Epoch  255 | train_loss=0.1078 train_mIoU=0.8455 | val_loss=0.7534 val_mIoU=0.3661 val_mAcc=0.4092 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.1498   Acc: 0.1659
+  [branch  ]  IoU: 0.8725   Acc: 0.9930
+  [wire    ]  IoU: 0.1032   Acc: 0.1033
+Epoch  256 | train_loss=0.1050 train_mIoU=0.8484 | val_loss=0.8314 val_mIoU=0.3752 val_mAcc=0.4207 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0625   Acc: 0.0642
+  [branch  ]  IoU: 0.8711   Acc: 0.9985
+  [wire    ]  IoU: 0.1463   Acc: 0.1475
+Epoch  257 | train_loss=0.1063 train_mIoU=0.8477 | val_loss=0.8701 val_mIoU=0.3600 val_mAcc=0.4034 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.1133   Acc: 0.1196
+  [branch  ]  IoU: 0.8704   Acc: 0.9964
+  [wire    ]  IoU: 0.0924   Acc: 0.0926
+Epoch  258 | train_loss=0.1048 train_mIoU=0.8508 | val_loss=0.8983 val_mIoU=0.3587 val_mAcc=0.4028 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.0569   Acc: 0.0584
+  [branch  ]  IoU: 0.8754   Acc: 0.9981
+  [wire    ]  IoU: 0.2354   Acc: 0.2394
+Epoch  259 | train_loss=0.1272 train_mIoU=0.8181 | val_loss=0.7725 val_mIoU=0.3892 val_mAcc=0.4320 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.1047   Acc: 0.1134
+  [branch  ]  IoU: 0.8718   Acc: 0.9957
+  [wire    ]  IoU: 0.1129   Acc: 0.1131
+Epoch  260 | train_loss=0.1076 train_mIoU=0.8480 | val_loss=0.7093 val_mIoU=0.3631 val_mAcc=0.4074 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0683   Acc: 0.0706
+  [branch  ]  IoU: 0.8757   Acc: 0.9968
+  [wire    ]  IoU: 0.2288   Acc: 0.2380
+Epoch  261 | train_loss=0.1091 train_mIoU=0.8451 | val_loss=0.5305 val_mIoU=0.3909 val_mAcc=0.4351 val_allAcc=0.8761
+  [trunk   ]  IoU: 0.0726   Acc: 0.0753
+  [branch  ]  IoU: 0.8775   Acc: 0.9967
+  [wire    ]  IoU: 0.2416   Acc: 0.2537
+Epoch  262 | train_loss=0.1050 train_mIoU=0.8482 | val_loss=0.7692 val_mIoU=0.3972 val_mAcc=0.4419 val_allAcc=0.8773
+  [trunk   ]  IoU: 0.1023   Acc: 0.1087
+  [branch  ]  IoU: 0.8762   Acc: 0.9958
+  [wire    ]  IoU: 0.2068   Acc: 0.2101
+Epoch  263 | train_loss=0.1085 train_mIoU=0.8460 | val_loss=0.5850 val_mIoU=0.3951 val_mAcc=0.4382 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.0134   Acc: 0.0135
+  [branch  ]  IoU: 0.8633   Acc: 0.9998
+  [wire    ]  IoU: 0.0639   Acc: 0.0640
+Epoch  264 | train_loss=0.1084 train_mIoU=0.8456 | val_loss=1.1385 val_mIoU=0.3135 val_mAcc=0.3591 val_allAcc=0.8637
+  [trunk   ]  IoU: 0.0781   Acc: 0.0802
+  [branch  ]  IoU: 0.8707   Acc: 0.9982
+  [wire    ]  IoU: 0.1327   Acc: 0.1330
+Epoch  265 | train_loss=0.1069 train_mIoU=0.8456 | val_loss=0.7866 val_mIoU=0.3605 val_mAcc=0.4038 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0561   Acc: 0.0576
+  [branch  ]  IoU: 0.8847   Acc: 0.9860
+  [wire    ]  IoU: 0.3976   Acc: 0.5135
+Epoch  266 | train_loss=0.1169 train_mIoU=0.8304 | val_loss=0.4474 val_mIoU=0.4462 val_mAcc=0.5190 val_allAcc=0.8822
+  [trunk   ]  IoU: 0.0588   Acc: 0.0623
+  [branch  ]  IoU: 0.8789   Acc: 0.9956
+  [wire    ]  IoU: 0.2910   Acc: 0.3042
+Epoch  267 | train_loss=0.1358 train_mIoU=0.8063 | val_loss=0.7440 val_mIoU=0.4096 val_mAcc=0.4540 val_allAcc=0.8784
+  [trunk   ]  IoU: 0.0373   Acc: 0.0386
+  [branch  ]  IoU: 0.8684   Acc: 0.9991
+  [wire    ]  IoU: 0.1065   Acc: 0.1071
+Epoch  268 | train_loss=0.1096 train_mIoU=0.8455 | val_loss=0.9059 val_mIoU=0.3374 val_mAcc=0.3816 val_allAcc=0.8677
+  [trunk   ]  IoU: 0.1614   Acc: 0.1794
+  [branch  ]  IoU: 0.8766   Acc: 0.9940
+  [wire    ]  IoU: 0.1237   Acc: 0.1239
+Epoch  269 | train_loss=0.0997 train_mIoU=0.8577 | val_loss=0.5845 val_mIoU=0.3872 val_mAcc=0.4324 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.1709   Acc: 0.2057
+  [branch  ]  IoU: 0.8833   Acc: 0.9857
+  [wire    ]  IoU: 0.2902   Acc: 0.3017
+Epoch  270 | train_loss=0.0958 train_mIoU=0.8624 | val_loss=0.4371 val_mIoU=0.4481 val_mAcc=0.4977 val_allAcc=0.8814
+  [trunk   ]  IoU: 0.1235   Acc: 0.1343
+  [branch  ]  IoU: 0.8803   Acc: 0.9945
+  [wire    ]  IoU: 0.2499   Acc: 0.2542
+Epoch  271 | train_loss=0.0954 train_mIoU=0.8637 | val_loss=0.5814 val_mIoU=0.4179 val_mAcc=0.4610 val_allAcc=0.8803
+  [trunk   ]  IoU: 0.0780   Acc: 0.0792
+  [branch  ]  IoU: 0.8725   Acc: 0.9990
+  [wire    ]  IoU: 0.1561   Acc: 0.1567
+Epoch  272 | train_loss=0.1008 train_mIoU=0.8543 | val_loss=0.8307 val_mIoU=0.3688 val_mAcc=0.4116 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1045   Acc: 0.1102
+  [branch  ]  IoU: 0.8730   Acc: 0.9966
+  [wire    ]  IoU: 0.1327   Acc: 0.1347
+Epoch  273 | train_loss=0.1060 train_mIoU=0.8466 | val_loss=0.6772 val_mIoU=0.3701 val_mAcc=0.4138 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.1442   Acc: 0.1675
+  [branch  ]  IoU: 0.8737   Acc: 0.9892
+  [wire    ]  IoU: 0.1454   Acc: 0.1481
+Epoch  274 | train_loss=0.1030 train_mIoU=0.8525 | val_loss=0.5609 val_mIoU=0.3878 val_mAcc=0.4349 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.1667   Acc: 0.2208
+  [branch  ]  IoU: 0.8660   Acc: 0.9735
+  [wire    ]  IoU: 0.1706   Acc: 0.1771
+Epoch  275 | train_loss=0.1088 train_mIoU=0.8449 | val_loss=0.5772 val_mIoU=0.4011 val_mAcc=0.4572 val_allAcc=0.8647
+  [trunk   ]  IoU: 0.0390   Acc: 0.0399
+  [branch  ]  IoU: 0.8696   Acc: 0.9988
+  [wire    ]  IoU: 0.1380   Acc: 0.1406
+Epoch  276 | train_loss=0.1344 train_mIoU=0.8087 | val_loss=0.7843 val_mIoU=0.3489 val_mAcc=0.3931 val_allAcc=0.8695
+  [trunk   ]  IoU: 0.1452   Acc: 0.1590
+  [branch  ]  IoU: 0.8827   Acc: 0.9933
+  [wire    ]  IoU: 0.2768   Acc: 0.2840
+Epoch  277 | train_loss=0.1070 train_mIoU=0.8471 | val_loss=0.4529 val_mIoU=0.4349 val_mAcc=0.4788 val_allAcc=0.8831
+  [trunk   ]  IoU: 0.0694   Acc: 0.0733
+  [branch  ]  IoU: 0.8695   Acc: 0.9980
+  [wire    ]  IoU: 0.0854   Acc: 0.0856
+Epoch  278 | train_loss=0.1058 train_mIoU=0.8494 | val_loss=0.8578 val_mIoU=0.3414 val_mAcc=0.3857 val_allAcc=0.8683
+  [trunk   ]  IoU: 0.1188   Acc: 0.1442
+  [branch  ]  IoU: 0.8771   Acc: 0.9921
+  [wire    ]  IoU: 0.0955   Acc: 0.0960
+Epoch  279 | train_loss=0.1012 train_mIoU=0.8561 | val_loss=0.6888 val_mIoU=0.3638 val_mAcc=0.4108 val_allAcc=0.8696
+  [trunk   ]  IoU: 0.0834   Acc: 0.0861
+  [branch  ]  IoU: 0.8729   Acc: 0.9984
+  [wire    ]  IoU: 0.1519   Acc: 0.1525
+Epoch  280 | train_loss=0.1000 train_mIoU=0.8560 | val_loss=0.8344 val_mIoU=0.3694 val_mAcc=0.4123 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0954   Acc: 0.1094
+  [branch  ]  IoU: 0.8777   Acc: 0.9944
+  [wire    ]  IoU: 0.1774   Acc: 0.1784
+Epoch  281 | train_loss=0.0964 train_mIoU=0.8604 | val_loss=0.7159 val_mIoU=0.3835 val_mAcc=0.4274 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.0934   Acc: 0.1102
+  [branch  ]  IoU: 0.8738   Acc: 0.9936
+  [wire    ]  IoU: 0.0798   Acc: 0.0803
+Epoch  282 | train_loss=0.0987 train_mIoU=0.8582 | val_loss=0.7042 val_mIoU=0.3490 val_mAcc=0.3947 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.0825   Acc: 0.0867
+  [branch  ]  IoU: 0.8679   Acc: 0.9979
+  [wire    ]  IoU: 0.0514   Acc: 0.0515
+Epoch  283 | train_loss=0.1050 train_mIoU=0.8497 | val_loss=0.8326 val_mIoU=0.3339 val_mAcc=0.3787 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.1415   Acc: 0.1575
+  [branch  ]  IoU: 0.8843   Acc: 0.9878
+  [wire    ]  IoU: 0.3418   Acc: 0.3784
+Epoch  284 | train_loss=0.1043 train_mIoU=0.8501 | val_loss=0.4959 val_mIoU=0.4559 val_mAcc=0.5079 val_allAcc=0.8839
+  [trunk   ]  IoU: 0.0603   Acc: 0.0621
+  [branch  ]  IoU: 0.8797   Acc: 0.9957
+  [wire    ]  IoU: 0.2996   Acc: 0.3234
+Epoch  285 | train_loss=0.1074 train_mIoU=0.8437 | val_loss=0.5359 val_mIoU=0.4132 val_mAcc=0.4604 val_allAcc=0.8796
+  [trunk   ]  IoU: 0.0899   Acc: 0.0927
+  [branch  ]  IoU: 0.8698   Acc: 0.9972
+  [wire    ]  IoU: 0.1212   Acc: 0.1219
+Epoch  286 | train_loss=0.1072 train_mIoU=0.8458 | val_loss=0.9003 val_mIoU=0.3603 val_mAcc=0.4039 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0618   Acc: 0.0643
+  [branch  ]  IoU: 0.8665   Acc: 0.9984
+  [wire    ]  IoU: 0.0520   Acc: 0.0521
+Epoch  287 | train_loss=0.0998 train_mIoU=0.8572 | val_loss=1.0007 val_mIoU=0.3268 val_mAcc=0.3716 val_allAcc=0.8659
+  [trunk   ]  IoU: 0.0863   Acc: 0.0930
+  [branch  ]  IoU: 0.8678   Acc: 0.9955
+  [wire    ]  IoU: 0.0744   Acc: 0.0746
+Epoch  288 | train_loss=0.1011 train_mIoU=0.8556 | val_loss=0.8199 val_mIoU=0.3428 val_mAcc=0.3877 val_allAcc=0.8671
+  [trunk   ]  IoU: 0.0954   Acc: 0.1007
+  [branch  ]  IoU: 0.8718   Acc: 0.9972
+  [wire    ]  IoU: 0.1176   Acc: 0.1179
+Epoch  289 | train_loss=0.1030 train_mIoU=0.8522 | val_loss=0.7134 val_mIoU=0.3616 val_mAcc=0.4053 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.0465   Acc: 0.0472
+  [branch  ]  IoU: 0.8654   Acc: 0.9989
+  [wire    ]  IoU: 0.0744   Acc: 0.0745
+Epoch  290 | train_loss=0.1015 train_mIoU=0.8524 | val_loss=0.9109 val_mIoU=0.3288 val_mAcc=0.3735 val_allAcc=0.8663
+  [trunk   ]  IoU: 0.0446   Acc: 0.0460
+  [branch  ]  IoU: 0.8667   Acc: 0.9987
+  [wire    ]  IoU: 0.0798   Acc: 0.0799
+Epoch  291 | train_loss=0.1054 train_mIoU=0.8485 | val_loss=0.9579 val_mIoU=0.3304 val_mAcc=0.3749 val_allAcc=0.8664
+  [trunk   ]  IoU: 0.1634   Acc: 0.1914
+  [branch  ]  IoU: 0.8755   Acc: 0.9889
+  [wire    ]  IoU: 0.1553   Acc: 0.1563
+Epoch  292 | train_loss=0.0985 train_mIoU=0.8578 | val_loss=0.7099 val_mIoU=0.3980 val_mAcc=0.4456 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0660   Acc: 0.0679
+  [branch  ]  IoU: 0.8680   Acc: 0.9987
+  [wire    ]  IoU: 0.0806   Acc: 0.0808
+Epoch  293 | train_loss=0.0998 train_mIoU=0.8563 | val_loss=0.8299 val_mIoU=0.3382 val_mAcc=0.3825 val_allAcc=0.8682
+  [trunk   ]  IoU: 0.0938   Acc: 0.0979
+  [branch  ]  IoU: 0.8705   Acc: 0.9978
+  [wire    ]  IoU: 0.0945   Acc: 0.0947
+Epoch  294 | train_loss=0.0998 train_mIoU=0.8555 | val_loss=0.9111 val_mIoU=0.3529 val_mAcc=0.3968 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.0966   Acc: 0.1043
+  [branch  ]  IoU: 0.8730   Acc: 0.9939
+  [wire    ]  IoU: 0.1906   Acc: 0.1936
+Epoch  295 | train_loss=0.1150 train_mIoU=0.8364 | val_loss=0.5903 val_mIoU=0.3868 val_mAcc=0.4306 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1002   Acc: 0.1096
+  [branch  ]  IoU: 0.8670   Acc: 0.9946
+  [wire    ]  IoU: 0.0439   Acc: 0.0440
+Epoch  296 | train_loss=0.1026 train_mIoU=0.8528 | val_loss=0.7194 val_mIoU=0.3370 val_mAcc=0.3827 val_allAcc=0.8659
+  [trunk   ]  IoU: 0.0587   Acc: 0.0601
+  [branch  ]  IoU: 0.8672   Acc: 0.9992
+  [wire    ]  IoU: 0.0679   Acc: 0.0679
+Epoch  297 | train_loss=0.0998 train_mIoU=0.8551 | val_loss=0.7928 val_mIoU=0.3313 val_mAcc=0.3758 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.0924   Acc: 0.0965
+  [branch  ]  IoU: 0.8776   Acc: 0.9972
+  [wire    ]  IoU: 0.2145   Acc: 0.2208
+Epoch  298 | train_loss=0.1023 train_mIoU=0.8520 | val_loss=0.5529 val_mIoU=0.3948 val_mAcc=0.4382 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.0756   Acc: 0.0794
+  [branch  ]  IoU: 0.8653   Acc: 0.9976
+  [wire    ]  IoU: 0.0211   Acc: 0.0211
+Epoch  299 | train_loss=0.1036 train_mIoU=0.8509 | val_loss=0.9484 val_mIoU=0.3207 val_mAcc=0.3660 val_allAcc=0.8646
+  [trunk   ]  IoU: 0.0753   Acc: 0.0806
+  [branch  ]  IoU: 0.8709   Acc: 0.9975
+  [wire    ]  IoU: 0.0963   Acc: 0.0969
+Epoch  300 | train_loss=0.0996 train_mIoU=0.8563 | val_loss=0.7135 val_mIoU=0.3475 val_mAcc=0.3917 val_allAcc=0.8691
+  [trunk   ]  IoU: 0.0572   Acc: 0.0586
+  [branch  ]  IoU: 0.8660   Acc: 0.9993
+  [wire    ]  IoU: 0.0467   Acc: 0.0468
+Epoch  301 | train_loss=0.1002 train_mIoU=0.8562 | val_loss=0.7640 val_mIoU=0.3233 val_mAcc=0.3682 val_allAcc=0.8659
+  [trunk   ]  IoU: 0.0495   Acc: 0.0510
+  [branch  ]  IoU: 0.8655   Acc: 0.9992
+  [wire    ]  IoU: 0.0400   Acc: 0.0400
+Epoch  302 | train_loss=0.1034 train_mIoU=0.8511 | val_loss=1.0606 val_mIoU=0.3184 val_mAcc=0.3634 val_allAcc=0.8648
+  [trunk   ]  IoU: 0.0755   Acc: 0.0783
+  [branch  ]  IoU: 0.8699   Acc: 0.9978
+  [wire    ]  IoU: 0.1221   Acc: 0.1223
+Epoch  303 | train_loss=0.1011 train_mIoU=0.8563 | val_loss=0.8629 val_mIoU=0.3558 val_mAcc=0.3994 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.0785   Acc: 0.0814
+  [branch  ]  IoU: 0.8757   Acc: 0.9973
+  [wire    ]  IoU: 0.2183   Acc: 0.2225
+Epoch  304 | train_loss=0.0984 train_mIoU=0.8582 | val_loss=0.6775 val_mIoU=0.3908 val_mAcc=0.4337 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.0762   Acc: 0.0780
+  [branch  ]  IoU: 0.8680   Acc: 0.9987
+  [wire    ]  IoU: 0.0759   Acc: 0.0760
+Epoch  305 | train_loss=0.0977 train_mIoU=0.8588 | val_loss=0.7695 val_mIoU=0.3400 val_mAcc=0.3842 val_allAcc=0.8687
+  [trunk   ]  IoU: 0.0239   Acc: 0.0242
+  [branch  ]  IoU: 0.8653   Acc: 0.9994
+  [wire    ]  IoU: 0.0863   Acc: 0.0865
+Epoch  306 | train_loss=0.0985 train_mIoU=0.8573 | val_loss=1.0800 val_mIoU=0.3252 val_mAcc=0.3700 val_allAcc=0.8655
+  [trunk   ]  IoU: 0.0770   Acc: 0.0807
+  [branch  ]  IoU: 0.8685   Acc: 0.9983
+  [wire    ]  IoU: 0.0630   Acc: 0.0630
+Epoch  307 | train_loss=0.1057 train_mIoU=0.8487 | val_loss=0.7673 val_mIoU=0.3362 val_mAcc=0.3807 val_allAcc=0.8678
+  [trunk   ]  IoU: 0.1146   Acc: 0.1244
+  [branch  ]  IoU: 0.8751   Acc: 0.9958
+  [wire    ]  IoU: 0.1462   Acc: 0.1472
+Epoch  308 | train_loss=0.1001 train_mIoU=0.8570 | val_loss=0.6333 val_mIoU=0.3787 val_mAcc=0.4225 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0568   Acc: 0.0587
+  [branch  ]  IoU: 0.8735   Acc: 0.9988
+  [wire    ]  IoU: 0.1819   Acc: 0.1833
+Epoch  309 | train_loss=0.1015 train_mIoU=0.8529 | val_loss=0.8081 val_mIoU=0.3707 val_mAcc=0.4136 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1248   Acc: 0.1393
+  [branch  ]  IoU: 0.8826   Acc: 0.9928
+  [wire    ]  IoU: 0.2726   Acc: 0.2832
+Epoch  310 | train_loss=0.0921 train_mIoU=0.8660 | val_loss=0.5081 val_mIoU=0.4267 val_mAcc=0.4718 val_allAcc=0.8810
+  [trunk   ]  IoU: 0.1791   Acc: 0.2450
+  [branch  ]  IoU: 0.8766   Acc: 0.9762
+  [wire    ]  IoU: 0.1737   Acc: 0.1827
+Epoch  311 | train_loss=0.1310 train_mIoU=0.8163 | val_loss=0.5152 val_mIoU=0.4098 val_mAcc=0.4680 val_allAcc=0.8693
+  [trunk   ]  IoU: 0.1009   Acc: 0.1100
+  [branch  ]  IoU: 0.8788   Acc: 0.9882
+  [wire    ]  IoU: 0.2664   Acc: 0.3088
+Epoch  312 | train_loss=0.1105 train_mIoU=0.8431 | val_loss=0.5585 val_mIoU=0.4154 val_mAcc=0.4690 val_allAcc=0.8762
+  [trunk   ]  IoU: 0.0615   Acc: 0.0632
+  [branch  ]  IoU: 0.8684   Acc: 0.9986
+  [wire    ]  IoU: 0.1007   Acc: 0.1009
+Epoch  313 | train_loss=0.1054 train_mIoU=0.8489 | val_loss=0.7944 val_mIoU=0.3435 val_mAcc=0.3876 val_allAcc=0.8689
+  [trunk   ]  IoU: 0.0577   Acc: 0.0588
+  [branch  ]  IoU: 0.8683   Acc: 0.9979
+  [wire    ]  IoU: 0.1277   Acc: 0.1289
+Epoch  314 | train_loss=0.0932 train_mIoU=0.8656 | val_loss=0.7908 val_mIoU=0.3512 val_mAcc=0.3952 val_allAcc=0.8696
+  [trunk   ]  IoU: 0.1531   Acc: 0.1653
+  [branch  ]  IoU: 0.8737   Acc: 0.9953
+  [wire    ]  IoU: 0.0937   Acc: 0.0940
+Epoch  315 | train_loss=0.0909 train_mIoU=0.8679 | val_loss=0.7189 val_mIoU=0.3735 val_mAcc=0.4182 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.0462   Acc: 0.0472
+  [branch  ]  IoU: 0.8714   Acc: 0.9983
+  [wire    ]  IoU: 0.1883   Acc: 0.1903
+Epoch  316 | train_loss=0.0914 train_mIoU=0.8684 | val_loss=0.7215 val_mIoU=0.3686 val_mAcc=0.4119 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0536   Acc: 0.0545
+  [branch  ]  IoU: 0.8671   Acc: 0.9985
+  [wire    ]  IoU: 0.1037   Acc: 0.1043
+Epoch  317 | train_loss=0.0949 train_mIoU=0.8619 | val_loss=0.7658 val_mIoU=0.3415 val_mAcc=0.3857 val_allAcc=0.8683
+  [trunk   ]  IoU: 0.0540   Acc: 0.0567
+  [branch  ]  IoU: 0.8730   Acc: 0.9963
+  [wire    ]  IoU: 0.1973   Acc: 0.2040
+Epoch  318 | train_loss=0.0955 train_mIoU=0.8627 | val_loss=0.7648 val_mIoU=0.3748 val_mAcc=0.4190 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0548   Acc: 0.0561
+  [branch  ]  IoU: 0.8652   Acc: 0.9990
+  [wire    ]  IoU: 0.0416   Acc: 0.0417
+Epoch  319 | train_loss=0.0991 train_mIoU=0.8561 | val_loss=0.9251 val_mIoU=0.3205 val_mAcc=0.3656 val_allAcc=0.8651
+  [trunk   ]  IoU: 0.0775   Acc: 0.0800
+  [branch  ]  IoU: 0.8760   Acc: 0.9983
+  [wire    ]  IoU: 0.2105   Acc: 0.2132
+Epoch  320 | train_loss=0.1039 train_mIoU=0.8480 | val_loss=0.7420 val_mIoU=0.3880 val_mAcc=0.4305 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.0563   Acc: 0.0580
+  [branch  ]  IoU: 0.8696   Acc: 0.9983
+  [wire    ]  IoU: 0.1369   Acc: 0.1373
+Epoch  321 | train_loss=0.0916 train_mIoU=0.8676 | val_loss=0.7923 val_mIoU=0.3543 val_mAcc=0.3978 val_allAcc=0.8703
+  [trunk   ]  IoU: 0.0920   Acc: 0.0944
+  [branch  ]  IoU: 0.8766   Acc: 0.9980
+  [wire    ]  IoU: 0.2276   Acc: 0.2286
+Epoch  322 | train_loss=0.1018 train_mIoU=0.8535 | val_loss=0.7034 val_mIoU=0.3987 val_mAcc=0.4403 val_allAcc=0.8785
+  [trunk   ]  IoU: 0.0952   Acc: 0.0987
+  [branch  ]  IoU: 0.8672   Acc: 0.9973
+  [wire    ]  IoU: 0.0574   Acc: 0.0576
+Epoch  323 | train_loss=0.0925 train_mIoU=0.8658 | val_loss=0.8714 val_mIoU=0.3399 val_mAcc=0.3845 val_allAcc=0.8680
+  [trunk   ]  IoU: 0.0873   Acc: 0.0900
+  [branch  ]  IoU: 0.8779   Acc: 0.9978
+  [wire    ]  IoU: 0.2495   Acc: 0.2524
+Epoch  324 | train_loss=0.0974 train_mIoU=0.8596 | val_loss=0.7551 val_mIoU=0.4049 val_mAcc=0.4468 val_allAcc=0.8794
+  [trunk   ]  IoU: 0.1020   Acc: 0.1054
+  [branch  ]  IoU: 0.8772   Acc: 0.9969
+  [wire    ]  IoU: 0.2215   Acc: 0.2276
+Epoch  325 | train_loss=0.0937 train_mIoU=0.8643 | val_loss=0.6521 val_mIoU=0.4002 val_mAcc=0.4433 val_allAcc=0.8784
+  [trunk   ]  IoU: 0.1186   Acc: 0.1271
+  [branch  ]  IoU: 0.8853   Acc: 0.9944
+  [wire    ]  IoU: 0.3479   Acc: 0.3617
+Epoch  326 | train_loss=0.0917 train_mIoU=0.8676 | val_loss=0.5457 val_mIoU=0.4506 val_mAcc=0.4944 val_allAcc=0.8860
+  [trunk   ]  IoU: 0.0512   Acc: 0.0520
+  [branch  ]  IoU: 0.8704   Acc: 0.9992
+  [wire    ]  IoU: 0.1384   Acc: 0.1401
+Epoch  327 | train_loss=0.0896 train_mIoU=0.8678 | val_loss=0.8157 val_mIoU=0.3533 val_mAcc=0.3971 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.0651   Acc: 0.0671
+  [branch  ]  IoU: 0.8754   Acc: 0.9983
+  [wire    ]  IoU: 0.2161   Acc: 0.2191
+Epoch  328 | train_loss=0.0927 train_mIoU=0.8655 | val_loss=0.8636 val_mIoU=0.3855 val_mAcc=0.4282 val_allAcc=0.8760
+  [trunk   ]  IoU: 0.1492   Acc: 0.1660
+  [branch  ]  IoU: 0.8734   Acc: 0.9918
+  [wire    ]  IoU: 0.1433   Acc: 0.1446
+Epoch  329 | train_loss=0.0966 train_mIoU=0.8609 | val_loss=0.6855 val_mIoU=0.3887 val_mAcc=0.4341 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.1123   Acc: 0.1238
+  [branch  ]  IoU: 0.8783   Acc: 0.9940
+  [wire    ]  IoU: 0.2145   Acc: 0.2202
+Epoch  330 | train_loss=0.1164 train_mIoU=0.8344 | val_loss=0.7052 val_mIoU=0.4017 val_mAcc=0.4460 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.1091   Acc: 0.1336
+  [branch  ]  IoU: 0.8749   Acc: 0.9855
+  [wire    ]  IoU: 0.2234   Acc: 0.2308
+Epoch  331 | train_loss=0.1073 train_mIoU=0.8464 | val_loss=0.6164 val_mIoU=0.4025 val_mAcc=0.4500 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.0465   Acc: 0.0476
+  [branch  ]  IoU: 0.8676   Acc: 0.9988
+  [wire    ]  IoU: 0.1042   Acc: 0.1046
+Epoch  332 | train_loss=0.1248 train_mIoU=0.8204 | val_loss=0.7549 val_mIoU=0.3394 val_mAcc=0.3837 val_allAcc=0.8680
+  [trunk   ]  IoU: 0.0980   Acc: 0.1055
+  [branch  ]  IoU: 0.8731   Acc: 0.9941
+  [wire    ]  IoU: 0.1842   Acc: 0.1879
+Epoch  333 | train_loss=0.1081 train_mIoU=0.8452 | val_loss=0.6063 val_mIoU=0.3851 val_mAcc=0.4292 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.0484   Acc: 0.0497
+  [branch  ]  IoU: 0.8697   Acc: 0.9977
+  [wire    ]  IoU: 0.1508   Acc: 0.1537
+Epoch  334 | train_loss=0.1103 train_mIoU=0.8425 | val_loss=0.8827 val_mIoU=0.3563 val_mAcc=0.4004 val_allAcc=0.8702
+  [trunk   ]  IoU: 0.1406   Acc: 0.1522
+  [branch  ]  IoU: 0.8732   Acc: 0.9946
+  [wire    ]  IoU: 0.1146   Acc: 0.1153
+Epoch  335 | train_loss=0.0936 train_mIoU=0.8652 | val_loss=0.6994 val_mIoU=0.3761 val_mAcc=0.4207 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1255   Acc: 0.1341
+  [branch  ]  IoU: 0.8793   Acc: 0.9943
+  [wire    ]  IoU: 0.2436   Acc: 0.2522
+Epoch  336 | train_loss=0.0894 train_mIoU=0.8700 | val_loss=0.6613 val_mIoU=0.4162 val_mAcc=0.4602 val_allAcc=0.8800
+  [trunk   ]  IoU: 0.0858   Acc: 0.0890
+  [branch  ]  IoU: 0.8703   Acc: 0.9983
+  [wire    ]  IoU: 0.0979   Acc: 0.0980
+Epoch  337 | train_loss=0.0907 train_mIoU=0.8685 | val_loss=1.0638 val_mIoU=0.3513 val_mAcc=0.3951 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.0726   Acc: 0.0742
+  [branch  ]  IoU: 0.8751   Acc: 0.9985
+  [wire    ]  IoU: 0.2096   Acc: 0.2125
+Epoch  338 | train_loss=0.0899 train_mIoU=0.8694 | val_loss=0.7971 val_mIoU=0.3858 val_mAcc=0.4284 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.0766   Acc: 0.0812
+  [branch  ]  IoU: 0.8717   Acc: 0.9971
+  [wire    ]  IoU: 0.1405   Acc: 0.1410
+Epoch  339 | train_loss=0.0874 train_mIoU=0.8727 | val_loss=0.8177 val_mIoU=0.3630 val_mAcc=0.4064 val_allAcc=0.8714
+  [trunk   ]  IoU: 0.1618   Acc: 0.1880
+  [branch  ]  IoU: 0.8672   Acc: 0.9851
+  [wire    ]  IoU: 0.0943   Acc: 0.0985
+Epoch  340 | train_loss=0.0904 train_mIoU=0.8685 | val_loss=0.6658 val_mIoU=0.3744 val_mAcc=0.4239 val_allAcc=0.8673
+  [trunk   ]  IoU: 0.0526   Acc: 0.0538
+  [branch  ]  IoU: 0.8675   Acc: 0.9991
+  [wire    ]  IoU: 0.0848   Acc: 0.0851
+Epoch  341 | train_loss=0.0892 train_mIoU=0.8705 | val_loss=0.9539 val_mIoU=0.3350 val_mAcc=0.3793 val_allAcc=0.8676
+  [trunk   ]  IoU: 0.0854   Acc: 0.0877
+  [branch  ]  IoU: 0.8728   Acc: 0.9984
+  [wire    ]  IoU: 0.1481   Acc: 0.1495
+Epoch  342 | train_loss=0.0930 train_mIoU=0.8658 | val_loss=0.8295 val_mIoU=0.3688 val_mAcc=0.4119 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1289   Acc: 0.1435
+  [branch  ]  IoU: 0.8795   Acc: 0.9952
+  [wire    ]  IoU: 0.1755   Acc: 0.1776
+Epoch  343 | train_loss=0.1031 train_mIoU=0.8506 | val_loss=0.6467 val_mIoU=0.3946 val_mAcc=0.4388 val_allAcc=0.8771
+  [trunk   ]  IoU: 0.1210   Acc: 0.1278
+  [branch  ]  IoU: 0.8797   Acc: 0.9954
+  [wire    ]  IoU: 0.2382   Acc: 0.2471
+Epoch  344 | train_loss=0.1033 train_mIoU=0.8505 | val_loss=0.6626 val_mIoU=0.4130 val_mAcc=0.4568 val_allAcc=0.8802
+  [trunk   ]  IoU: 0.1031   Acc: 0.1082
+  [branch  ]  IoU: 0.8734   Acc: 0.9969
+  [wire    ]  IoU: 0.1536   Acc: 0.1543
+Epoch  345 | train_loss=0.0994 train_mIoU=0.8560 | val_loss=0.7990 val_mIoU=0.3767 val_mAcc=0.4198 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1289   Acc: 0.1457
+  [branch  ]  IoU: 0.8778   Acc: 0.9945
+  [wire    ]  IoU: 0.1430   Acc: 0.1442
+Epoch  346 | train_loss=0.1076 train_mIoU=0.8468 | val_loss=0.6666 val_mIoU=0.3832 val_mAcc=0.4282 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.1061   Acc: 0.1106
+  [branch  ]  IoU: 0.8687   Acc: 0.9967
+  [wire    ]  IoU: 0.0806   Acc: 0.0807
+Epoch  347 | train_loss=0.1000 train_mIoU=0.8561 | val_loss=0.8215 val_mIoU=0.3518 val_mAcc=0.3960 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.1219   Acc: 0.1280
+  [branch  ]  IoU: 0.8745   Acc: 0.9971
+  [wire    ]  IoU: 0.1418   Acc: 0.1421
+Epoch  348 | train_loss=0.0895 train_mIoU=0.8711 | val_loss=0.7926 val_mIoU=0.3794 val_mAcc=0.4224 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.0508   Acc: 0.0519
+  [branch  ]  IoU: 0.8657   Acc: 0.9987
+  [wire    ]  IoU: 0.0655   Acc: 0.0658
+Epoch  349 | train_loss=0.0884 train_mIoU=0.8729 | val_loss=1.0352 val_mIoU=0.3273 val_mAcc=0.3721 val_allAcc=0.8659
+  [trunk   ]  IoU: 0.0770   Acc: 0.0816
+  [branch  ]  IoU: 0.8773   Acc: 0.9957
+  [wire    ]  IoU: 0.2535   Acc: 0.2607
+Epoch  350 | train_loss=0.0882 train_mIoU=0.8715 | val_loss=0.7374 val_mIoU=0.4026 val_mAcc=0.4460 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.0841   Acc: 0.0873
+  [branch  ]  IoU: 0.8667   Acc: 0.9982
+  [wire    ]  IoU: 0.0354   Acc: 0.0354
+Epoch  351 | train_loss=0.0995 train_mIoU=0.8544 | val_loss=1.0916 val_mIoU=0.3287 val_mAcc=0.3736 val_allAcc=0.8666
+  [trunk   ]  IoU: 0.1169   Acc: 0.1277
+  [branch  ]  IoU: 0.8741   Acc: 0.9944
+  [wire    ]  IoU: 0.1374   Acc: 0.1407
+Epoch  352 | train_loss=0.0962 train_mIoU=0.8603 | val_loss=0.7159 val_mIoU=0.3762 val_mAcc=0.4209 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.1248   Acc: 0.1324
+  [branch  ]  IoU: 0.8761   Acc: 0.9962
+  [wire    ]  IoU: 0.1724   Acc: 0.1739
+Epoch  353 | train_loss=0.0916 train_mIoU=0.8670 | val_loss=0.8639 val_mIoU=0.3911 val_mAcc=0.4342 val_allAcc=0.8768
+  [trunk   ]  IoU: 0.1130   Acc: 0.1171
+  [branch  ]  IoU: 0.8745   Acc: 0.9973
+  [wire    ]  IoU: 0.1650   Acc: 0.1660
+Epoch  354 | train_loss=0.0872 train_mIoU=0.8723 | val_loss=0.8673 val_mIoU=0.3841 val_mAcc=0.4268 val_allAcc=0.8760
+  [trunk   ]  IoU: 0.1351   Acc: 0.1536
+  [branch  ]  IoU: 0.8728   Acc: 0.9906
+  [wire    ]  IoU: 0.1539   Acc: 0.1548
+Epoch  355 | train_loss=0.0926 train_mIoU=0.8658 | val_loss=0.7909 val_mIoU=0.3873 val_mAcc=0.4330 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.1198   Acc: 0.1270
+  [branch  ]  IoU: 0.8801   Acc: 0.9951
+  [wire    ]  IoU: 0.2734   Acc: 0.2788
+Epoch  356 | train_loss=0.0901 train_mIoU=0.8698 | val_loss=0.6057 val_mIoU=0.4244 val_mAcc=0.4670 val_allAcc=0.8817
+  [trunk   ]  IoU: 0.1491   Acc: 0.1681
+  [branch  ]  IoU: 0.8776   Acc: 0.9893
+  [wire    ]  IoU: 0.2255   Acc: 0.2362
+Epoch  357 | train_loss=0.0957 train_mIoU=0.8640 | val_loss=0.5512 val_mIoU=0.4174 val_mAcc=0.4645 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.0684   Acc: 0.0708
+  [branch  ]  IoU: 0.8688   Acc: 0.9982
+  [wire    ]  IoU: 0.0949   Acc: 0.0954
+Epoch  358 | train_loss=0.1007 train_mIoU=0.8549 | val_loss=0.9538 val_mIoU=0.3440 val_mAcc=0.3881 val_allAcc=0.8688
+  [trunk   ]  IoU: 0.0482   Acc: 0.0488
+  [branch  ]  IoU: 0.8669   Acc: 0.9995
+  [wire    ]  IoU: 0.0822   Acc: 0.0824
+Epoch  359 | train_loss=0.1061 train_mIoU=0.8479 | val_loss=1.0004 val_mIoU=0.3324 val_mAcc=0.3769 val_allAcc=0.8674
+  [trunk   ]  IoU: 0.0760   Acc: 0.0775
+  [branch  ]  IoU: 0.8691   Acc: 0.9986
+  [wire    ]  IoU: 0.1018   Acc: 0.1022
+Epoch  360 | train_loss=0.0899 train_mIoU=0.8706 | val_loss=0.9306 val_mIoU=0.3490 val_mAcc=0.3928 val_allAcc=0.8701
+  [trunk   ]  IoU: 0.1063   Acc: 0.1114
+  [branch  ]  IoU: 0.8839   Acc: 0.9946
+  [wire    ]  IoU: 0.3419   Acc: 0.3617
+Epoch  361 | train_loss=0.0884 train_mIoU=0.8726 | val_loss=0.6252 val_mIoU=0.4440 val_mAcc=0.4893 val_allAcc=0.8850
+  [trunk   ]  IoU: 0.0433   Acc: 0.0440
+  [branch  ]  IoU: 0.8711   Acc: 0.9992
+  [wire    ]  IoU: 0.1638   Acc: 0.1654
+Epoch  362 | train_loss=0.0870 train_mIoU=0.8742 | val_loss=1.0571 val_mIoU=0.3594 val_mAcc=0.4029 val_allAcc=0.8717
+  [trunk   ]  IoU: 0.1379   Acc: 0.1505
+  [branch  ]  IoU: 0.8709   Acc: 0.9940
+  [wire    ]  IoU: 0.0836   Acc: 0.0838
+Epoch  363 | train_loss=0.0932 train_mIoU=0.8640 | val_loss=0.8585 val_mIoU=0.3641 val_mAcc=0.4094 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.0359   Acc: 0.0370
+  [branch  ]  IoU: 0.8690   Acc: 0.9992
+  [wire    ]  IoU: 0.1217   Acc: 0.1221
+Epoch  364 | train_loss=0.0938 train_mIoU=0.8643 | val_loss=0.8537 val_mIoU=0.3422 val_mAcc=0.3861 val_allAcc=0.8686
+  [trunk   ]  IoU: 0.0755   Acc: 0.0774
+  [branch  ]  IoU: 0.8762   Acc: 0.9973
+  [wire    ]  IoU: 0.2363   Acc: 0.2435
+Epoch  365 | train_loss=0.0918 train_mIoU=0.8677 | val_loss=0.6732 val_mIoU=0.3960 val_mAcc=0.4394 val_allAcc=0.8774
+  [trunk   ]  IoU: 0.0317   Acc: 0.0319
+  [branch  ]  IoU: 0.8676   Acc: 0.9994
+  [wire    ]  IoU: 0.1250   Acc: 0.1260
+Epoch  366 | train_loss=0.0891 train_mIoU=0.8708 | val_loss=1.0098 val_mIoU=0.3414 val_mAcc=0.3858 val_allAcc=0.8685
+  [trunk   ]  IoU: 0.0639   Acc: 0.0663
+  [branch  ]  IoU: 0.8718   Acc: 0.9984
+  [wire    ]  IoU: 0.1472   Acc: 0.1484
+Epoch  367 | train_loss=0.0968 train_mIoU=0.8589 | val_loss=0.9703 val_mIoU=0.3610 val_mAcc=0.4044 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.1132   Acc: 0.1188
+  [branch  ]  IoU: 0.8726   Acc: 0.9966
+  [wire    ]  IoU: 0.1312   Acc: 0.1320
+Epoch  368 | train_loss=0.1144 train_mIoU=0.8366 | val_loss=0.7351 val_mIoU=0.3723 val_mAcc=0.4158 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1001   Acc: 0.1087
+  [branch  ]  IoU: 0.8722   Acc: 0.9958
+  [wire    ]  IoU: 0.1155   Acc: 0.1158
+Epoch  369 | train_loss=0.0944 train_mIoU=0.8646 | val_loss=0.7816 val_mIoU=0.3626 val_mAcc=0.4068 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.1136   Acc: 0.1206
+  [branch  ]  IoU: 0.8714   Acc: 0.9959
+  [wire    ]  IoU: 0.1173   Acc: 0.1174
+Epoch  370 | train_loss=0.0854 train_mIoU=0.8762 | val_loss=0.8576 val_mIoU=0.3674 val_mAcc=0.4113 val_allAcc=0.8722
+  [trunk   ]  IoU: 0.0569   Acc: 0.0601
+  [branch  ]  IoU: 0.8645   Acc: 0.9957
+  [wire    ]  IoU: 0.0790   Acc: 0.0792
+Epoch  371 | train_loss=0.0866 train_mIoU=0.8738 | val_loss=0.9868 val_mIoU=0.3335 val_mAcc=0.3784 val_allAcc=0.8649
+  [trunk   ]  IoU: 0.1006   Acc: 0.1055
+  [branch  ]  IoU: 0.8737   Acc: 0.9973
+  [wire    ]  IoU: 0.1484   Acc: 0.1492
+Epoch  372 | train_loss=0.0871 train_mIoU=0.8742 | val_loss=0.8887 val_mIoU=0.3742 val_mAcc=0.4174 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.0734   Acc: 0.0754
+  [branch  ]  IoU: 0.8700   Acc: 0.9986
+  [wire    ]  IoU: 0.1153   Acc: 0.1156
+Epoch  373 | train_loss=0.0851 train_mIoU=0.8760 | val_loss=0.9616 val_mIoU=0.3529 val_mAcc=0.3965 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.1262   Acc: 0.1349
+  [branch  ]  IoU: 0.8769   Acc: 0.9954
+  [wire    ]  IoU: 0.2021   Acc: 0.2034
+Epoch  374 | train_loss=0.0832 train_mIoU=0.8782 | val_loss=0.7915 val_mIoU=0.4017 val_mAcc=0.4445 val_allAcc=0.8781
+  [trunk   ]  IoU: 0.1232   Acc: 0.1305
+  [branch  ]  IoU: 0.8761   Acc: 0.9960
+  [wire    ]  IoU: 0.1817   Acc: 0.1835
+Epoch  375 | train_loss=0.0859 train_mIoU=0.8749 | val_loss=0.7489 val_mIoU=0.3937 val_mAcc=0.4366 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.0962   Acc: 0.1006
+  [branch  ]  IoU: 0.8738   Acc: 0.9964
+  [wire    ]  IoU: 0.1675   Acc: 0.1714
+Epoch  376 | train_loss=0.0896 train_mIoU=0.8699 | val_loss=0.8290 val_mIoU=0.3791 val_mAcc=0.4228 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0670   Acc: 0.0690
+  [branch  ]  IoU: 0.8684   Acc: 0.9987
+  [wire    ]  IoU: 0.0862   Acc: 0.0866
+Epoch  377 | train_loss=0.0883 train_mIoU=0.8713 | val_loss=1.0419 val_mIoU=0.3406 val_mAcc=0.3847 val_allAcc=0.8686
+  [trunk   ]  IoU: 0.0370   Acc: 0.0376
+  [branch  ]  IoU: 0.8664   Acc: 0.9994
+  [wire    ]  IoU: 0.0858   Acc: 0.0860
+Epoch  378 | train_loss=0.0881 train_mIoU=0.8724 | val_loss=1.2955 val_mIoU=0.3297 val_mAcc=0.3743 val_allAcc=0.8666
+  [trunk   ]  IoU: 0.0863   Acc: 0.0910
+  [branch  ]  IoU: 0.8747   Acc: 0.9978
+  [wire    ]  IoU: 0.1630   Acc: 0.1642
+Epoch  379 | train_loss=0.0915 train_mIoU=0.8673 | val_loss=0.7529 val_mIoU=0.3747 val_mAcc=0.4177 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1093   Acc: 0.1160
+  [branch  ]  IoU: 0.8734   Acc: 0.9964
+  [wire    ]  IoU: 0.1429   Acc: 0.1436
+Epoch  380 | train_loss=0.0872 train_mIoU=0.8741 | val_loss=0.8158 val_mIoU=0.3752 val_mAcc=0.4186 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.0871   Acc: 0.0900
+  [branch  ]  IoU: 0.8811   Acc: 0.9960
+  [wire    ]  IoU: 0.3113   Acc: 0.3267
+Epoch  381 | train_loss=0.0846 train_mIoU=0.8772 | val_loss=0.7199 val_mIoU=0.4265 val_mAcc=0.4709 val_allAcc=0.8823
+  [trunk   ]  IoU: 0.0966   Acc: 0.1013
+  [branch  ]  IoU: 0.8727   Acc: 0.9982
+  [wire    ]  IoU: 0.1112   Acc: 0.1116
+Epoch  382 | train_loss=0.0837 train_mIoU=0.8787 | val_loss=0.8799 val_mIoU=0.3602 val_mAcc=0.4037 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.0867   Acc: 0.0926
+  [branch  ]  IoU: 0.8731   Acc: 0.9973
+  [wire    ]  IoU: 0.1316   Acc: 0.1321
+Epoch  383 | train_loss=0.0916 train_mIoU=0.8665 | val_loss=0.7356 val_mIoU=0.3638 val_mAcc=0.4073 val_allAcc=0.8720
+  [trunk   ]  IoU: 0.1156   Acc: 0.1365
+  [branch  ]  IoU: 0.8762   Acc: 0.9891
+  [wire    ]  IoU: 0.2123   Acc: 0.2161
+Epoch  384 | train_loss=0.0943 train_mIoU=0.8632 | val_loss=0.7386 val_mIoU=0.4014 val_mAcc=0.4472 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1217   Acc: 0.1348
+  [branch  ]  IoU: 0.8871   Acc: 0.9927
+  [wire    ]  IoU: 0.3474   Acc: 0.3672
+Epoch  385 | train_loss=0.0940 train_mIoU=0.8652 | val_loss=0.5676 val_mIoU=0.4521 val_mAcc=0.4982 val_allAcc=0.8856
+  [trunk   ]  IoU: 0.0650   Acc: 0.0693
+  [branch  ]  IoU: 0.8734   Acc: 0.9973
+  [wire    ]  IoU: 0.1727   Acc: 0.1733
+Epoch  386 | train_loss=0.0945 train_mIoU=0.8637 | val_loss=0.8504 val_mIoU=0.3703 val_mAcc=0.4133 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.1690   Acc: 0.1884
+  [branch  ]  IoU: 0.8878   Acc: 0.9930
+  [wire    ]  IoU: 0.3131   Acc: 0.3208
+Epoch  387 | train_loss=0.0919 train_mIoU=0.8657 | val_loss=0.5610 val_mIoU=0.4566 val_mAcc=0.5007 val_allAcc=0.8874
+  [trunk   ]  IoU: 0.1269   Acc: 0.1371
+  [branch  ]  IoU: 0.8780   Acc: 0.9961
+  [wire    ]  IoU: 0.1790   Acc: 0.1802
+Epoch  388 | train_loss=0.0884 train_mIoU=0.8708 | val_loss=0.8348 val_mIoU=0.3946 val_mAcc=0.4378 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.1506   Acc: 0.1697
+  [branch  ]  IoU: 0.8739   Acc: 0.9920
+  [wire    ]  IoU: 0.1227   Acc: 0.1235
+Epoch  389 | train_loss=0.0884 train_mIoU=0.8706 | val_loss=0.7535 val_mIoU=0.3824 val_mAcc=0.4284 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0617   Acc: 0.0631
+  [branch  ]  IoU: 0.8684   Acc: 0.9986
+  [wire    ]  IoU: 0.1045   Acc: 0.1049
+Epoch  390 | train_loss=0.0885 train_mIoU=0.8727 | val_loss=0.9921 val_mIoU=0.3449 val_mAcc=0.3889 val_allAcc=0.8691
+  [trunk   ]  IoU: 0.1338   Acc: 0.1501
+  [branch  ]  IoU: 0.8786   Acc: 0.9938
+  [wire    ]  IoU: 0.1776   Acc: 0.1802
+Epoch  391 | train_loss=0.0871 train_mIoU=0.8739 | val_loss=0.7706 val_mIoU=0.3967 val_mAcc=0.4414 val_allAcc=0.8766
+  [trunk   ]  IoU: 0.1102   Acc: 0.1164
+  [branch  ]  IoU: 0.8761   Acc: 0.9964
+  [wire    ]  IoU: 0.1843   Acc: 0.1873
+Epoch  392 | train_loss=0.0889 train_mIoU=0.8696 | val_loss=0.7064 val_mIoU=0.3902 val_mAcc=0.4334 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.1565   Acc: 0.1895
+  [branch  ]  IoU: 0.8828   Acc: 0.9919
+  [wire    ]  IoU: 0.1462   Acc: 0.1476
+Epoch  393 | train_loss=0.0920 train_mIoU=0.8671 | val_loss=0.7013 val_mIoU=0.3952 val_mAcc=0.4430 val_allAcc=0.8762
+  [trunk   ]  IoU: 0.1151   Acc: 0.1219
+  [branch  ]  IoU: 0.8741   Acc: 0.9960
+  [wire    ]  IoU: 0.1588   Acc: 0.1600
+Epoch  394 | train_loss=0.0898 train_mIoU=0.8693 | val_loss=0.9356 val_mIoU=0.3827 val_mAcc=0.4260 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.1120   Acc: 0.1186
+  [branch  ]  IoU: 0.8747   Acc: 0.9957
+  [wire    ]  IoU: 0.1760   Acc: 0.1786
+Epoch  395 | train_loss=0.0872 train_mIoU=0.8726 | val_loss=0.8094 val_mIoU=0.3876 val_mAcc=0.4310 val_allAcc=0.8756
+  [trunk   ]  IoU: 0.0606   Acc: 0.0615
+  [branch  ]  IoU: 0.8688   Acc: 0.9989
+  [wire    ]  IoU: 0.1176   Acc: 0.1180
+Epoch  396 | train_loss=0.0919 train_mIoU=0.8671 | val_loss=0.8453 val_mIoU=0.3490 val_mAcc=0.3928 val_allAcc=0.8700
+  [trunk   ]  IoU: 0.0925   Acc: 0.0999
+  [branch  ]  IoU: 0.8751   Acc: 0.9959
+  [wire    ]  IoU: 0.1776   Acc: 0.1800
+Epoch  397 | train_loss=0.0885 train_mIoU=0.8723 | val_loss=0.6944 val_mIoU=0.3818 val_mAcc=0.4252 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0864   Acc: 0.0916
+  [branch  ]  IoU: 0.8844   Acc: 0.9944
+  [wire    ]  IoU: 0.3259   Acc: 0.3560
+Epoch  398 | train_loss=0.0841 train_mIoU=0.8777 | val_loss=0.7121 val_mIoU=0.4323 val_mAcc=0.4807 val_allAcc=0.8828
+  [trunk   ]  IoU: 0.0912   Acc: 0.0962
+  [branch  ]  IoU: 0.8744   Acc: 0.9976
+  [wire    ]  IoU: 0.1498   Acc: 0.1515
+Epoch  399 | train_loss=0.0830 train_mIoU=0.8781 | val_loss=0.9199 val_mIoU=0.3718 val_mAcc=0.4151 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0581   Acc: 0.0591
+  [branch  ]  IoU: 0.8698   Acc: 0.9991
+  [wire    ]  IoU: 0.1314   Acc: 0.1315
+Epoch  400 | train_loss=0.0847 train_mIoU=0.8766 | val_loss=1.0099 val_mIoU=0.3531 val_mAcc=0.3966 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.0706   Acc: 0.0723
+  [branch  ]  IoU: 0.8731   Acc: 0.9984
+  [wire    ]  IoU: 0.1734   Acc: 0.1759
+Epoch  401 | train_loss=0.0856 train_mIoU=0.8760 | val_loss=0.7427 val_mIoU=0.3724 val_mAcc=0.4155 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1279   Acc: 0.1367
+  [branch  ]  IoU: 0.8787   Acc: 0.9955
+  [wire    ]  IoU: 0.2205   Acc: 0.2232
+Epoch  402 | train_loss=0.0796 train_mIoU=0.8838 | val_loss=0.7485 val_mIoU=0.4091 val_mAcc=0.4518 val_allAcc=0.8795
+  [trunk   ]  IoU: 0.1531   Acc: 0.1875
+  [branch  ]  IoU: 0.8773   Acc: 0.9903
+  [wire    ]  IoU: 0.0862   Acc: 0.0864
+Epoch  403 | train_loss=0.0851 train_mIoU=0.8758 | val_loss=0.8670 val_mIoU=0.3722 val_mAcc=0.4214 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.1155   Acc: 0.1230
+  [branch  ]  IoU: 0.8736   Acc: 0.9956
+  [wire    ]  IoU: 0.1528   Acc: 0.1542
+Epoch  404 | train_loss=0.0877 train_mIoU=0.8725 | val_loss=0.7816 val_mIoU=0.3807 val_mAcc=0.4242 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0520   Acc: 0.0529
+  [branch  ]  IoU: 0.8758   Acc: 0.9985
+  [wire    ]  IoU: 0.2357   Acc: 0.2430
+Epoch  405 | train_loss=0.0823 train_mIoU=0.8798 | val_loss=0.9941 val_mIoU=0.3878 val_mAcc=0.4314 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.0697   Acc: 0.0717
+  [branch  ]  IoU: 0.8747   Acc: 0.9990
+  [wire    ]  IoU: 0.1864   Acc: 0.1879
+Epoch  406 | train_loss=0.0825 train_mIoU=0.8797 | val_loss=0.9203 val_mIoU=0.3769 val_mAcc=0.4195 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.0726   Acc: 0.0744
+  [branch  ]  IoU: 0.8708   Acc: 0.9986
+  [wire    ]  IoU: 0.1308   Acc: 0.1315
+Epoch  407 | train_loss=0.0796 train_mIoU=0.8826 | val_loss=1.0341 val_mIoU=0.3581 val_mAcc=0.4015 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0895   Acc: 0.0939
+  [branch  ]  IoU: 0.8676   Acc: 0.9975
+  [wire    ]  IoU: 0.0488   Acc: 0.0490
+Epoch  408 | train_loss=0.0863 train_mIoU=0.8742 | val_loss=0.9353 val_mIoU=0.3353 val_mAcc=0.3801 val_allAcc=0.8673
+  [trunk   ]  IoU: 0.1808   Acc: 0.2242
+  [branch  ]  IoU: 0.8841   Acc: 0.9876
+  [wire    ]  IoU: 0.2022   Acc: 0.2057
+Epoch  409 | train_loss=0.0870 train_mIoU=0.8745 | val_loss=0.6693 val_mIoU=0.4223 val_mAcc=0.4725 val_allAcc=0.8788
+  [trunk   ]  IoU: 0.0480   Acc: 0.0489
+  [branch  ]  IoU: 0.8712   Acc: 0.9989
+  [wire    ]  IoU: 0.1748   Acc: 0.1754
+Epoch  410 | train_loss=0.0939 train_mIoU=0.8636 | val_loss=1.1682 val_mIoU=0.3646 val_mAcc=0.4077 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1134   Acc: 0.1198
+  [branch  ]  IoU: 0.8739   Acc: 0.9952
+  [wire    ]  IoU: 0.1744   Acc: 0.1774
+Epoch  411 | train_loss=0.1155 train_mIoU=0.8343 | val_loss=0.6338 val_mIoU=0.3872 val_mAcc=0.4308 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.1032   Acc: 0.1080
+  [branch  ]  IoU: 0.8691   Acc: 0.9969
+  [wire    ]  IoU: 0.0811   Acc: 0.0812
+Epoch  412 | train_loss=0.1047 train_mIoU=0.8495 | val_loss=0.8651 val_mIoU=0.3511 val_mAcc=0.3954 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.0484   Acc: 0.0488
+  [branch  ]  IoU: 0.8686   Acc: 0.9994
+  [wire    ]  IoU: 0.1177   Acc: 0.1186
+Epoch  413 | train_loss=0.0938 train_mIoU=0.8641 | val_loss=1.0122 val_mIoU=0.3449 val_mAcc=0.3889 val_allAcc=0.8694
+  [trunk   ]  IoU: 0.0506   Acc: 0.0521
+  [branch  ]  IoU: 0.8674   Acc: 0.9991
+  [wire    ]  IoU: 0.0798   Acc: 0.0799
+Epoch  414 | train_loss=0.0819 train_mIoU=0.8811 | val_loss=1.0049 val_mIoU=0.3326 val_mAcc=0.3770 val_allAcc=0.8672
+  [trunk   ]  IoU: 0.0799   Acc: 0.0840
+  [branch  ]  IoU: 0.8695   Acc: 0.9976
+  [wire    ]  IoU: 0.0907   Acc: 0.0909
+Epoch  415 | train_loss=0.0805 train_mIoU=0.8818 | val_loss=0.9301 val_mIoU=0.3467 val_mAcc=0.3908 val_allAcc=0.8691
+  [trunk   ]  IoU: 0.1443   Acc: 0.1632
+  [branch  ]  IoU: 0.8723   Acc: 0.9922
+  [wire    ]  IoU: 0.0936   Acc: 0.0940
+Epoch  416 | train_loss=0.0808 train_mIoU=0.8817 | val_loss=0.7930 val_mIoU=0.3701 val_mAcc=0.4164 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.0799   Acc: 0.0842
+  [branch  ]  IoU: 0.8702   Acc: 0.9978
+  [wire    ]  IoU: 0.0937   Acc: 0.0940
+Epoch  417 | train_loss=0.0798 train_mIoU=0.8830 | val_loss=0.9993 val_mIoU=0.3479 val_mAcc=0.3920 val_allAcc=0.8695
+  [trunk   ]  IoU: 0.1129   Acc: 0.1186
+  [branch  ]  IoU: 0.8764   Acc: 0.9972
+  [wire    ]  IoU: 0.1845   Acc: 0.1854
+Epoch  418 | train_loss=0.0784 train_mIoU=0.8853 | val_loss=0.7961 val_mIoU=0.3913 val_mAcc=0.4337 val_allAcc=0.8772
+  [trunk   ]  IoU: 0.1134   Acc: 0.1220
+  [branch  ]  IoU: 0.8784   Acc: 0.9955
+  [wire    ]  IoU: 0.2155   Acc: 0.2203
+Epoch  419 | train_loss=0.0781 train_mIoU=0.8860 | val_loss=0.8023 val_mIoU=0.4024 val_mAcc=0.4459 val_allAcc=0.8781
+  [trunk   ]  IoU: 0.1385   Acc: 0.1489
+  [branch  ]  IoU: 0.8829   Acc: 0.9945
+  [wire    ]  IoU: 0.2856   Acc: 0.2930
+Epoch  420 | train_loss=0.0780 train_mIoU=0.8850 | val_loss=0.6990 val_mIoU=0.4357 val_mAcc=0.4788 val_allAcc=0.8838
+  [trunk   ]  IoU: 0.0570   Acc: 0.0581
+  [branch  ]  IoU: 0.8675   Acc: 0.9988
+  [wire    ]  IoU: 0.0965   Acc: 0.0967
+Epoch  421 | train_loss=0.0845 train_mIoU=0.8767 | val_loss=1.0885 val_mIoU=0.3403 val_mAcc=0.3845 val_allAcc=0.8684
+  [trunk   ]  IoU: 0.0468   Acc: 0.0471
+  [branch  ]  IoU: 0.8695   Acc: 0.9987
+  [wire    ]  IoU: 0.1535   Acc: 0.1554
+Epoch  422 | train_loss=0.0855 train_mIoU=0.8743 | val_loss=1.1153 val_mIoU=0.3566 val_mAcc=0.4004 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.1018   Acc: 0.1080
+  [branch  ]  IoU: 0.8797   Acc: 0.9966
+  [wire    ]  IoU: 0.2542   Acc: 0.2578
+Epoch  423 | train_loss=0.0842 train_mIoU=0.8773 | val_loss=0.7708 val_mIoU=0.4119 val_mAcc=0.4541 val_allAcc=0.8802
+  [trunk   ]  IoU: 0.0960   Acc: 0.1078
+  [branch  ]  IoU: 0.8761   Acc: 0.9954
+  [wire    ]  IoU: 0.1480   Acc: 0.1493
+Epoch  424 | train_loss=0.0806 train_mIoU=0.8828 | val_loss=0.9109 val_mIoU=0.3734 val_mAcc=0.4175 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0780   Acc: 0.0800
+  [branch  ]  IoU: 0.8727   Acc: 0.9982
+  [wire    ]  IoU: 0.1550   Acc: 0.1579
+Epoch  425 | train_loss=0.0771 train_mIoU=0.8868 | val_loss=1.0517 val_mIoU=0.3686 val_mAcc=0.4120 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1034   Acc: 0.1082
+  [branch  ]  IoU: 0.8712   Acc: 0.9975
+  [wire    ]  IoU: 0.0980   Acc: 0.0984
+Epoch  426 | train_loss=0.0816 train_mIoU=0.8820 | val_loss=0.8983 val_mIoU=0.3575 val_mAcc=0.4013 val_allAcc=0.8714
+  [trunk   ]  IoU: 0.0239   Acc: 0.0240
+  [branch  ]  IoU: 0.8697   Acc: 0.9993
+  [wire    ]  IoU: 0.1805   Acc: 0.1826
+Epoch  427 | train_loss=0.0832 train_mIoU=0.8804 | val_loss=0.9479 val_mIoU=0.3580 val_mAcc=0.4020 val_allAcc=0.8711
+  [trunk   ]  IoU: 0.1050   Acc: 0.1105
+  [branch  ]  IoU: 0.8726   Acc: 0.9963
+  [wire    ]  IoU: 0.1497   Acc: 0.1501
+Epoch  428 | train_loss=0.0892 train_mIoU=0.8711 | val_loss=0.8097 val_mIoU=0.3758 val_mAcc=0.4190 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0728   Acc: 0.0764
+  [branch  ]  IoU: 0.8715   Acc: 0.9980
+  [wire    ]  IoU: 0.1242   Acc: 0.1251
+Epoch  429 | train_loss=0.0840 train_mIoU=0.8773 | val_loss=0.9315 val_mIoU=0.3562 val_mAcc=0.3998 val_allAcc=0.8709
+  [trunk   ]  IoU: 0.1435   Acc: 0.1572
+  [branch  ]  IoU: 0.8734   Acc: 0.9931
+  [wire    ]  IoU: 0.1396   Acc: 0.1406
+Epoch  430 | train_loss=0.0828 train_mIoU=0.8789 | val_loss=0.8198 val_mIoU=0.3855 val_mAcc=0.4303 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0572   Acc: 0.0583
+  [branch  ]  IoU: 0.8715   Acc: 0.9986
+  [wire    ]  IoU: 0.1705   Acc: 0.1721
+Epoch  431 | train_loss=0.0812 train_mIoU=0.8813 | val_loss=0.8780 val_mIoU=0.3664 val_mAcc=0.4097 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0910   Acc: 0.0941
+  [branch  ]  IoU: 0.8737   Acc: 0.9977
+  [wire    ]  IoU: 0.1680   Acc: 0.1696
+Epoch  432 | train_loss=0.0790 train_mIoU=0.8838 | val_loss=0.9858 val_mIoU=0.3775 val_mAcc=0.4204 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.1299   Acc: 0.1400
+  [branch  ]  IoU: 0.8820   Acc: 0.9956
+  [wire    ]  IoU: 0.2593   Acc: 0.2626
+Epoch  433 | train_loss=0.0791 train_mIoU=0.8835 | val_loss=0.8012 val_mIoU=0.4237 val_mAcc=0.4661 val_allAcc=0.8822
+  [trunk   ]  IoU: 0.1006   Acc: 0.1039
+  [branch  ]  IoU: 0.8727   Acc: 0.9980
+  [wire    ]  IoU: 0.1342   Acc: 0.1348
+Epoch  434 | train_loss=0.0806 train_mIoU=0.8819 | val_loss=0.8461 val_mIoU=0.3692 val_mAcc=0.4122 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0652   Acc: 0.0665
+  [branch  ]  IoU: 0.8689   Acc: 0.9990
+  [wire    ]  IoU: 0.0989   Acc: 0.0993
+Epoch  435 | train_loss=0.0801 train_mIoU=0.8834 | val_loss=0.9426 val_mIoU=0.3443 val_mAcc=0.3883 val_allAcc=0.8694
+  [trunk   ]  IoU: 0.0779   Acc: 0.0802
+  [branch  ]  IoU: 0.8733   Acc: 0.9972
+  [wire    ]  IoU: 0.1908   Acc: 0.1944
+Epoch  436 | train_loss=0.0774 train_mIoU=0.8870 | val_loss=0.8656 val_mIoU=0.3806 val_mAcc=0.4239 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.0844   Acc: 0.0873
+  [branch  ]  IoU: 0.8689   Acc: 0.9977
+  [wire    ]  IoU: 0.0943   Acc: 0.0946
+Epoch  437 | train_loss=0.0773 train_mIoU=0.8874 | val_loss=1.0212 val_mIoU=0.3492 val_mAcc=0.3932 val_allAcc=0.8697
+  [trunk   ]  IoU: 0.0586   Acc: 0.0597
+  [branch  ]  IoU: 0.8678   Acc: 0.9988
+  [wire    ]  IoU: 0.0917   Acc: 0.0924
+Epoch  438 | train_loss=0.0771 train_mIoU=0.8867 | val_loss=1.0680 val_mIoU=0.3394 val_mAcc=0.3837 val_allAcc=0.8683
+  [trunk   ]  IoU: 0.0601   Acc: 0.0616
+  [branch  ]  IoU: 0.8702   Acc: 0.9986
+  [wire    ]  IoU: 0.1317   Acc: 0.1328
+Epoch  439 | train_loss=0.0774 train_mIoU=0.8871 | val_loss=1.0563 val_mIoU=0.3540 val_mAcc=0.3977 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.1537   Acc: 0.1729
+  [branch  ]  IoU: 0.8811   Acc: 0.9928
+  [wire    ]  IoU: 0.2230   Acc: 0.2255
+Epoch  440 | train_loss=0.0796 train_mIoU=0.8838 | val_loss=0.7578 val_mIoU=0.4193 val_mAcc=0.4637 val_allAcc=0.8803
+  [trunk   ]  IoU: 0.0787   Acc: 0.0845
+  [branch  ]  IoU: 0.8781   Acc: 0.9973
+  [wire    ]  IoU: 0.2190   Acc: 0.2216
+Epoch  441 | train_loss=0.0844 train_mIoU=0.8768 | val_loss=0.8509 val_mIoU=0.3919 val_mAcc=0.4345 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.1655   Acc: 0.1977
+  [branch  ]  IoU: 0.8778   Acc: 0.9868
+  [wire    ]  IoU: 0.2161   Acc: 0.2189
+Epoch  442 | train_loss=0.0926 train_mIoU=0.8652 | val_loss=0.5550 val_mIoU=0.4198 val_mAcc=0.4678 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.1044   Acc: 0.1116
+  [branch  ]  IoU: 0.8793   Acc: 0.9955
+  [wire    ]  IoU: 0.2552   Acc: 0.2602
+Epoch  443 | train_loss=0.0869 train_mIoU=0.8743 | val_loss=0.7420 val_mIoU=0.4130 val_mAcc=0.4558 val_allAcc=0.8797
+  [trunk   ]  IoU: 0.0765   Acc: 0.0784
+  [branch  ]  IoU: 0.8735   Acc: 0.9983
+  [wire    ]  IoU: 0.1808   Acc: 0.1824
+Epoch  444 | train_loss=0.0795 train_mIoU=0.8838 | val_loss=0.8914 val_mIoU=0.3770 val_mAcc=0.4197 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.0527   Acc: 0.0536
+  [branch  ]  IoU: 0.8686   Acc: 0.9993
+  [wire    ]  IoU: 0.1119   Acc: 0.1122
+Epoch  445 | train_loss=0.0767 train_mIoU=0.8871 | val_loss=1.2763 val_mIoU=0.3444 val_mAcc=0.3883 val_allAcc=0.8693
+  [trunk   ]  IoU: 0.0956   Acc: 0.1005
+  [branch  ]  IoU: 0.8759   Acc: 0.9963
+  [wire    ]  IoU: 0.2050   Acc: 0.2095
+Epoch  446 | train_loss=0.0787 train_mIoU=0.8840 | val_loss=0.8956 val_mIoU=0.3922 val_mAcc=0.4355 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.0750   Acc: 0.0769
+  [branch  ]  IoU: 0.8754   Acc: 0.9985
+  [wire    ]  IoU: 0.2123   Acc: 0.2142
+Epoch  447 | train_loss=0.0762 train_mIoU=0.8877 | val_loss=1.0129 val_mIoU=0.3876 val_mAcc=0.4298 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.1070   Acc: 0.1134
+  [branch  ]  IoU: 0.8741   Acc: 0.9974
+  [wire    ]  IoU: 0.1301   Acc: 0.1306
+Epoch  448 | train_loss=0.0755 train_mIoU=0.8895 | val_loss=1.0577 val_mIoU=0.3704 val_mAcc=0.4138 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0611   Acc: 0.0628
+  [branch  ]  IoU: 0.8746   Acc: 0.9986
+  [wire    ]  IoU: 0.2080   Acc: 0.2102
+Epoch  449 | train_loss=0.0773 train_mIoU=0.8867 | val_loss=1.0095 val_mIoU=0.3812 val_mAcc=0.4239 val_allAcc=0.8754
+  [trunk   ]  IoU: 0.0878   Acc: 0.0925
+  [branch  ]  IoU: 0.8773   Acc: 0.9968
+  [wire    ]  IoU: 0.2159   Acc: 0.2220
+Epoch  450 | train_loss=0.0751 train_mIoU=0.8899 | val_loss=0.9645 val_mIoU=0.3937 val_mAcc=0.4371 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.0856   Acc: 0.0904
+  [branch  ]  IoU: 0.8754   Acc: 0.9975
+  [wire    ]  IoU: 0.1758   Acc: 0.1782
+Epoch  451 | train_loss=0.0761 train_mIoU=0.8893 | val_loss=0.9255 val_mIoU=0.3789 val_mAcc=0.4221 val_allAcc=0.8748
+  [trunk   ]  IoU: 0.0873   Acc: 0.0918
+  [branch  ]  IoU: 0.8715   Acc: 0.9973
+  [wire    ]  IoU: 0.1235   Acc: 0.1243
+Epoch  452 | train_loss=0.0777 train_mIoU=0.8854 | val_loss=0.9299 val_mIoU=0.3608 val_mAcc=0.4045 val_allAcc=0.8715
+  [trunk   ]  IoU: 0.0725   Acc: 0.0753
+  [branch  ]  IoU: 0.8744   Acc: 0.9974
+  [wire    ]  IoU: 0.2022   Acc: 0.2058
+Epoch  453 | train_loss=0.0788 train_mIoU=0.8826 | val_loss=0.9165 val_mIoU=0.3830 val_mAcc=0.4261 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.1380   Acc: 0.1508
+  [branch  ]  IoU: 0.8862   Acc: 0.9899
+  [wire    ]  IoU: 0.3489   Acc: 0.3860
+Epoch  454 | train_loss=0.0850 train_mIoU=0.8762 | val_loss=0.7087 val_mIoU=0.4577 val_mAcc=0.5089 val_allAcc=0.8856
+  [trunk   ]  IoU: 0.1005   Acc: 0.1050
+  [branch  ]  IoU: 0.8743   Acc: 0.9980
+  [wire    ]  IoU: 0.1451   Acc: 0.1459
+Epoch  455 | train_loss=0.0817 train_mIoU=0.8816 | val_loss=1.0243 val_mIoU=0.3733 val_mAcc=0.4163 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.1673   Acc: 0.1892
+  [branch  ]  IoU: 0.8839   Acc: 0.9935
+  [wire    ]  IoU: 0.2249   Acc: 0.2269
+Epoch  456 | train_loss=0.0751 train_mIoU=0.8904 | val_loss=0.7059 val_mIoU=0.4254 val_mAcc=0.4699 val_allAcc=0.8823
+  [trunk   ]  IoU: 0.0970   Acc: 0.1005
+  [branch  ]  IoU: 0.8813   Acc: 0.9962
+  [wire    ]  IoU: 0.2967   Acc: 0.3099
+Epoch  457 | train_loss=0.0759 train_mIoU=0.8888 | val_loss=0.7684 val_mIoU=0.4250 val_mAcc=0.4689 val_allAcc=0.8824
+  [trunk   ]  IoU: 0.0826   Acc: 0.0847
+  [branch  ]  IoU: 0.8758   Acc: 0.9976
+  [wire    ]  IoU: 0.2168   Acc: 0.2221
+Epoch  458 | train_loss=0.0797 train_mIoU=0.8838 | val_loss=0.9007 val_mIoU=0.3917 val_mAcc=0.4348 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.1067   Acc: 0.1123
+  [branch  ]  IoU: 0.8745   Acc: 0.9956
+  [wire    ]  IoU: 0.1855   Acc: 0.1890
+Epoch  459 | train_loss=0.0782 train_mIoU=0.8844 | val_loss=0.8572 val_mIoU=0.3889 val_mAcc=0.4323 val_allAcc=0.8756
+  [trunk   ]  IoU: 0.0486   Acc: 0.0494
+  [branch  ]  IoU: 0.8669   Acc: 0.9989
+  [wire    ]  IoU: 0.0924   Acc: 0.0928
+Epoch  460 | train_loss=0.0778 train_mIoU=0.8861 | val_loss=1.1219 val_mIoU=0.3360 val_mAcc=0.3804 val_allAcc=0.8675
+  [trunk   ]  IoU: 0.0858   Acc: 0.0893
+  [branch  ]  IoU: 0.8735   Acc: 0.9959
+  [wire    ]  IoU: 0.1784   Acc: 0.1862
+Epoch  461 | train_loss=0.0801 train_mIoU=0.8814 | val_loss=0.9654 val_mIoU=0.3792 val_mAcc=0.4238 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1121   Acc: 0.1171
+  [branch  ]  IoU: 0.8774   Acc: 0.9951
+  [wire    ]  IoU: 0.2258   Acc: 0.2363
+Epoch  462 | train_loss=0.0762 train_mIoU=0.8881 | val_loss=0.8581 val_mIoU=0.4051 val_mAcc=0.4495 val_allAcc=0.8784
+  [trunk   ]  IoU: 0.0416   Acc: 0.0423
+  [branch  ]  IoU: 0.8742   Acc: 0.9981
+  [wire    ]  IoU: 0.2227   Acc: 0.2311
+Epoch  463 | train_loss=0.0803 train_mIoU=0.8828 | val_loss=0.8773 val_mIoU=0.3795 val_mAcc=0.4238 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.1194   Acc: 0.1278
+  [branch  ]  IoU: 0.8754   Acc: 0.9956
+  [wire    ]  IoU: 0.1562   Acc: 0.1596
+Epoch  464 | train_loss=0.0737 train_mIoU=0.8911 | val_loss=0.8659 val_mIoU=0.3837 val_mAcc=0.4277 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.1097   Acc: 0.1170
+  [branch  ]  IoU: 0.8726   Acc: 0.9963
+  [wire    ]  IoU: 0.1195   Acc: 0.1204
+Epoch  465 | train_loss=0.0737 train_mIoU=0.8910 | val_loss=0.9345 val_mIoU=0.3673 val_mAcc=0.4112 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0781   Acc: 0.0805
+  [branch  ]  IoU: 0.8691   Acc: 0.9986
+  [wire    ]  IoU: 0.0858   Acc: 0.0859
+Epoch  466 | train_loss=0.0767 train_mIoU=0.8872 | val_loss=1.1281 val_mIoU=0.3443 val_mAcc=0.3883 val_allAcc=0.8694
+  [trunk   ]  IoU: 0.0476   Acc: 0.0488
+  [branch  ]  IoU: 0.8695   Acc: 0.9987
+  [wire    ]  IoU: 0.1326   Acc: 0.1341
+Epoch  467 | train_loss=0.0835 train_mIoU=0.8766 | val_loss=1.0632 val_mIoU=0.3499 val_mAcc=0.3939 val_allAcc=0.8698
+  [trunk   ]  IoU: 0.0916   Acc: 0.0939
+  [branch  ]  IoU: 0.8725   Acc: 0.9985
+  [wire    ]  IoU: 0.1392   Acc: 0.1398
+Epoch  468 | train_loss=0.0763 train_mIoU=0.8883 | val_loss=1.0115 val_mIoU=0.3678 val_mAcc=0.4107 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1036   Acc: 0.1097
+  [branch  ]  IoU: 0.8711   Acc: 0.9973
+  [wire    ]  IoU: 0.0822   Acc: 0.0826
+Epoch  469 | train_loss=0.0757 train_mIoU=0.8890 | val_loss=0.8987 val_mIoU=0.3523 val_mAcc=0.3965 val_allAcc=0.8704
+  [trunk   ]  IoU: 0.0907   Acc: 0.0947
+  [branch  ]  IoU: 0.8764   Acc: 0.9981
+  [wire    ]  IoU: 0.1932   Acc: 0.1949
+Epoch  470 | train_loss=0.0735 train_mIoU=0.8918 | val_loss=0.9491 val_mIoU=0.3868 val_mAcc=0.4292 val_allAcc=0.8766
+  [trunk   ]  IoU: 0.0477   Acc: 0.0481
+  [branch  ]  IoU: 0.8687   Acc: 0.9992
+  [wire    ]  IoU: 0.1260   Acc: 0.1271
+Epoch  471 | train_loss=0.0770 train_mIoU=0.8868 | val_loss=1.1822 val_mIoU=0.3475 val_mAcc=0.3915 val_allAcc=0.8698
+  [trunk   ]  IoU: 0.1103   Acc: 0.1170
+  [branch  ]  IoU: 0.8704   Acc: 0.9969
+  [wire    ]  IoU: 0.0723   Acc: 0.0724
+Epoch  472 | train_loss=0.0753 train_mIoU=0.8893 | val_loss=1.0365 val_mIoU=0.3510 val_mAcc=0.3954 val_allAcc=0.8701
+  [trunk   ]  IoU: 0.0708   Acc: 0.0727
+  [branch  ]  IoU: 0.8792   Acc: 0.9976
+  [wire    ]  IoU: 0.2845   Acc: 0.2940
+Epoch  473 | train_loss=0.0773 train_mIoU=0.8869 | val_loss=0.8390 val_mIoU=0.4115 val_mAcc=0.4547 val_allAcc=0.8803
+  [trunk   ]  IoU: 0.0769   Acc: 0.0793
+  [branch  ]  IoU: 0.8668   Acc: 0.9982
+  [wire    ]  IoU: 0.0582   Acc: 0.0583
+Epoch  474 | train_loss=0.0760 train_mIoU=0.8881 | val_loss=1.1035 val_mIoU=0.3340 val_mAcc=0.3786 val_allAcc=0.8673
+  [trunk   ]  IoU: 0.0932   Acc: 0.0964
+  [branch  ]  IoU: 0.8709   Acc: 0.9982
+  [wire    ]  IoU: 0.1032   Acc: 0.1034
+Epoch  475 | train_loss=0.0789 train_mIoU=0.8851 | val_loss=1.0618 val_mIoU=0.3558 val_mAcc=0.3994 val_allAcc=0.8714
+  [trunk   ]  IoU: 0.0681   Acc: 0.0702
+  [branch  ]  IoU: 0.8706   Acc: 0.9986
+  [wire    ]  IoU: 0.1261   Acc: 0.1268
+Epoch  476 | train_loss=0.0752 train_mIoU=0.8901 | val_loss=1.1052 val_mIoU=0.3550 val_mAcc=0.3985 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.1009   Acc: 0.1041
+  [branch  ]  IoU: 0.8742   Acc: 0.9984
+  [wire    ]  IoU: 0.1524   Acc: 0.1533
+Epoch  477 | train_loss=0.0744 train_mIoU=0.8910 | val_loss=1.0263 val_mIoU=0.3758 val_mAcc=0.4186 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.0954   Acc: 0.0977
+  [branch  ]  IoU: 0.8759   Acc: 0.9981
+  [wire    ]  IoU: 0.1942   Acc: 0.1980
+Epoch  478 | train_loss=0.0740 train_mIoU=0.8911 | val_loss=0.9955 val_mIoU=0.3885 val_mAcc=0.4313 val_allAcc=0.8771
+  [trunk   ]  IoU: 0.0575   Acc: 0.0581
+  [branch  ]  IoU: 0.8701   Acc: 0.9988
+  [wire    ]  IoU: 0.1411   Acc: 0.1430
+Epoch  479 | train_loss=0.0699 train_mIoU=0.8961 | val_loss=1.2100 val_mIoU=0.3562 val_mAcc=0.4000 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.1365   Acc: 0.1494
+  [branch  ]  IoU: 0.8792   Acc: 0.9950
+  [wire    ]  IoU: 0.1971   Acc: 0.1986
+Epoch  480 | train_loss=0.0702 train_mIoU=0.8961 | val_loss=0.9622 val_mIoU=0.4043 val_mAcc=0.4477 val_allAcc=0.8787
+  [trunk   ]  IoU: 0.1056   Acc: 0.1097
+  [branch  ]  IoU: 0.8770   Acc: 0.9971
+  [wire    ]  IoU: 0.2081   Acc: 0.2125
+Epoch  481 | train_loss=0.0687 train_mIoU=0.8983 | val_loss=0.9402 val_mIoU=0.3969 val_mAcc=0.4397 val_allAcc=0.8780
+  [trunk   ]  IoU: 0.1008   Acc: 0.1051
+  [branch  ]  IoU: 0.8754   Acc: 0.9978
+  [wire    ]  IoU: 0.1646   Acc: 0.1669
+Epoch  482 | train_loss=0.0723 train_mIoU=0.8922 | val_loss=0.9436 val_mIoU=0.3803 val_mAcc=0.4233 val_allAcc=0.8756
+  [trunk   ]  IoU: 0.1129   Acc: 0.1179
+  [branch  ]  IoU: 0.8755   Acc: 0.9976
+  [wire    ]  IoU: 0.1562   Acc: 0.1582
+Epoch  483 | train_loss=0.0711 train_mIoU=0.8945 | val_loss=0.9712 val_mIoU=0.3815 val_mAcc=0.4246 val_allAcc=0.8759
+  [trunk   ]  IoU: 0.0727   Acc: 0.0746
+  [branch  ]  IoU: 0.8710   Acc: 0.9983
+  [wire    ]  IoU: 0.1285   Acc: 0.1309
+Epoch  484 | train_loss=0.0722 train_mIoU=0.8936 | val_loss=1.0401 val_mIoU=0.3574 val_mAcc=0.4012 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0257   Acc: 0.0260
+  [branch  ]  IoU: 0.8650   Acc: 0.9997
+  [wire    ]  IoU: 0.0744   Acc: 0.0745
+Epoch  485 | train_loss=0.0711 train_mIoU=0.8943 | val_loss=1.3344 val_mIoU=0.3217 val_mAcc=0.3667 val_allAcc=0.8652
+  [trunk   ]  IoU: 0.0238   Acc: 0.0240
+  [branch  ]  IoU: 0.8654   Acc: 0.9995
+  [wire    ]  IoU: 0.0930   Acc: 0.0935
+Epoch  486 | train_loss=0.0738 train_mIoU=0.8920 | val_loss=1.1606 val_mIoU=0.3274 val_mAcc=0.3723 val_allAcc=0.8661
+  [trunk   ]  IoU: 0.0947   Acc: 0.0971
+  [branch  ]  IoU: 0.8706   Acc: 0.9984
+  [wire    ]  IoU: 0.1024   Acc: 0.1028
+Epoch  487 | train_loss=0.0738 train_mIoU=0.8924 | val_loss=1.0790 val_mIoU=0.3559 val_mAcc=0.3994 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0625   Acc: 0.0638
+  [branch  ]  IoU: 0.8834   Acc: 0.9935
+  [wire    ]  IoU: 0.3476   Acc: 0.3986
+Epoch  488 | train_loss=0.0721 train_mIoU=0.8937 | val_loss=0.7802 val_mIoU=0.4312 val_mAcc=0.4853 val_allAcc=0.8823
+  [trunk   ]  IoU: 0.0508   Acc: 0.0516
+  [branch  ]  IoU: 0.8724   Acc: 0.9983
+  [wire    ]  IoU: 0.1841   Acc: 0.1902
+Epoch  489 | train_loss=0.0711 train_mIoU=0.8962 | val_loss=0.9963 val_mIoU=0.3691 val_mAcc=0.4134 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.0669   Acc: 0.0684
+  [branch  ]  IoU: 0.8694   Acc: 0.9988
+  [wire    ]  IoU: 0.1120   Acc: 0.1125
+Epoch  490 | train_loss=0.0696 train_mIoU=0.8966 | val_loss=1.0687 val_mIoU=0.3494 val_mAcc=0.3932 val_allAcc=0.8701
+  [trunk   ]  IoU: 0.0596   Acc: 0.0612
+  [branch  ]  IoU: 0.8664   Acc: 0.9989
+  [wire    ]  IoU: 0.0585   Acc: 0.0585
+Epoch  491 | train_loss=0.0709 train_mIoU=0.8948 | val_loss=1.1522 val_mIoU=0.3282 val_mAcc=0.3729 val_allAcc=0.8665
+  [trunk   ]  IoU: 0.0475   Acc: 0.0480
+  [branch  ]  IoU: 0.8741   Acc: 0.9980
+  [wire    ]  IoU: 0.2199   Acc: 0.2295
+Epoch  492 | train_loss=0.0719 train_mIoU=0.8946 | val_loss=1.0053 val_mIoU=0.3805 val_mAcc=0.4252 val_allAcc=0.8748
+  [trunk   ]  IoU: 0.0751   Acc: 0.0793
+  [branch  ]  IoU: 0.8705   Acc: 0.9976
+  [wire    ]  IoU: 0.1022   Acc: 0.1030
+Epoch  493 | train_loss=0.0747 train_mIoU=0.8898 | val_loss=1.0086 val_mIoU=0.3492 val_mAcc=0.3933 val_allAcc=0.8695
+  [trunk   ]  IoU: 0.0680   Acc: 0.0699
+  [branch  ]  IoU: 0.8715   Acc: 0.9987
+  [wire    ]  IoU: 0.1439   Acc: 0.1444
+Epoch  494 | train_loss=0.0755 train_mIoU=0.8888 | val_loss=1.0673 val_mIoU=0.3611 val_mAcc=0.4043 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.0969   Acc: 0.1045
+  [branch  ]  IoU: 0.8787   Acc: 0.9954
+  [wire    ]  IoU: 0.2176   Acc: 0.2273
+Epoch  495 | train_loss=0.0774 train_mIoU=0.8863 | val_loss=0.8125 val_mIoU=0.3977 val_mAcc=0.4424 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.0531   Acc: 0.0544
+  [branch  ]  IoU: 0.8804   Acc: 0.9963
+  [wire    ]  IoU: 0.3151   Acc: 0.3385
+Epoch  496 | train_loss=0.0810 train_mIoU=0.8810 | val_loss=0.8325 val_mIoU=0.4162 val_mAcc=0.4631 val_allAcc=0.8804
+  [trunk   ]  IoU: 0.0652   Acc: 0.0673
+  [branch  ]  IoU: 0.8689   Acc: 0.9990
+  [wire    ]  IoU: 0.0872   Acc: 0.0874
+Epoch  497 | train_loss=0.0799 train_mIoU=0.8821 | val_loss=1.0486 val_mIoU=0.3405 val_mAcc=0.3846 val_allAcc=0.8687
+  [trunk   ]  IoU: 0.0818   Acc: 0.0848
+  [branch  ]  IoU: 0.8719   Acc: 0.9980
+  [wire    ]  IoU: 0.1420   Acc: 0.1427
+Epoch  498 | train_loss=0.0742 train_mIoU=0.8914 | val_loss=1.0306 val_mIoU=0.3652 val_mAcc=0.4085 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.1031   Acc: 0.1080
+  [branch  ]  IoU: 0.8739   Acc: 0.9979
+  [wire    ]  IoU: 0.1315   Acc: 0.1324
+Epoch  499 | train_loss=0.0730 train_mIoU=0.8932 | val_loss=0.9945 val_mIoU=0.3695 val_mAcc=0.4128 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.0811   Acc: 0.0850
+  [branch  ]  IoU: 0.8721   Acc: 0.9985
+  [wire    ]  IoU: 0.1129   Acc: 0.1135
+Epoch  500 | train_loss=0.0702 train_mIoU=0.8962 | val_loss=1.1338 val_mIoU=0.3554 val_mAcc=0.3990 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0367   Acc: 0.0373
+  [branch  ]  IoU: 0.8650   Acc: 0.9995
+  [wire    ]  IoU: 0.0585   Acc: 0.0585
+Epoch  501 | train_loss=0.0692 train_mIoU=0.8981 | val_loss=1.2379 val_mIoU=0.3201 val_mAcc=0.3651 val_allAcc=0.8651
+  [trunk   ]  IoU: 0.0694   Acc: 0.0714
+  [branch  ]  IoU: 0.8744   Acc: 0.9988
+  [wire    ]  IoU: 0.1857   Acc: 0.1875
+Epoch  502 | train_loss=0.0674 train_mIoU=0.9002 | val_loss=0.9697 val_mIoU=0.3765 val_mAcc=0.4192 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.0480   Acc: 0.0488
+  [branch  ]  IoU: 0.8712   Acc: 0.9992
+  [wire    ]  IoU: 0.1648   Acc: 0.1657
+Epoch  503 | train_loss=0.0676 train_mIoU=0.8998 | val_loss=1.0676 val_mIoU=0.3613 val_mAcc=0.4046 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.1117   Acc: 0.1175
+  [branch  ]  IoU: 0.8749   Acc: 0.9973
+  [wire    ]  IoU: 0.1513   Acc: 0.1521
+Epoch  504 | train_loss=0.0676 train_mIoU=0.8999 | val_loss=0.9594 val_mIoU=0.3793 val_mAcc=0.4223 val_allAcc=0.8752
+  [trunk   ]  IoU: 0.0856   Acc: 0.0879
+  [branch  ]  IoU: 0.8724   Acc: 0.9980
+  [wire    ]  IoU: 0.1401   Acc: 0.1430
+Epoch  505 | train_loss=0.0699 train_mIoU=0.8965 | val_loss=0.9957 val_mIoU=0.3660 val_mAcc=0.4096 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.0497   Acc: 0.0503
+  [branch  ]  IoU: 0.8650   Acc: 0.9994
+  [wire    ]  IoU: 0.0497   Acc: 0.0498
+Epoch  506 | train_loss=0.0681 train_mIoU=0.8992 | val_loss=1.2525 val_mIoU=0.3215 val_mAcc=0.3665 val_allAcc=0.8655
+  [trunk   ]  IoU: 0.0671   Acc: 0.0690
+  [branch  ]  IoU: 0.8725   Acc: 0.9984
+  [wire    ]  IoU: 0.1630   Acc: 0.1652
+Epoch  507 | train_loss=0.0699 train_mIoU=0.8967 | val_loss=0.9959 val_mIoU=0.3675 val_mAcc=0.4109 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.0460   Acc: 0.0465
+  [branch  ]  IoU: 0.8671   Acc: 0.9992
+  [wire    ]  IoU: 0.0930   Acc: 0.0939
+Epoch  508 | train_loss=0.0686 train_mIoU=0.8988 | val_loss=1.1952 val_mIoU=0.3353 val_mAcc=0.3799 val_allAcc=0.8676
+  [trunk   ]  IoU: 0.0788   Acc: 0.0810
+  [branch  ]  IoU: 0.8789   Acc: 0.9980
+  [wire    ]  IoU: 0.2476   Acc: 0.2567
+Epoch  509 | train_loss=0.0664 train_mIoU=0.9019 | val_loss=0.9467 val_mIoU=0.4018 val_mAcc=0.4452 val_allAcc=0.8792
+  [trunk   ]  IoU: 0.0756   Acc: 0.0774
+  [branch  ]  IoU: 0.8724   Acc: 0.9980
+  [wire    ]  IoU: 0.1589   Acc: 0.1624
+Epoch  510 | train_loss=0.0676 train_mIoU=0.9007 | val_loss=1.0737 val_mIoU=0.3690 val_mAcc=0.4126 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.1000   Acc: 0.1053
+  [branch  ]  IoU: 0.8760   Acc: 0.9965
+  [wire    ]  IoU: 0.1904   Acc: 0.1946
+Epoch  511 | train_loss=0.0682 train_mIoU=0.8985 | val_loss=0.9513 val_mIoU=0.3888 val_mAcc=0.4321 val_allAcc=0.8761
+  [trunk   ]  IoU: 0.0714   Acc: 0.0733
+  [branch  ]  IoU: 0.8688   Acc: 0.9987
+  [wire    ]  IoU: 0.0868   Acc: 0.0875
+Epoch  512 | train_loss=0.0688 train_mIoU=0.8974 | val_loss=1.1686 val_mIoU=0.3424 val_mAcc=0.3865 val_allAcc=0.8690
+  [trunk   ]  IoU: 0.0693   Acc: 0.0707
+  [branch  ]  IoU: 0.8704   Acc: 0.9984
+  [wire    ]  IoU: 0.1297   Acc: 0.1316
+Epoch  513 | train_loss=0.0684 train_mIoU=0.8989 | val_loss=1.0581 val_mIoU=0.3565 val_mAcc=0.4002 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0822   Acc: 0.0862
+  [branch  ]  IoU: 0.8717   Acc: 0.9970
+  [wire    ]  IoU: 0.1295   Acc: 0.1322
+Epoch  514 | train_loss=0.0681 train_mIoU=0.8990 | val_loss=1.0627 val_mIoU=0.3611 val_mAcc=0.4052 val_allAcc=0.8713
+  [trunk   ]  IoU: 0.0456   Acc: 0.0463
+  [branch  ]  IoU: 0.8642   Acc: 0.9993
+  [wire    ]  IoU: 0.0382   Acc: 0.0382
+Epoch  515 | train_loss=0.0692 train_mIoU=0.8975 | val_loss=1.3482 val_mIoU=0.3160 val_mAcc=0.3613 val_allAcc=0.8644
+  [trunk   ]  IoU: 0.1295   Acc: 0.1386
+  [branch  ]  IoU: 0.8731   Acc: 0.9956
+  [wire    ]  IoU: 0.1157   Acc: 0.1164
+Epoch  516 | train_loss=0.0701 train_mIoU=0.8956 | val_loss=1.0521 val_mIoU=0.3727 val_mAcc=0.4169 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.0877   Acc: 0.0912
+  [branch  ]  IoU: 0.8676   Acc: 0.9973
+  [wire    ]  IoU: 0.0706   Acc: 0.0708
+Epoch  517 | train_loss=0.0686 train_mIoU=0.8989 | val_loss=1.1693 val_mIoU=0.3420 val_mAcc=0.3864 val_allAcc=0.8682
+  [trunk   ]  IoU: 0.1169   Acc: 0.1275
+  [branch  ]  IoU: 0.8762   Acc: 0.9942
+  [wire    ]  IoU: 0.1883   Acc: 0.1919
+Epoch  518 | train_loss=0.0703 train_mIoU=0.8963 | val_loss=0.8593 val_mIoU=0.3938 val_mAcc=0.4379 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.0658   Acc: 0.0681
+  [branch  ]  IoU: 0.8679   Acc: 0.9984
+  [wire    ]  IoU: 0.0785   Acc: 0.0786
+Epoch  519 | train_loss=0.0693 train_mIoU=0.8969 | val_loss=1.1887 val_mIoU=0.3374 val_mAcc=0.3817 val_allAcc=0.8678
+  [trunk   ]  IoU: 0.0826   Acc: 0.0861
+  [branch  ]  IoU: 0.8699   Acc: 0.9975
+  [wire    ]  IoU: 0.1045   Acc: 0.1055
+Epoch  520 | train_loss=0.0661 train_mIoU=0.9013 | val_loss=1.0566 val_mIoU=0.3523 val_mAcc=0.3964 val_allAcc=0.8700
+  [trunk   ]  IoU: 0.0727   Acc: 0.0758
+  [branch  ]  IoU: 0.8716   Acc: 0.9978
+  [wire    ]  IoU: 0.1418   Acc: 0.1428
+Epoch  521 | train_loss=0.0667 train_mIoU=0.9022 | val_loss=1.0633 val_mIoU=0.3620 val_mAcc=0.4055 val_allAcc=0.8717
+  [trunk   ]  IoU: 0.0762   Acc: 0.0782
+  [branch  ]  IoU: 0.8691   Acc: 0.9982
+  [wire    ]  IoU: 0.1034   Acc: 0.1040
+Epoch  522 | train_loss=0.0668 train_mIoU=0.9011 | val_loss=1.1391 val_mIoU=0.3496 val_mAcc=0.3935 val_allAcc=0.8700
+  [trunk   ]  IoU: 0.0915   Acc: 0.0943
+  [branch  ]  IoU: 0.8736   Acc: 0.9984
+  [wire    ]  IoU: 0.1526   Acc: 0.1534
+Epoch  523 | train_loss=0.0667 train_mIoU=0.9012 | val_loss=1.1151 val_mIoU=0.3726 val_mAcc=0.4154 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0561   Acc: 0.0574
+  [branch  ]  IoU: 0.8860   Acc: 0.9887
+  [wire    ]  IoU: 0.3929   Acc: 0.4929
+Epoch  524 | train_loss=0.0712 train_mIoU=0.8940 | val_loss=0.8243 val_mIoU=0.4450 val_mAcc=0.5130 val_allAcc=0.8833
+  [trunk   ]  IoU: 0.0993   Acc: 0.1039
+  [branch  ]  IoU: 0.8762   Acc: 0.9964
+  [wire    ]  IoU: 0.1828   Acc: 0.1908
+Epoch  525 | train_loss=0.0713 train_mIoU=0.8949 | val_loss=0.9809 val_mIoU=0.3861 val_mAcc=0.4304 val_allAcc=0.8757
+  [trunk   ]  IoU: 0.0570   Acc: 0.0578
+  [branch  ]  IoU: 0.8810   Acc: 0.9976
+  [wire    ]  IoU: 0.2960   Acc: 0.3181
+Epoch  526 | train_loss=0.0692 train_mIoU=0.8983 | val_loss=0.9803 val_mIoU=0.4113 val_mAcc=0.4578 val_allAcc=0.8806
+  [trunk   ]  IoU: 0.0933   Acc: 0.0967
+  [branch  ]  IoU: 0.8843   Acc: 0.9955
+  [wire    ]  IoU: 0.3409   Acc: 0.3653
+Epoch  527 | train_loss=0.0680 train_mIoU=0.8993 | val_loss=0.8098 val_mIoU=0.4395 val_mAcc=0.4858 val_allAcc=0.8847
+  [trunk   ]  IoU: 0.1127   Acc: 0.1201
+  [branch  ]  IoU: 0.8812   Acc: 0.9949
+  [wire    ]  IoU: 0.2676   Acc: 0.2802
+Epoch  528 | train_loss=0.0668 train_mIoU=0.9022 | val_loss=0.8568 val_mIoU=0.4205 val_mAcc=0.4651 val_allAcc=0.8810
+  [trunk   ]  IoU: 0.0493   Acc: 0.0498
+  [branch  ]  IoU: 0.8732   Acc: 0.9987
+  [wire    ]  IoU: 0.2047   Acc: 0.2094
+Epoch  529 | train_loss=0.0656 train_mIoU=0.9025 | val_loss=1.1544 val_mIoU=0.3758 val_mAcc=0.4193 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0706   Acc: 0.0730
+  [branch  ]  IoU: 0.8686   Acc: 0.9984
+  [wire    ]  IoU: 0.0861   Acc: 0.0866
+Epoch  530 | train_loss=0.0726 train_mIoU=0.8928 | val_loss=1.1361 val_mIoU=0.3418 val_mAcc=0.3860 val_allAcc=0.8686
+  [trunk   ]  IoU: 0.1365   Acc: 0.1490
+  [branch  ]  IoU: 0.8792   Acc: 0.9932
+  [wire    ]  IoU: 0.2318   Acc: 0.2382
+Epoch  531 | train_loss=0.0666 train_mIoU=0.9019 | val_loss=0.8132 val_mIoU=0.4158 val_mAcc=0.4602 val_allAcc=0.8794
+  [trunk   ]  IoU: 0.1095   Acc: 0.1145
+  [branch  ]  IoU: 0.8774   Acc: 0.9973
+  [wire    ]  IoU: 0.2021   Acc: 0.2045
+Epoch  532 | train_loss=0.0652 train_mIoU=0.9024 | val_loss=0.9658 val_mIoU=0.3963 val_mAcc=0.4388 val_allAcc=0.8782
+  [trunk   ]  IoU: 0.1200   Acc: 0.1260
+  [branch  ]  IoU: 0.8759   Acc: 0.9972
+  [wire    ]  IoU: 0.1617   Acc: 0.1628
+Epoch  533 | train_loss=0.0643 train_mIoU=0.9050 | val_loss=0.9552 val_mIoU=0.3858 val_mAcc=0.4287 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.0901   Acc: 0.0923
+  [branch  ]  IoU: 0.8714   Acc: 0.9983
+  [wire    ]  IoU: 0.1256   Acc: 0.1264
+Epoch  534 | train_loss=0.0638 train_mIoU=0.9041 | val_loss=1.0579 val_mIoU=0.3624 val_mAcc=0.4057 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0746   Acc: 0.0771
+  [branch  ]  IoU: 0.8674   Acc: 0.9982
+  [wire    ]  IoU: 0.0673   Acc: 0.0675
+Epoch  535 | train_loss=0.0647 train_mIoU=0.9041 | val_loss=1.2447 val_mIoU=0.3365 val_mAcc=0.3809 val_allAcc=0.8677
+  [trunk   ]  IoU: 0.1082   Acc: 0.1152
+  [branch  ]  IoU: 0.8740   Acc: 0.9967
+  [wire    ]  IoU: 0.1426   Acc: 0.1431
+Epoch  536 | train_loss=0.0642 train_mIoU=0.9052 | val_loss=0.9941 val_mIoU=0.3749 val_mAcc=0.4183 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.0659   Acc: 0.0675
+  [branch  ]  IoU: 0.8663   Acc: 0.9985
+  [wire    ]  IoU: 0.0600   Acc: 0.0602
+Epoch  537 | train_loss=0.0659 train_mIoU=0.9022 | val_loss=1.1933 val_mIoU=0.3308 val_mAcc=0.3754 val_allAcc=0.8668
+  [trunk   ]  IoU: 0.1208   Acc: 0.1310
+  [branch  ]  IoU: 0.8773   Acc: 0.9944
+  [wire    ]  IoU: 0.1895   Acc: 0.1958
+Epoch  538 | train_loss=0.0646 train_mIoU=0.9038 | val_loss=0.8472 val_mIoU=0.3958 val_mAcc=0.4404 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.0701   Acc: 0.0716
+  [branch  ]  IoU: 0.8775   Acc: 0.9982
+  [wire    ]  IoU: 0.2597   Acc: 0.2652
+Epoch  539 | train_loss=0.0645 train_mIoU=0.9048 | val_loss=1.0321 val_mIoU=0.4024 val_mAcc=0.4450 val_allAcc=0.8790
+  [trunk   ]  IoU: 0.1304   Acc: 0.1380
+  [branch  ]  IoU: 0.8818   Acc: 0.9955
+  [wire    ]  IoU: 0.2652   Acc: 0.2736
+Epoch  540 | train_loss=0.0676 train_mIoU=0.8993 | val_loss=0.8462 val_mIoU=0.4258 val_mAcc=0.4690 val_allAcc=0.8826
+  [trunk   ]  IoU: 0.0583   Acc: 0.0600
+  [branch  ]  IoU: 0.8745   Acc: 0.9982
+  [wire    ]  IoU: 0.2011   Acc: 0.2064
+Epoch  541 | train_loss=0.0671 train_mIoU=0.9003 | val_loss=1.0534 val_mIoU=0.3780 val_mAcc=0.4215 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.0777   Acc: 0.0798
+  [branch  ]  IoU: 0.8737   Acc: 0.9979
+  [wire    ]  IoU: 0.1770   Acc: 0.1809
+Epoch  542 | train_loss=0.0636 train_mIoU=0.9062 | val_loss=1.0880 val_mIoU=0.3761 val_mAcc=0.4195 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0990   Acc: 0.1037
+  [branch  ]  IoU: 0.8780   Acc: 0.9971
+  [wire    ]  IoU: 0.2259   Acc: 0.2303
+Epoch  543 | train_loss=0.0631 train_mIoU=0.9063 | val_loss=0.8932 val_mIoU=0.4010 val_mAcc=0.4437 val_allAcc=0.8786
+  [trunk   ]  IoU: 0.1154   Acc: 0.1229
+  [branch  ]  IoU: 0.8781   Acc: 0.9967
+  [wire    ]  IoU: 0.1971   Acc: 0.1993
+Epoch  544 | train_loss=0.0626 train_mIoU=0.9072 | val_loss=0.9418 val_mIoU=0.3969 val_mAcc=0.4396 val_allAcc=0.8780
+  [trunk   ]  IoU: 0.0966   Acc: 0.1022
+  [branch  ]  IoU: 0.8743   Acc: 0.9977
+  [wire    ]  IoU: 0.1418   Acc: 0.1426
+Epoch  545 | train_loss=0.0620 train_mIoU=0.9086 | val_loss=1.0638 val_mIoU=0.3709 val_mAcc=0.4142 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1269   Acc: 0.1362
+  [branch  ]  IoU: 0.8780   Acc: 0.9961
+  [wire    ]  IoU: 0.1802   Acc: 0.1828
+Epoch  546 | train_loss=0.0630 train_mIoU=0.9064 | val_loss=0.9094 val_mIoU=0.3950 val_mAcc=0.4384 val_allAcc=0.8776
+  [trunk   ]  IoU: 0.0958   Acc: 0.1001
+  [branch  ]  IoU: 0.8753   Acc: 0.9974
+  [wire    ]  IoU: 0.1856   Acc: 0.1872
+Epoch  547 | train_loss=0.0619 train_mIoU=0.9082 | val_loss=0.9644 val_mIoU=0.3856 val_mAcc=0.4283 val_allAcc=0.8760
+  [trunk   ]  IoU: 0.0623   Acc: 0.0641
+  [branch  ]  IoU: 0.8714   Acc: 0.9986
+  [wire    ]  IoU: 0.1468   Acc: 0.1478
+Epoch  548 | train_loss=0.0626 train_mIoU=0.9066 | val_loss=1.2171 val_mIoU=0.3601 val_mAcc=0.4035 val_allAcc=0.8718
+  [trunk   ]  IoU: 0.0910   Acc: 0.0946
+  [branch  ]  IoU: 0.8818   Acc: 0.9969
+  [wire    ]  IoU: 0.3001   Acc: 0.3106
+Epoch  549 | train_loss=0.0624 train_mIoU=0.9068 | val_loss=0.9380 val_mIoU=0.4243 val_mAcc=0.4674 val_allAcc=0.8825
+  [trunk   ]  IoU: 0.0811   Acc: 0.0827
+  [branch  ]  IoU: 0.8735   Acc: 0.9988
+  [wire    ]  IoU: 0.1688   Acc: 0.1699
+Epoch  550 | train_loss=0.0641 train_mIoU=0.9045 | val_loss=1.0298 val_mIoU=0.3745 val_mAcc=0.4172 val_allAcc=0.8748
+  [trunk   ]  IoU: 0.0690   Acc: 0.0707
+  [branch  ]  IoU: 0.8694   Acc: 0.9983
+  [wire    ]  IoU: 0.1181   Acc: 0.1190
+Epoch  551 | train_loss=0.0636 train_mIoU=0.9055 | val_loss=1.1751 val_mIoU=0.3522 val_mAcc=0.3960 val_allAcc=0.8703
+  [trunk   ]  IoU: 0.0692   Acc: 0.0706
+  [branch  ]  IoU: 0.8767   Acc: 0.9986
+  [wire    ]  IoU: 0.2389   Acc: 0.2427
+Epoch  552 | train_loss=0.0638 train_mIoU=0.9043 | val_loss=1.0270 val_mIoU=0.3950 val_mAcc=0.4373 val_allAcc=0.8780
+  [trunk   ]  IoU: 0.0789   Acc: 0.0811
+  [branch  ]  IoU: 0.8744   Acc: 0.9980
+  [wire    ]  IoU: 0.1842   Acc: 0.1882
+Epoch  553 | train_loss=0.0627 train_mIoU=0.9071 | val_loss=1.0658 val_mIoU=0.3791 val_mAcc=0.4224 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.0568   Acc: 0.0583
+  [branch  ]  IoU: 0.8693   Acc: 0.9986
+  [wire    ]  IoU: 0.1188   Acc: 0.1197
+Epoch  554 | train_loss=0.0623 train_mIoU=0.9067 | val_loss=1.2131 val_mIoU=0.3483 val_mAcc=0.3922 val_allAcc=0.8696
+  [trunk   ]  IoU: 0.0450   Acc: 0.0456
+  [branch  ]  IoU: 0.8671   Acc: 0.9992
+  [wire    ]  IoU: 0.0982   Acc: 0.0984
+Epoch  555 | train_loss=0.0623 train_mIoU=0.9072 | val_loss=1.2876 val_mIoU=0.3367 val_mAcc=0.3811 val_allAcc=0.8678
+  [trunk   ]  IoU: 0.0964   Acc: 0.0998
+  [branch  ]  IoU: 0.8701   Acc: 0.9981
+  [wire    ]  IoU: 0.0827   Acc: 0.0831
+Epoch  556 | train_loss=0.0632 train_mIoU=0.9065 | val_loss=1.1222 val_mIoU=0.3497 val_mAcc=0.3937 val_allAcc=0.8704
+  [trunk   ]  IoU: 0.0700   Acc: 0.0716
+  [branch  ]  IoU: 0.8723   Acc: 0.9985
+  [wire    ]  IoU: 0.1619   Acc: 0.1639
+Epoch  557 | train_loss=0.0634 train_mIoU=0.9059 | val_loss=1.0566 val_mIoU=0.3681 val_mAcc=0.4113 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0828   Acc: 0.0874
+  [branch  ]  IoU: 0.8732   Acc: 0.9977
+  [wire    ]  IoU: 0.1446   Acc: 0.1452
+Epoch  558 | train_loss=0.0627 train_mIoU=0.9066 | val_loss=1.0447 val_mIoU=0.3669 val_mAcc=0.4101 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.0811   Acc: 0.0836
+  [branch  ]  IoU: 0.8736   Acc: 0.9980
+  [wire    ]  IoU: 0.1714   Acc: 0.1737
+Epoch  559 | train_loss=0.0621 train_mIoU=0.9070 | val_loss=1.0696 val_mIoU=0.3753 val_mAcc=0.4184 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0736   Acc: 0.0757
+  [branch  ]  IoU: 0.8732   Acc: 0.9986
+  [wire    ]  IoU: 0.1703   Acc: 0.1710
+Epoch  560 | train_loss=0.0606 train_mIoU=0.9092 | val_loss=1.0961 val_mIoU=0.3724 val_mAcc=0.4151 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.0537   Acc: 0.0543
+  [branch  ]  IoU: 0.8703   Acc: 0.9989
+  [wire    ]  IoU: 0.1523   Acc: 0.1535
+Epoch  561 | train_loss=0.0603 train_mIoU=0.9107 | val_loss=1.1525 val_mIoU=0.3588 val_mAcc=0.4023 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.0761   Acc: 0.0814
+  [branch  ]  IoU: 0.8728   Acc: 0.9968
+  [wire    ]  IoU: 0.1526   Acc: 0.1536
+Epoch  562 | train_loss=0.0601 train_mIoU=0.9104 | val_loss=1.1573 val_mIoU=0.3672 val_mAcc=0.4106 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0663   Acc: 0.0677
+  [branch  ]  IoU: 0.8698   Acc: 0.9990
+  [wire    ]  IoU: 0.1134   Acc: 0.1139
+Epoch  563 | train_loss=0.0602 train_mIoU=0.9105 | val_loss=1.2498 val_mIoU=0.3498 val_mAcc=0.3935 val_allAcc=0.8704
+  [trunk   ]  IoU: 0.0806   Acc: 0.0839
+  [branch  ]  IoU: 0.8714   Acc: 0.9985
+  [wire    ]  IoU: 0.1131   Acc: 0.1134
+Epoch  564 | train_loss=0.0606 train_mIoU=0.9099 | val_loss=1.1649 val_mIoU=0.3550 val_mAcc=0.3986 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.1146   Acc: 0.1221
+  [branch  ]  IoU: 0.8758   Acc: 0.9966
+  [wire    ]  IoU: 0.1622   Acc: 0.1637
+Epoch  565 | train_loss=0.0593 train_mIoU=0.9113 | val_loss=1.0837 val_mIoU=0.3842 val_mAcc=0.4275 val_allAcc=0.8757
+  [trunk   ]  IoU: 0.1333   Acc: 0.1457
+  [branch  ]  IoU: 0.8774   Acc: 0.9953
+  [wire    ]  IoU: 0.1596   Acc: 0.1613
+Epoch  566 | train_loss=0.0597 train_mIoU=0.9110 | val_loss=1.0105 val_mIoU=0.3901 val_mAcc=0.4341 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.1378   Acc: 0.1559
+  [branch  ]  IoU: 0.8786   Acc: 0.9925
+  [wire    ]  IoU: 0.1972   Acc: 0.2000
+Epoch  567 | train_loss=0.0617 train_mIoU=0.9087 | val_loss=0.8379 val_mIoU=0.4045 val_mAcc=0.4495 val_allAcc=0.8771
+  [trunk   ]  IoU: 0.0975   Acc: 0.1024
+  [branch  ]  IoU: 0.8742   Acc: 0.9978
+  [wire    ]  IoU: 0.1434   Acc: 0.1445
+Epoch  568 | train_loss=0.0632 train_mIoU=0.9066 | val_loss=1.0458 val_mIoU=0.3717 val_mAcc=0.4149 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.0639   Acc: 0.0656
+  [branch  ]  IoU: 0.8691   Acc: 0.9986
+  [wire    ]  IoU: 0.1060   Acc: 0.1066
+Epoch  569 | train_loss=0.0652 train_mIoU=0.9041 | val_loss=1.0665 val_mIoU=0.3463 val_mAcc=0.3903 val_allAcc=0.8695
+  [trunk   ]  IoU: 0.0650   Acc: 0.0667
+  [branch  ]  IoU: 0.8748   Acc: 0.9979
+  [wire    ]  IoU: 0.2168   Acc: 0.2216
+Epoch  570 | train_loss=0.0643 train_mIoU=0.9048 | val_loss=0.9324 val_mIoU=0.3855 val_mAcc=0.4287 val_allAcc=0.8757
+  [trunk   ]  IoU: 0.0688   Acc: 0.0706
+  [branch  ]  IoU: 0.8700   Acc: 0.9986
+  [wire    ]  IoU: 0.1144   Acc: 0.1157
+Epoch  571 | train_loss=0.0695 train_mIoU=0.8973 | val_loss=1.1823 val_mIoU=0.3511 val_mAcc=0.3950 val_allAcc=0.8703
+  [trunk   ]  IoU: 0.0646   Acc: 0.0659
+  [branch  ]  IoU: 0.8741   Acc: 0.9984
+  [wire    ]  IoU: 0.1881   Acc: 0.1936
+Epoch  572 | train_loss=0.0645 train_mIoU=0.9047 | val_loss=1.0283 val_mIoU=0.3756 val_mAcc=0.4193 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.0654   Acc: 0.0665
+  [branch  ]  IoU: 0.8725   Acc: 0.9985
+  [wire    ]  IoU: 0.1658   Acc: 0.1697
+Epoch  573 | train_loss=0.0608 train_mIoU=0.9098 | val_loss=1.1504 val_mIoU=0.3679 val_mAcc=0.4116 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0901   Acc: 0.0925
+  [branch  ]  IoU: 0.8771   Acc: 0.9970
+  [wire    ]  IoU: 0.2262   Acc: 0.2354
+Epoch  574 | train_loss=0.0589 train_mIoU=0.9127 | val_loss=0.9799 val_mIoU=0.3978 val_mAcc=0.4416 val_allAcc=0.8779
+  [trunk   ]  IoU: 0.0783   Acc: 0.0802
+  [branch  ]  IoU: 0.8756   Acc: 0.9980
+  [wire    ]  IoU: 0.2078   Acc: 0.2128
+Epoch  575 | train_loss=0.0583 train_mIoU=0.9125 | val_loss=1.0373 val_mIoU=0.3872 val_mAcc=0.4303 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.1141   Acc: 0.1191
+  [branch  ]  IoU: 0.8763   Acc: 0.9964
+  [wire    ]  IoU: 0.1948   Acc: 0.1991
+Epoch  576 | train_loss=0.0572 train_mIoU=0.9142 | val_loss=0.9533 val_mIoU=0.3951 val_mAcc=0.4382 val_allAcc=0.8774
+  [trunk   ]  IoU: 0.1108   Acc: 0.1165
+  [branch  ]  IoU: 0.8803   Acc: 0.9954
+  [wire    ]  IoU: 0.2474   Acc: 0.2612
+Epoch  577 | train_loss=0.0573 train_mIoU=0.9140 | val_loss=0.9331 val_mIoU=0.4128 val_mAcc=0.4577 val_allAcc=0.8801
+  [trunk   ]  IoU: 0.0733   Acc: 0.0752
+  [branch  ]  IoU: 0.8728   Acc: 0.9984
+  [wire    ]  IoU: 0.1467   Acc: 0.1507
+Epoch  578 | train_loss=0.0587 train_mIoU=0.9126 | val_loss=1.0908 val_mIoU=0.3642 val_mAcc=0.4081 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0919   Acc: 0.0950
+  [branch  ]  IoU: 0.8724   Acc: 0.9980
+  [wire    ]  IoU: 0.1303   Acc: 0.1319
+Epoch  579 | train_loss=0.0584 train_mIoU=0.9124 | val_loss=1.1868 val_mIoU=0.3648 val_mAcc=0.4083 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.0676   Acc: 0.0697
+  [branch  ]  IoU: 0.8725   Acc: 0.9977
+  [wire    ]  IoU: 0.1485   Acc: 0.1543
+Epoch  580 | train_loss=0.0576 train_mIoU=0.9142 | val_loss=1.1568 val_mIoU=0.3629 val_mAcc=0.4072 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.1030   Acc: 0.1077
+  [branch  ]  IoU: 0.8787   Acc: 0.9971
+  [wire    ]  IoU: 0.2289   Acc: 0.2341
+Epoch  581 | train_loss=0.0583 train_mIoU=0.9125 | val_loss=0.9895 val_mIoU=0.4035 val_mAcc=0.4463 val_allAcc=0.8792
+  [trunk   ]  IoU: 0.1045   Acc: 0.1089
+  [branch  ]  IoU: 0.8756   Acc: 0.9971
+  [wire    ]  IoU: 0.1793   Acc: 0.1832
+Epoch  582 | train_loss=0.0584 train_mIoU=0.9123 | val_loss=1.0715 val_mIoU=0.3865 val_mAcc=0.4297 val_allAcc=0.8762
+  [trunk   ]  IoU: 0.0969   Acc: 0.1008
+  [branch  ]  IoU: 0.8705   Acc: 0.9978
+  [wire    ]  IoU: 0.0959   Acc: 0.0962
+Epoch  583 | train_loss=0.0571 train_mIoU=0.9143 | val_loss=1.2166 val_mIoU=0.3544 val_mAcc=0.3983 val_allAcc=0.8710
+  [trunk   ]  IoU: 0.0499   Acc: 0.0507
+  [branch  ]  IoU: 0.8701   Acc: 0.9989
+  [wire    ]  IoU: 0.1405   Acc: 0.1428
+Epoch  584 | train_loss=0.0560 train_mIoU=0.9154 | val_loss=1.2770 val_mIoU=0.3535 val_mAcc=0.3975 val_allAcc=0.8706
+  [trunk   ]  IoU: 0.1202   Acc: 0.1268
+  [branch  ]  IoU: 0.8778   Acc: 0.9966
+  [wire    ]  IoU: 0.1917   Acc: 0.1959
+Epoch  585 | train_loss=0.0568 train_mIoU=0.9144 | val_loss=1.0100 val_mIoU=0.3966 val_mAcc=0.4398 val_allAcc=0.8780
+  [trunk   ]  IoU: 0.0600   Acc: 0.0613
+  [branch  ]  IoU: 0.8703   Acc: 0.9986
+  [wire    ]  IoU: 0.1287   Acc: 0.1313
+Epoch  586 | train_loss=0.0563 train_mIoU=0.9159 | val_loss=1.2433 val_mIoU=0.3530 val_mAcc=0.3970 val_allAcc=0.8705
+  [trunk   ]  IoU: 0.0581   Acc: 0.0597
+  [branch  ]  IoU: 0.8753   Acc: 0.9972
+  [wire    ]  IoU: 0.2012   Acc: 0.2141
+Epoch  587 | train_loss=0.0575 train_mIoU=0.9141 | val_loss=1.1701 val_mIoU=0.3782 val_mAcc=0.4237 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0643   Acc: 0.0659
+  [branch  ]  IoU: 0.8745   Acc: 0.9976
+  [wire    ]  IoU: 0.1899   Acc: 0.1997
+Epoch  588 | train_loss=0.0586 train_mIoU=0.9124 | val_loss=1.1386 val_mIoU=0.3762 val_mAcc=0.4210 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1109   Acc: 0.1169
+  [branch  ]  IoU: 0.8748   Acc: 0.9965
+  [wire    ]  IoU: 0.1594   Acc: 0.1622
+Epoch  589 | train_loss=0.0573 train_mIoU=0.9140 | val_loss=1.0632 val_mIoU=0.3817 val_mAcc=0.4252 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.0902   Acc: 0.0930
+  [branch  ]  IoU: 0.8731   Acc: 0.9976
+  [wire    ]  IoU: 0.1536   Acc: 0.1566
+Epoch  590 | train_loss=0.0581 train_mIoU=0.9130 | val_loss=1.1471 val_mIoU=0.3723 val_mAcc=0.4157 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1062   Acc: 0.1127
+  [branch  ]  IoU: 0.8722   Acc: 0.9963
+  [wire    ]  IoU: 0.1256   Acc: 0.1266
+Epoch  591 | train_loss=0.0575 train_mIoU=0.9131 | val_loss=1.2345 val_mIoU=0.3680 val_mAcc=0.4119 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0785   Acc: 0.0808
+  [branch  ]  IoU: 0.8727   Acc: 0.9980
+  [wire    ]  IoU: 0.1602   Acc: 0.1625
+Epoch  592 | train_loss=0.0575 train_mIoU=0.9148 | val_loss=1.1538 val_mIoU=0.3705 val_mAcc=0.4138 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1401   Acc: 0.1581
+  [branch  ]  IoU: 0.8786   Acc: 0.9924
+  [wire    ]  IoU: 0.2023   Acc: 0.2048
+Epoch  593 | train_loss=0.0562 train_mIoU=0.9157 | val_loss=0.9446 val_mIoU=0.4070 val_mAcc=0.4518 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.1114   Acc: 0.1171
+  [branch  ]  IoU: 0.8754   Acc: 0.9973
+  [wire    ]  IoU: 0.1560   Acc: 0.1578
+Epoch  594 | train_loss=0.0562 train_mIoU=0.9161 | val_loss=1.0920 val_mIoU=0.3809 val_mAcc=0.4241 val_allAcc=0.8755
+  [trunk   ]  IoU: 0.0845   Acc: 0.0873
+  [branch  ]  IoU: 0.8718   Acc: 0.9981
+  [wire    ]  IoU: 0.1338   Acc: 0.1347
+Epoch  595 | train_loss=0.0572 train_mIoU=0.9137 | val_loss=1.1797 val_mIoU=0.3634 val_mAcc=0.4067 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0665   Acc: 0.0682
+  [branch  ]  IoU: 0.8693   Acc: 0.9988
+  [wire    ]  IoU: 0.1066   Acc: 0.1071
+Epoch  596 | train_loss=0.0560 train_mIoU=0.9160 | val_loss=1.2706 val_mIoU=0.3475 val_mAcc=0.3913 val_allAcc=0.8698
+  [trunk   ]  IoU: 0.0924   Acc: 0.0952
+  [branch  ]  IoU: 0.8764   Acc: 0.9984
+  [wire    ]  IoU: 0.2000   Acc: 0.2023
+Epoch  597 | train_loss=0.0557 train_mIoU=0.9165 | val_loss=1.0951 val_mIoU=0.3896 val_mAcc=0.4319 val_allAcc=0.8773
+  [trunk   ]  IoU: 0.0760   Acc: 0.0781
+  [branch  ]  IoU: 0.8722   Acc: 0.9985
+  [wire    ]  IoU: 0.1404   Acc: 0.1426
+Epoch  598 | train_loss=0.0552 train_mIoU=0.9170 | val_loss=1.2129 val_mIoU=0.3629 val_mAcc=0.4064 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0375   Acc: 0.0378
+  [branch  ]  IoU: 0.8649   Acc: 0.9995
+  [wire    ]  IoU: 0.0643   Acc: 0.0646
+Epoch  599 | train_loss=0.0558 train_mIoU=0.9163 | val_loss=1.4496 val_mIoU=0.3222 val_mAcc=0.3673 val_allAcc=0.8654
+  [trunk   ]  IoU: 0.1096   Acc: 0.1155
+  [branch  ]  IoU: 0.8724   Acc: 0.9971
+  [wire    ]  IoU: 0.1104   Acc: 0.1111
+Epoch  600 | train_loss=0.0563 train_mIoU=0.9149 | val_loss=1.1601 val_mIoU=0.3641 val_mAcc=0.4079 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.0830   Acc: 0.0855
+  [branch  ]  IoU: 0.8729   Acc: 0.9981
+  [wire    ]  IoU: 0.1507   Acc: 0.1534
+Epoch  601 | train_loss=0.0560 train_mIoU=0.9163 | val_loss=1.1987 val_mIoU=0.3689 val_mAcc=0.4123 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.0612   Acc: 0.0622
+  [branch  ]  IoU: 0.8709   Acc: 0.9990
+  [wire    ]  IoU: 0.1401   Acc: 0.1418
+Epoch  602 | train_loss=0.0550 train_mIoU=0.9172 | val_loss=1.2820 val_mIoU=0.3574 val_mAcc=0.4010 val_allAcc=0.8716
+  [trunk   ]  IoU: 0.1142   Acc: 0.1217
+  [branch  ]  IoU: 0.8744   Acc: 0.9965
+  [wire    ]  IoU: 0.1416   Acc: 0.1425
+Epoch  603 | train_loss=0.0545 train_mIoU=0.9180 | val_loss=1.1409 val_mIoU=0.3767 val_mAcc=0.4202 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0702   Acc: 0.0719
+  [branch  ]  IoU: 0.8705   Acc: 0.9987
+  [wire    ]  IoU: 0.1263   Acc: 0.1271
+Epoch  604 | train_loss=0.0551 train_mIoU=0.9166 | val_loss=1.2616 val_mIoU=0.3557 val_mAcc=0.3992 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0992   Acc: 0.1035
+  [branch  ]  IoU: 0.8725   Acc: 0.9973
+  [wire    ]  IoU: 0.1362   Acc: 0.1371
+Epoch  605 | train_loss=0.0543 train_mIoU=0.9184 | val_loss=1.1676 val_mIoU=0.3693 val_mAcc=0.4126 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.1026   Acc: 0.1066
+  [branch  ]  IoU: 0.8736   Acc: 0.9976
+  [wire    ]  IoU: 0.1476   Acc: 0.1485
+Epoch  606 | train_loss=0.0541 train_mIoU=0.9192 | val_loss=1.1177 val_mIoU=0.3746 val_mAcc=0.4176 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0901   Acc: 0.0933
+  [branch  ]  IoU: 0.8733   Acc: 0.9982
+  [wire    ]  IoU: 0.1470   Acc: 0.1482
+Epoch  607 | train_loss=0.0538 train_mIoU=0.9197 | val_loss=1.1806 val_mIoU=0.3701 val_mAcc=0.4132 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.0726   Acc: 0.0747
+  [branch  ]  IoU: 0.8694   Acc: 0.9986
+  [wire    ]  IoU: 0.1012   Acc: 0.1015
+Epoch  608 | train_loss=0.0546 train_mIoU=0.9179 | val_loss=1.2670 val_mIoU=0.3477 val_mAcc=0.3916 val_allAcc=0.8699
+  [trunk   ]  IoU: 0.0928   Acc: 0.0963
+  [branch  ]  IoU: 0.8735   Acc: 0.9980
+  [wire    ]  IoU: 0.1527   Acc: 0.1538
+Epoch  609 | train_loss=0.0554 train_mIoU=0.9167 | val_loss=1.1941 val_mIoU=0.3730 val_mAcc=0.4160 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0808   Acc: 0.0844
+  [branch  ]  IoU: 0.8737   Acc: 0.9979
+  [wire    ]  IoU: 0.1500   Acc: 0.1528
+Epoch  610 | train_loss=0.0553 train_mIoU=0.9170 | val_loss=1.2472 val_mIoU=0.3682 val_mAcc=0.4117 val_allAcc=0.8731
+  [trunk   ]  IoU: 0.0614   Acc: 0.0626
+  [branch  ]  IoU: 0.8696   Acc: 0.9989
+  [wire    ]  IoU: 0.1172   Acc: 0.1180
+Epoch  611 | train_loss=0.0559 train_mIoU=0.9160 | val_loss=1.2638 val_mIoU=0.3494 val_mAcc=0.3932 val_allAcc=0.8701
+  [trunk   ]  IoU: 0.1162   Acc: 0.1246
+  [branch  ]  IoU: 0.8734   Acc: 0.9965
+  [wire    ]  IoU: 0.1131   Acc: 0.1136
+Epoch  612 | train_loss=0.0544 train_mIoU=0.9176 | val_loss=1.1960 val_mIoU=0.3676 val_mAcc=0.4116 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.0978   Acc: 0.1024
+  [branch  ]  IoU: 0.8722   Acc: 0.9974
+  [wire    ]  IoU: 0.1220   Acc: 0.1231
+Epoch  613 | train_loss=0.0552 train_mIoU=0.9169 | val_loss=1.2608 val_mIoU=0.3640 val_mAcc=0.4076 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0870   Acc: 0.0897
+  [branch  ]  IoU: 0.8705   Acc: 0.9980
+  [wire    ]  IoU: 0.1113   Acc: 0.1121
+Epoch  614 | train_loss=0.0537 train_mIoU=0.9195 | val_loss=1.1987 val_mIoU=0.3563 val_mAcc=0.3999 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0921   Acc: 0.0960
+  [branch  ]  IoU: 0.8717   Acc: 0.9978
+  [wire    ]  IoU: 0.1180   Acc: 0.1189
+Epoch  615 | train_loss=0.0540 train_mIoU=0.9187 | val_loss=1.2238 val_mIoU=0.3606 val_mAcc=0.4042 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0934   Acc: 0.0979
+  [branch  ]  IoU: 0.8718   Acc: 0.9974
+  [wire    ]  IoU: 0.1202   Acc: 0.1211
+Epoch  616 | train_loss=0.0530 train_mIoU=0.9206 | val_loss=1.2323 val_mIoU=0.3618 val_mAcc=0.4055 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0713   Acc: 0.0737
+  [branch  ]  IoU: 0.8692   Acc: 0.9984
+  [wire    ]  IoU: 0.0921   Acc: 0.0928
+Epoch  617 | train_loss=0.0541 train_mIoU=0.9187 | val_loss=1.3081 val_mIoU=0.3442 val_mAcc=0.3883 val_allAcc=0.8690
+  [trunk   ]  IoU: 0.0831   Acc: 0.0858
+  [branch  ]  IoU: 0.8716   Acc: 0.9983
+  [wire    ]  IoU: 0.1227   Acc: 0.1240
+Epoch  618 | train_loss=0.0532 train_mIoU=0.9205 | val_loss=1.2864 val_mIoU=0.3591 val_mAcc=0.4027 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.0808   Acc: 0.0834
+  [branch  ]  IoU: 0.8692   Acc: 0.9984
+  [wire    ]  IoU: 0.0836   Acc: 0.0840
+Epoch  619 | train_loss=0.0528 train_mIoU=0.9199 | val_loss=1.3859 val_mIoU=0.3445 val_mAcc=0.3886 val_allAcc=0.8694
+  [trunk   ]  IoU: 0.0826   Acc: 0.0852
+  [branch  ]  IoU: 0.8726   Acc: 0.9983
+  [wire    ]  IoU: 0.1413   Acc: 0.1432
+Epoch  620 | train_loss=0.0527 train_mIoU=0.9207 | val_loss=1.2966 val_mIoU=0.3655 val_mAcc=0.4089 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.0692   Acc: 0.0704
+  [branch  ]  IoU: 0.8728   Acc: 0.9986
+  [wire    ]  IoU: 0.1684   Acc: 0.1714
+Epoch  621 | train_loss=0.0531 train_mIoU=0.9200 | val_loss=1.2417 val_mIoU=0.3701 val_mAcc=0.4135 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0817   Acc: 0.0840
+  [branch  ]  IoU: 0.8723   Acc: 0.9980
+  [wire    ]  IoU: 0.1452   Acc: 0.1482
+Epoch  622 | train_loss=0.0525 train_mIoU=0.9214 | val_loss=1.2689 val_mIoU=0.3664 val_mAcc=0.4100 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.0783   Acc: 0.0805
+  [branch  ]  IoU: 0.8683   Acc: 0.9988
+  [wire    ]  IoU: 0.0672   Acc: 0.0673
+Epoch  623 | train_loss=0.0530 train_mIoU=0.9200 | val_loss=1.4652 val_mIoU=0.3379 val_mAcc=0.3822 val_allAcc=0.8685
+  [trunk   ]  IoU: 0.1031   Acc: 0.1075
+  [branch  ]  IoU: 0.8708   Acc: 0.9976
+  [wire    ]  IoU: 0.0931   Acc: 0.0934
+Epoch  624 | train_loss=0.0525 train_mIoU=0.9209 | val_loss=1.2943 val_mIoU=0.3557 val_mAcc=0.3995 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0833   Acc: 0.0859
+  [branch  ]  IoU: 0.8702   Acc: 0.9984
+  [wire    ]  IoU: 0.1043   Acc: 0.1046
+Epoch  625 | train_loss=0.0526 train_mIoU=0.9207 | val_loss=1.2876 val_mIoU=0.3526 val_mAcc=0.3963 val_allAcc=0.8708
+  [trunk   ]  IoU: 0.1049   Acc: 0.1094
+  [branch  ]  IoU: 0.8719   Acc: 0.9977
+  [wire    ]  IoU: 0.1069   Acc: 0.1076
+Epoch  626 | train_loss=0.0531 train_mIoU=0.9197 | val_loss=1.2542 val_mIoU=0.3612 val_mAcc=0.4049 val_allAcc=0.8722
+  [trunk   ]  IoU: 0.0946   Acc: 0.0981
+  [branch  ]  IoU: 0.8738   Acc: 0.9984
+  [wire    ]  IoU: 0.1449   Acc: 0.1458
+Epoch  627 | train_loss=0.0533 train_mIoU=0.9200 | val_loss=1.1895 val_mIoU=0.3711 val_mAcc=0.4141 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.0892   Acc: 0.0919
+  [branch  ]  IoU: 0.8722   Acc: 0.9984
+  [wire    ]  IoU: 0.1311   Acc: 0.1320
+Epoch  628 | train_loss=0.0519 train_mIoU=0.9215 | val_loss=1.3301 val_mIoU=0.3642 val_mAcc=0.4074 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.1006   Acc: 0.1037
+  [branch  ]  IoU: 0.8716   Acc: 0.9984
+  [wire    ]  IoU: 0.1077   Acc: 0.1082
+Epoch  629 | train_loss=0.0513 train_mIoU=0.9226 | val_loss=1.2657 val_mIoU=0.3600 val_mAcc=0.4034 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.0961   Acc: 0.0993
+  [branch  ]  IoU: 0.8722   Acc: 0.9982
+  [wire    ]  IoU: 0.1230   Acc: 0.1239
+Epoch  630 | train_loss=0.0524 train_mIoU=0.9209 | val_loss=1.2337 val_mIoU=0.3638 val_mAcc=0.4071 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.1026   Acc: 0.1081
+  [branch  ]  IoU: 0.8731   Acc: 0.9977
+  [wire    ]  IoU: 0.1177   Acc: 0.1182
+Epoch  631 | train_loss=0.0517 train_mIoU=0.9220 | val_loss=1.2901 val_mIoU=0.3645 val_mAcc=0.4080 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.1099   Acc: 0.1153
+  [branch  ]  IoU: 0.8738   Acc: 0.9980
+  [wire    ]  IoU: 0.1174   Acc: 0.1178
+Epoch  632 | train_loss=0.0526 train_mIoU=0.9208 | val_loss=1.1673 val_mIoU=0.3670 val_mAcc=0.4104 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1127   Acc: 0.1187
+  [branch  ]  IoU: 0.8730   Acc: 0.9973
+  [wire    ]  IoU: 0.1105   Acc: 0.1112
+Epoch  633 | train_loss=0.0521 train_mIoU=0.9216 | val_loss=1.2439 val_mIoU=0.3654 val_mAcc=0.4091 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.1091   Acc: 0.1140
+  [branch  ]  IoU: 0.8774   Acc: 0.9974
+  [wire    ]  IoU: 0.1952   Acc: 0.1988
+Epoch  634 | train_loss=0.0524 train_mIoU=0.9205 | val_loss=1.1225 val_mIoU=0.3939 val_mAcc=0.4367 val_allAcc=0.8778
+  [trunk   ]  IoU: 0.1053   Acc: 0.1102
+  [branch  ]  IoU: 0.8742   Acc: 0.9974
+  [wire    ]  IoU: 0.1469   Acc: 0.1483
+Epoch  635 | train_loss=0.0523 train_mIoU=0.9210 | val_loss=1.1605 val_mIoU=0.3754 val_mAcc=0.4186 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.0871   Acc: 0.0906
+  [branch  ]  IoU: 0.8729   Acc: 0.9980
+  [wire    ]  IoU: 0.1396   Acc: 0.1410
+Epoch  636 | train_loss=0.0515 train_mIoU=0.9224 | val_loss=1.2978 val_mIoU=0.3665 val_mAcc=0.4099 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.0889   Acc: 0.0930
+  [branch  ]  IoU: 0.8736   Acc: 0.9977
+  [wire    ]  IoU: 0.1470   Acc: 0.1488
+Epoch  637 | train_loss=0.0514 train_mIoU=0.9224 | val_loss=1.2072 val_mIoU=0.3698 val_mAcc=0.4132 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1055   Acc: 0.1097
+  [branch  ]  IoU: 0.8755   Acc: 0.9975
+  [wire    ]  IoU: 0.1667   Acc: 0.1699
+Epoch  638 | train_loss=0.0515 train_mIoU=0.9230 | val_loss=1.1462 val_mIoU=0.3825 val_mAcc=0.4257 val_allAcc=0.8758
+  [trunk   ]  IoU: 0.0837   Acc: 0.0860
+  [branch  ]  IoU: 0.8730   Acc: 0.9985
+  [wire    ]  IoU: 0.1448   Acc: 0.1471
+Epoch  639 | train_loss=0.0518 train_mIoU=0.9216 | val_loss=1.2487 val_mIoU=0.3672 val_mAcc=0.4105 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1237   Acc: 0.1318
+  [branch  ]  IoU: 0.8752   Acc: 0.9971
+  [wire    ]  IoU: 0.1246   Acc: 0.1255
+Epoch  640 | train_loss=0.0513 train_mIoU=0.9231 | val_loss=1.1644 val_mIoU=0.3745 val_mAcc=0.4181 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.0856   Acc: 0.0883
+  [branch  ]  IoU: 0.8702   Acc: 0.9985
+  [wire    ]  IoU: 0.0991   Acc: 0.0995
+Epoch  641 | train_loss=0.0504 train_mIoU=0.9243 | val_loss=1.3216 val_mIoU=0.3516 val_mAcc=0.3954 val_allAcc=0.8707
+  [trunk   ]  IoU: 0.1246   Acc: 0.1321
+  [branch  ]  IoU: 0.8761   Acc: 0.9967
+  [wire    ]  IoU: 0.1550   Acc: 0.1566
+Epoch  642 | train_loss=0.0511 train_mIoU=0.9227 | val_loss=1.1289 val_mIoU=0.3852 val_mAcc=0.4285 val_allAcc=0.8762
+  [trunk   ]  IoU: 0.1038   Acc: 0.1081
+  [branch  ]  IoU: 0.8716   Acc: 0.9976
+  [wire    ]  IoU: 0.1070   Acc: 0.1077
+Epoch  643 | train_loss=0.0501 train_mIoU=0.9237 | val_loss=1.2809 val_mIoU=0.3608 val_mAcc=0.4045 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.0875   Acc: 0.0900
+  [branch  ]  IoU: 0.8708   Acc: 0.9982
+  [wire    ]  IoU: 0.1074   Acc: 0.1088
+Epoch  644 | train_loss=0.0497 train_mIoU=0.9245 | val_loss=1.3571 val_mIoU=0.3552 val_mAcc=0.3990 val_allAcc=0.8712
+  [trunk   ]  IoU: 0.0943   Acc: 0.0982
+  [branch  ]  IoU: 0.8728   Acc: 0.9977
+  [wire    ]  IoU: 0.1214   Acc: 0.1241
+Epoch  645 | train_loss=0.0499 train_mIoU=0.9245 | val_loss=1.3033 val_mIoU=0.3628 val_mAcc=0.4067 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1017   Acc: 0.1069
+  [branch  ]  IoU: 0.8744   Acc: 0.9975
+  [wire    ]  IoU: 0.1382   Acc: 0.1406
+Epoch  646 | train_loss=0.0503 train_mIoU=0.9242 | val_loss=1.2017 val_mIoU=0.3714 val_mAcc=0.4150 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.0990   Acc: 0.1047
+  [branch  ]  IoU: 0.8771   Acc: 0.9973
+  [wire    ]  IoU: 0.1853   Acc: 0.1888
+Epoch  647 | train_loss=0.0507 train_mIoU=0.9231 | val_loss=1.1979 val_mIoU=0.3871 val_mAcc=0.4303 val_allAcc=0.8764
+  [trunk   ]  IoU: 0.1042   Acc: 0.1091
+  [branch  ]  IoU: 0.8759   Acc: 0.9978
+  [wire    ]  IoU: 0.1621   Acc: 0.1647
+Epoch  648 | train_loss=0.0498 train_mIoU=0.9241 | val_loss=1.1917 val_mIoU=0.3808 val_mAcc=0.4239 val_allAcc=0.8757
+  [trunk   ]  IoU: 0.1098   Acc: 0.1154
+  [branch  ]  IoU: 0.8729   Acc: 0.9976
+  [wire    ]  IoU: 0.1069   Acc: 0.1076
+Epoch  649 | train_loss=0.0498 train_mIoU=0.9248 | val_loss=1.2958 val_mIoU=0.3632 val_mAcc=0.4069 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0996   Acc: 0.1042
+  [branch  ]  IoU: 0.8701   Acc: 0.9978
+  [wire    ]  IoU: 0.0753   Acc: 0.0756
+Epoch  650 | train_loss=0.0490 train_mIoU=0.9258 | val_loss=1.3925 val_mIoU=0.3483 val_mAcc=0.3925 val_allAcc=0.8700
+  [trunk   ]  IoU: 0.1183   Acc: 0.1259
+  [branch  ]  IoU: 0.8744   Acc: 0.9972
+  [wire    ]  IoU: 0.1193   Acc: 0.1197
+Epoch  651 | train_loss=0.0494 train_mIoU=0.9252 | val_loss=1.2046 val_mIoU=0.3706 val_mAcc=0.4143 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1052   Acc: 0.1098
+  [branch  ]  IoU: 0.8730   Acc: 0.9979
+  [wire    ]  IoU: 0.1203   Acc: 0.1210
+Epoch  652 | train_loss=0.0488 train_mIoU=0.9264 | val_loss=1.2219 val_mIoU=0.3662 val_mAcc=0.4096 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.0962   Acc: 0.1008
+  [branch  ]  IoU: 0.8725   Acc: 0.9977
+  [wire    ]  IoU: 0.1209   Acc: 0.1219
+Epoch  653 | train_loss=0.0495 train_mIoU=0.9253 | val_loss=1.2719 val_mIoU=0.3632 val_mAcc=0.4068 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1341   Acc: 0.1457
+  [branch  ]  IoU: 0.8780   Acc: 0.9959
+  [wire    ]  IoU: 0.1625   Acc: 0.1643
+Epoch  654 | train_loss=0.0489 train_mIoU=0.9254 | val_loss=1.1058 val_mIoU=0.3916 val_mAcc=0.4353 val_allAcc=0.8770
+  [trunk   ]  IoU: 0.1227   Acc: 0.1311
+  [branch  ]  IoU: 0.8769   Acc: 0.9964
+  [wire    ]  IoU: 0.1658   Acc: 0.1682
+Epoch  655 | train_loss=0.0491 train_mIoU=0.9257 | val_loss=1.1221 val_mIoU=0.3885 val_mAcc=0.4319 val_allAcc=0.8765
+  [trunk   ]  IoU: 0.1226   Acc: 0.1310
+  [branch  ]  IoU: 0.8760   Acc: 0.9965
+  [wire    ]  IoU: 0.1472   Acc: 0.1491
+Epoch  656 | train_loss=0.0491 train_mIoU=0.9259 | val_loss=1.1533 val_mIoU=0.3819 val_mAcc=0.4255 val_allAcc=0.8755
+  [trunk   ]  IoU: 0.1241   Acc: 0.1325
+  [branch  ]  IoU: 0.8756   Acc: 0.9963
+  [wire    ]  IoU: 0.1444   Acc: 0.1461
+Epoch  657 | train_loss=0.0489 train_mIoU=0.9259 | val_loss=1.1654 val_mIoU=0.3813 val_mAcc=0.4250 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.1183   Acc: 0.1249
+  [branch  ]  IoU: 0.8764   Acc: 0.9965
+  [wire    ]  IoU: 0.1779   Acc: 0.1808
+Epoch  658 | train_loss=0.0488 train_mIoU=0.9263 | val_loss=1.1519 val_mIoU=0.3909 val_mAcc=0.4341 val_allAcc=0.8769
+  [trunk   ]  IoU: 0.0903   Acc: 0.0936
+  [branch  ]  IoU: 0.8740   Acc: 0.9979
+  [wire    ]  IoU: 0.1556   Acc: 0.1582
+Epoch  659 | train_loss=0.0495 train_mIoU=0.9246 | val_loss=1.2300 val_mIoU=0.3733 val_mAcc=0.4166 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1133   Acc: 0.1183
+  [branch  ]  IoU: 0.8778   Acc: 0.9969
+  [wire    ]  IoU: 0.2029   Acc: 0.2085
+Epoch  660 | train_loss=0.0486 train_mIoU=0.9256 | val_loss=1.0736 val_mIoU=0.3980 val_mAcc=0.4412 val_allAcc=0.8783
+  [trunk   ]  IoU: 0.1088   Acc: 0.1142
+  [branch  ]  IoU: 0.8740   Acc: 0.9976
+  [wire    ]  IoU: 0.1334   Acc: 0.1343
+Epoch  661 | train_loss=0.0488 train_mIoU=0.9254 | val_loss=1.1925 val_mIoU=0.3721 val_mAcc=0.4154 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.0836   Acc: 0.0860
+  [branch  ]  IoU: 0.8734   Acc: 0.9982
+  [wire    ]  IoU: 0.1606   Acc: 0.1630
+Epoch  662 | train_loss=0.0483 train_mIoU=0.9273 | val_loss=1.1907 val_mIoU=0.3725 val_mAcc=0.4157 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.0947   Acc: 0.0987
+  [branch  ]  IoU: 0.8716   Acc: 0.9979
+  [wire    ]  IoU: 0.1096   Acc: 0.1104
+Epoch  663 | train_loss=0.0482 train_mIoU=0.9266 | val_loss=1.2696 val_mIoU=0.3587 val_mAcc=0.4023 val_allAcc=0.8717
+  [trunk   ]  IoU: 0.1078   Acc: 0.1129
+  [branch  ]  IoU: 0.8747   Acc: 0.9976
+  [wire    ]  IoU: 0.1424   Acc: 0.1444
+Epoch  664 | train_loss=0.0483 train_mIoU=0.9271 | val_loss=1.1942 val_mIoU=0.3750 val_mAcc=0.4183 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.1119   Acc: 0.1176
+  [branch  ]  IoU: 0.8743   Acc: 0.9976
+  [wire    ]  IoU: 0.1314   Acc: 0.1322
+Epoch  665 | train_loss=0.0489 train_mIoU=0.9263 | val_loss=1.2308 val_mIoU=0.3725 val_mAcc=0.4158 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1252   Acc: 0.1340
+  [branch  ]  IoU: 0.8752   Acc: 0.9970
+  [wire    ]  IoU: 0.1171   Acc: 0.1181
+Epoch  666 | train_loss=0.0490 train_mIoU=0.9257 | val_loss=1.2325 val_mIoU=0.3725 val_mAcc=0.4164 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1271   Acc: 0.1342
+  [branch  ]  IoU: 0.8770   Acc: 0.9968
+  [wire    ]  IoU: 0.1712   Acc: 0.1729
+Epoch  667 | train_loss=0.0486 train_mIoU=0.9260 | val_loss=1.1328 val_mIoU=0.3918 val_mAcc=0.4347 val_allAcc=0.8775
+  [trunk   ]  IoU: 0.1127   Acc: 0.1179
+  [branch  ]  IoU: 0.8732   Acc: 0.9979
+  [wire    ]  IoU: 0.1111   Acc: 0.1115
+Epoch  668 | train_loss=0.0472 train_mIoU=0.9282 | val_loss=1.3062 val_mIoU=0.3657 val_mAcc=0.4091 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1149   Acc: 0.1202
+  [branch  ]  IoU: 0.8764   Acc: 0.9976
+  [wire    ]  IoU: 0.1681   Acc: 0.1702
+Epoch  669 | train_loss=0.0475 train_mIoU=0.9283 | val_loss=1.1740 val_mIoU=0.3865 val_mAcc=0.4293 val_allAcc=0.8768
+  [trunk   ]  IoU: 0.1244   Acc: 0.1312
+  [branch  ]  IoU: 0.8760   Acc: 0.9973
+  [wire    ]  IoU: 0.1498   Acc: 0.1507
+Epoch  670 | train_loss=0.0473 train_mIoU=0.9279 | val_loss=1.2120 val_mIoU=0.3834 val_mAcc=0.4264 val_allAcc=0.8763
+  [trunk   ]  IoU: 0.1057   Acc: 0.1099
+  [branch  ]  IoU: 0.8740   Acc: 0.9978
+  [wire    ]  IoU: 0.1449   Acc: 0.1461
+Epoch  671 | train_loss=0.0473 train_mIoU=0.9283 | val_loss=1.2598 val_mIoU=0.3749 val_mAcc=0.4179 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.1137   Acc: 0.1191
+  [branch  ]  IoU: 0.8742   Acc: 0.9976
+  [wire    ]  IoU: 0.1290   Acc: 0.1304
+Epoch  672 | train_loss=0.0476 train_mIoU=0.9276 | val_loss=1.2538 val_mIoU=0.3723 val_mAcc=0.4157 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1178   Acc: 0.1242
+  [branch  ]  IoU: 0.8752   Acc: 0.9972
+  [wire    ]  IoU: 0.1442   Acc: 0.1453
+Epoch  673 | train_loss=0.0476 train_mIoU=0.9272 | val_loss=1.1756 val_mIoU=0.3790 val_mAcc=0.4222 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.1292   Acc: 0.1384
+  [branch  ]  IoU: 0.8755   Acc: 0.9967
+  [wire    ]  IoU: 0.1259   Acc: 0.1268
+Epoch  674 | train_loss=0.0475 train_mIoU=0.9282 | val_loss=1.2447 val_mIoU=0.3769 val_mAcc=0.4206 val_allAcc=0.8749
+  [trunk   ]  IoU: 0.1005   Acc: 0.1048
+  [branch  ]  IoU: 0.8725   Acc: 0.9978
+  [wire    ]  IoU: 0.1190   Acc: 0.1199
+Epoch  675 | train_loss=0.0477 train_mIoU=0.9273 | val_loss=1.3320 val_mIoU=0.3640 val_mAcc=0.4075 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0960   Acc: 0.1000
+  [branch  ]  IoU: 0.8720   Acc: 0.9977
+  [wire    ]  IoU: 0.1198   Acc: 0.1208
+Epoch  676 | train_loss=0.0466 train_mIoU=0.9287 | val_loss=1.3231 val_mIoU=0.3626 val_mAcc=0.4062 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1240   Acc: 0.1310
+  [branch  ]  IoU: 0.8742   Acc: 0.9970
+  [wire    ]  IoU: 0.1224   Acc: 0.1232
+Epoch  677 | train_loss=0.0466 train_mIoU=0.9292 | val_loss=1.2854 val_mIoU=0.3735 val_mAcc=0.4171 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.1221   Acc: 0.1285
+  [branch  ]  IoU: 0.8753   Acc: 0.9972
+  [wire    ]  IoU: 0.1490   Acc: 0.1497
+Epoch  678 | train_loss=0.0469 train_mIoU=0.9284 | val_loss=1.2361 val_mIoU=0.3821 val_mAcc=0.4251 val_allAcc=0.8759
+  [trunk   ]  IoU: 0.1161   Acc: 0.1213
+  [branch  ]  IoU: 0.8748   Acc: 0.9973
+  [wire    ]  IoU: 0.1486   Acc: 0.1502
+Epoch  679 | train_loss=0.0470 train_mIoU=0.9283 | val_loss=1.2631 val_mIoU=0.3798 val_mAcc=0.4229 val_allAcc=0.8755
+  [trunk   ]  IoU: 0.1124   Acc: 0.1169
+  [branch  ]  IoU: 0.8760   Acc: 0.9974
+  [wire    ]  IoU: 0.1715   Acc: 0.1746
+Epoch  680 | train_loss=0.0469 train_mIoU=0.9287 | val_loss=1.2233 val_mIoU=0.3867 val_mAcc=0.4296 val_allAcc=0.8767
+  [trunk   ]  IoU: 0.1125   Acc: 0.1177
+  [branch  ]  IoU: 0.8731   Acc: 0.9975
+  [wire    ]  IoU: 0.1194   Acc: 0.1203
+Epoch  681 | train_loss=0.0470 train_mIoU=0.9287 | val_loss=1.3085 val_mIoU=0.3683 val_mAcc=0.4118 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.0924   Acc: 0.0956
+  [branch  ]  IoU: 0.8714   Acc: 0.9980
+  [wire    ]  IoU: 0.1161   Acc: 0.1170
+Epoch  682 | train_loss=0.0464 train_mIoU=0.9291 | val_loss=1.3863 val_mIoU=0.3600 val_mAcc=0.4035 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.1150   Acc: 0.1208
+  [branch  ]  IoU: 0.8745   Acc: 0.9968
+  [wire    ]  IoU: 0.1513   Acc: 0.1530
+Epoch  683 | train_loss=0.0468 train_mIoU=0.9286 | val_loss=1.1995 val_mIoU=0.3803 val_mAcc=0.4235 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.0992   Acc: 0.1034
+  [branch  ]  IoU: 0.8718   Acc: 0.9978
+  [wire    ]  IoU: 0.1071   Acc: 0.1081
+Epoch  684 | train_loss=0.0466 train_mIoU=0.9293 | val_loss=1.3283 val_mIoU=0.3594 val_mAcc=0.4031 val_allAcc=0.8719
+  [trunk   ]  IoU: 0.1002   Acc: 0.1044
+  [branch  ]  IoU: 0.8718   Acc: 0.9974
+  [wire    ]  IoU: 0.1178   Acc: 0.1187
+Epoch  685 | train_loss=0.0465 train_mIoU=0.9291 | val_loss=1.3191 val_mIoU=0.3633 val_mAcc=0.4069 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1187   Acc: 0.1260
+  [branch  ]  IoU: 0.8760   Acc: 0.9964
+  [wire    ]  IoU: 0.1695   Acc: 0.1710
+Epoch  686 | train_loss=0.0462 train_mIoU=0.9296 | val_loss=1.1748 val_mIoU=0.3881 val_mAcc=0.4312 val_allAcc=0.8763
+  [trunk   ]  IoU: 0.1119   Acc: 0.1172
+  [branch  ]  IoU: 0.8734   Acc: 0.9973
+  [wire    ]  IoU: 0.1302   Acc: 0.1311
+Epoch  687 | train_loss=0.0456 train_mIoU=0.9303 | val_loss=1.2962 val_mIoU=0.3719 val_mAcc=0.4152 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1092   Acc: 0.1141
+  [branch  ]  IoU: 0.8740   Acc: 0.9976
+  [wire    ]  IoU: 0.1402   Acc: 0.1413
+Epoch  688 | train_loss=0.0459 train_mIoU=0.9303 | val_loss=1.2404 val_mIoU=0.3745 val_mAcc=0.4176 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.1149   Acc: 0.1206
+  [branch  ]  IoU: 0.8749   Acc: 0.9973
+  [wire    ]  IoU: 0.1478   Acc: 0.1490
+Epoch  689 | train_loss=0.0465 train_mIoU=0.9295 | val_loss=1.2611 val_mIoU=0.3792 val_mAcc=0.4223 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.0928   Acc: 0.0957
+  [branch  ]  IoU: 0.8725   Acc: 0.9983
+  [wire    ]  IoU: 0.1320   Acc: 0.1331
+Epoch  690 | train_loss=0.0462 train_mIoU=0.9298 | val_loss=1.3769 val_mIoU=0.3658 val_mAcc=0.4090 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.1036   Acc: 0.1083
+  [branch  ]  IoU: 0.8746   Acc: 0.9977
+  [wire    ]  IoU: 0.1540   Acc: 0.1552
+Epoch  691 | train_loss=0.0464 train_mIoU=0.9294 | val_loss=1.2853 val_mIoU=0.3774 val_mAcc=0.4204 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.1080   Acc: 0.1124
+  [branch  ]  IoU: 0.8746   Acc: 0.9976
+  [wire    ]  IoU: 0.1516   Acc: 0.1532
+Epoch  692 | train_loss=0.0458 train_mIoU=0.9303 | val_loss=1.2475 val_mIoU=0.3781 val_mAcc=0.4211 val_allAcc=0.8752
+  [trunk   ]  IoU: 0.0937   Acc: 0.0969
+  [branch  ]  IoU: 0.8711   Acc: 0.9983
+  [wire    ]  IoU: 0.1026   Acc: 0.1032
+Epoch  693 | train_loss=0.0461 train_mIoU=0.9296 | val_loss=1.3730 val_mIoU=0.3558 val_mAcc=0.3995 val_allAcc=0.8715
+  [trunk   ]  IoU: 0.1116   Acc: 0.1169
+  [branch  ]  IoU: 0.8740   Acc: 0.9975
+  [wire    ]  IoU: 0.1331   Acc: 0.1341
+Epoch  694 | train_loss=0.0458 train_mIoU=0.9305 | val_loss=1.3121 val_mIoU=0.3729 val_mAcc=0.4162 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0959   Acc: 0.0992
+  [branch  ]  IoU: 0.8735   Acc: 0.9979
+  [wire    ]  IoU: 0.1511   Acc: 0.1525
+Epoch  695 | train_loss=0.0461 train_mIoU=0.9300 | val_loss=1.2937 val_mIoU=0.3735 val_mAcc=0.4165 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1070   Acc: 0.1111
+  [branch  ]  IoU: 0.8743   Acc: 0.9976
+  [wire    ]  IoU: 0.1549   Acc: 0.1562
+Epoch  696 | train_loss=0.0456 train_mIoU=0.9303 | val_loss=1.2500 val_mIoU=0.3787 val_mAcc=0.4217 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.1007   Acc: 0.1047
+  [branch  ]  IoU: 0.8739   Acc: 0.9978
+  [wire    ]  IoU: 0.1476   Acc: 0.1492
+Epoch  697 | train_loss=0.0456 train_mIoU=0.9306 | val_loss=1.2776 val_mIoU=0.3741 val_mAcc=0.4172 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.1103   Acc: 0.1158
+  [branch  ]  IoU: 0.8754   Acc: 0.9973
+  [wire    ]  IoU: 0.1595   Acc: 0.1613
+Epoch  698 | train_loss=0.0456 train_mIoU=0.9301 | val_loss=1.2461 val_mIoU=0.3817 val_mAcc=0.4248 val_allAcc=0.8757
+  [trunk   ]  IoU: 0.0907   Acc: 0.0939
+  [branch  ]  IoU: 0.8730   Acc: 0.9982
+  [wire    ]  IoU: 0.1407   Acc: 0.1418
+Epoch  699 | train_loss=0.0453 train_mIoU=0.9311 | val_loss=1.3640 val_mIoU=0.3681 val_mAcc=0.4113 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1036   Acc: 0.1081
+  [branch  ]  IoU: 0.8739   Acc: 0.9978
+  [wire    ]  IoU: 0.1378   Acc: 0.1390
+Epoch  700 | train_loss=0.0450 train_mIoU=0.9318 | val_loss=1.3086 val_mIoU=0.3718 val_mAcc=0.4150 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1019   Acc: 0.1064
+  [branch  ]  IoU: 0.8732   Acc: 0.9978
+  [wire    ]  IoU: 0.1262   Acc: 0.1275
+Epoch  701 | train_loss=0.0455 train_mIoU=0.9305 | val_loss=1.3140 val_mIoU=0.3671 val_mAcc=0.4106 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1166   Acc: 0.1223
+  [branch  ]  IoU: 0.8749   Acc: 0.9974
+  [wire    ]  IoU: 0.1451   Acc: 0.1463
+Epoch  702 | train_loss=0.0452 train_mIoU=0.9318 | val_loss=1.2268 val_mIoU=0.3789 val_mAcc=0.4220 val_allAcc=0.8754
+  [trunk   ]  IoU: 0.1087   Acc: 0.1137
+  [branch  ]  IoU: 0.8740   Acc: 0.9975
+  [wire    ]  IoU: 0.1343   Acc: 0.1359
+Epoch  703 | train_loss=0.0451 train_mIoU=0.9316 | val_loss=1.3301 val_mIoU=0.3723 val_mAcc=0.4157 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1042   Acc: 0.1089
+  [branch  ]  IoU: 0.8731   Acc: 0.9980
+  [wire    ]  IoU: 0.1187   Acc: 0.1193
+Epoch  704 | train_loss=0.0454 train_mIoU=0.9312 | val_loss=1.3472 val_mIoU=0.3653 val_mAcc=0.4087 val_allAcc=0.8731
+  [trunk   ]  IoU: 0.1110   Acc: 0.1161
+  [branch  ]  IoU: 0.8739   Acc: 0.9979
+  [wire    ]  IoU: 0.1228   Acc: 0.1239
+Epoch  705 | train_loss=0.0451 train_mIoU=0.9322 | val_loss=1.3285 val_mIoU=0.3692 val_mAcc=0.4126 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1113   Acc: 0.1159
+  [branch  ]  IoU: 0.8730   Acc: 0.9979
+  [wire    ]  IoU: 0.1145   Acc: 0.1152
+Epoch  706 | train_loss=0.0447 train_mIoU=0.9320 | val_loss=1.3533 val_mIoU=0.3663 val_mAcc=0.4097 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1051   Acc: 0.1091
+  [branch  ]  IoU: 0.8727   Acc: 0.9981
+  [wire    ]  IoU: 0.1140   Acc: 0.1147
+Epoch  707 | train_loss=0.0448 train_mIoU=0.9319 | val_loss=1.3635 val_mIoU=0.3639 val_mAcc=0.4073 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.1089   Acc: 0.1136
+  [branch  ]  IoU: 0.8730   Acc: 0.9977
+  [wire    ]  IoU: 0.1203   Acc: 0.1210
+Epoch  708 | train_loss=0.0441 train_mIoU=0.9334 | val_loss=1.3505 val_mIoU=0.3674 val_mAcc=0.4108 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.0986   Acc: 0.1021
+  [branch  ]  IoU: 0.8722   Acc: 0.9982
+  [wire    ]  IoU: 0.1179   Acc: 0.1186
+Epoch  709 | train_loss=0.0447 train_mIoU=0.9318 | val_loss=1.3853 val_mIoU=0.3629 val_mAcc=0.4063 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.1041   Acc: 0.1083
+  [branch  ]  IoU: 0.8724   Acc: 0.9980
+  [wire    ]  IoU: 0.1121   Acc: 0.1128
+Epoch  710 | train_loss=0.0446 train_mIoU=0.9324 | val_loss=1.3895 val_mIoU=0.3628 val_mAcc=0.4063 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.1011   Acc: 0.1053
+  [branch  ]  IoU: 0.8732   Acc: 0.9979
+  [wire    ]  IoU: 0.1283   Acc: 0.1294
+Epoch  711 | train_loss=0.0446 train_mIoU=0.9318 | val_loss=1.3456 val_mIoU=0.3675 val_mAcc=0.4109 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1130   Acc: 0.1184
+  [branch  ]  IoU: 0.8754   Acc: 0.9976
+  [wire    ]  IoU: 0.1480   Acc: 0.1498
+Epoch  712 | train_loss=0.0443 train_mIoU=0.9322 | val_loss=1.2840 val_mIoU=0.3788 val_mAcc=0.4220 val_allAcc=0.8755
+  [trunk   ]  IoU: 0.1043   Acc: 0.1085
+  [branch  ]  IoU: 0.8724   Acc: 0.9979
+  [wire    ]  IoU: 0.1107   Acc: 0.1115
+Epoch  713 | train_loss=0.0446 train_mIoU=0.9320 | val_loss=1.3594 val_mIoU=0.3624 val_mAcc=0.4060 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.1070   Acc: 0.1114
+  [branch  ]  IoU: 0.8734   Acc: 0.9980
+  [wire    ]  IoU: 0.1239   Acc: 0.1247
+Epoch  714 | train_loss=0.0443 train_mIoU=0.9323 | val_loss=1.3308 val_mIoU=0.3681 val_mAcc=0.4114 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1118   Acc: 0.1172
+  [branch  ]  IoU: 0.8731   Acc: 0.9977
+  [wire    ]  IoU: 0.1112   Acc: 0.1119
+Epoch  715 | train_loss=0.0442 train_mIoU=0.9328 | val_loss=1.3191 val_mIoU=0.3654 val_mAcc=0.4089 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.1172   Acc: 0.1237
+  [branch  ]  IoU: 0.8745   Acc: 0.9974
+  [wire    ]  IoU: 0.1289   Acc: 0.1296
+Epoch  716 | train_loss=0.0441 train_mIoU=0.9327 | val_loss=1.2668 val_mIoU=0.3735 val_mAcc=0.4169 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.1094   Acc: 0.1145
+  [branch  ]  IoU: 0.8733   Acc: 0.9980
+  [wire    ]  IoU: 0.1156   Acc: 0.1160
+Epoch  717 | train_loss=0.0440 train_mIoU=0.9323 | val_loss=1.3712 val_mIoU=0.3661 val_mAcc=0.4095 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1063   Acc: 0.1105
+  [branch  ]  IoU: 0.8719   Acc: 0.9980
+  [wire    ]  IoU: 0.1013   Acc: 0.1018
+Epoch  718 | train_loss=0.0441 train_mIoU=0.9326 | val_loss=1.3961 val_mIoU=0.3598 val_mAcc=0.4034 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1004   Acc: 0.1040
+  [branch  ]  IoU: 0.8717   Acc: 0.9982
+  [wire    ]  IoU: 0.1055   Acc: 0.1060
+Epoch  719 | train_loss=0.0440 train_mIoU=0.9322 | val_loss=1.3970 val_mIoU=0.3592 val_mAcc=0.4027 val_allAcc=0.8721
+  [trunk   ]  IoU: 0.1093   Acc: 0.1143
+  [branch  ]  IoU: 0.8730   Acc: 0.9978
+  [wire    ]  IoU: 0.1105   Acc: 0.1112
+Epoch  720 | train_loss=0.0442 train_mIoU=0.9322 | val_loss=1.4034 val_mIoU=0.3643 val_mAcc=0.4078 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.0993   Acc: 0.1032
+  [branch  ]  IoU: 0.8720   Acc: 0.9982
+  [wire    ]  IoU: 0.1071   Acc: 0.1077
+Epoch  721 | train_loss=0.0437 train_mIoU=0.9331 | val_loss=1.4221 val_mIoU=0.3595 val_mAcc=0.4030 val_allAcc=0.8722
+  [trunk   ]  IoU: 0.1025   Acc: 0.1064
+  [branch  ]  IoU: 0.8723   Acc: 0.9981
+  [wire    ]  IoU: 0.1135   Acc: 0.1140
+Epoch  722 | train_loss=0.0438 train_mIoU=0.9334 | val_loss=1.4108 val_mIoU=0.3628 val_mAcc=0.4062 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.1116   Acc: 0.1170
+  [branch  ]  IoU: 0.8722   Acc: 0.9975
+  [wire    ]  IoU: 0.1001   Acc: 0.1005
+Epoch  723 | train_loss=0.0438 train_mIoU=0.9334 | val_loss=1.4164 val_mIoU=0.3613 val_mAcc=0.4050 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1137   Acc: 0.1195
+  [branch  ]  IoU: 0.8738   Acc: 0.9976
+  [wire    ]  IoU: 0.1242   Acc: 0.1247
+Epoch  724 | train_loss=0.0436 train_mIoU=0.9334 | val_loss=1.3871 val_mIoU=0.3706 val_mAcc=0.4139 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.1092   Acc: 0.1135
+  [branch  ]  IoU: 0.8744   Acc: 0.9978
+  [wire    ]  IoU: 0.1473   Acc: 0.1484
+Epoch  725 | train_loss=0.0434 train_mIoU=0.9343 | val_loss=1.3221 val_mIoU=0.3770 val_mAcc=0.4199 val_allAcc=0.8751
+  [trunk   ]  IoU: 0.1080   Acc: 0.1128
+  [branch  ]  IoU: 0.8731   Acc: 0.9977
+  [wire    ]  IoU: 0.1229   Acc: 0.1234
+Epoch  726 | train_loss=0.0432 train_mIoU=0.9340 | val_loss=1.3767 val_mIoU=0.3680 val_mAcc=0.4113 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1062   Acc: 0.1107
+  [branch  ]  IoU: 0.8733   Acc: 0.9977
+  [wire    ]  IoU: 0.1311   Acc: 0.1321
+Epoch  727 | train_loss=0.0436 train_mIoU=0.9340 | val_loss=1.3449 val_mIoU=0.3702 val_mAcc=0.4135 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1066   Acc: 0.1111
+  [branch  ]  IoU: 0.8723   Acc: 0.9977
+  [wire    ]  IoU: 0.1093   Acc: 0.1100
+Epoch  728 | train_loss=0.0435 train_mIoU=0.9337 | val_loss=1.4087 val_mIoU=0.3627 val_mAcc=0.4063 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.1039   Acc: 0.1081
+  [branch  ]  IoU: 0.8734   Acc: 0.9978
+  [wire    ]  IoU: 0.1321   Acc: 0.1333
+Epoch  729 | train_loss=0.0435 train_mIoU=0.9333 | val_loss=1.3807 val_mIoU=0.3698 val_mAcc=0.4131 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1059   Acc: 0.1106
+  [branch  ]  IoU: 0.8732   Acc: 0.9979
+  [wire    ]  IoU: 0.1230   Acc: 0.1237
+Epoch  730 | train_loss=0.0431 train_mIoU=0.9343 | val_loss=1.3790 val_mIoU=0.3674 val_mAcc=0.4107 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1077   Acc: 0.1127
+  [branch  ]  IoU: 0.8738   Acc: 0.9975
+  [wire    ]  IoU: 0.1360   Acc: 0.1371
+Epoch  731 | train_loss=0.0433 train_mIoU=0.9337 | val_loss=1.3591 val_mIoU=0.3725 val_mAcc=0.4158 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1057   Acc: 0.1100
+  [branch  ]  IoU: 0.8737   Acc: 0.9979
+  [wire    ]  IoU: 0.1341   Acc: 0.1350
+Epoch  732 | train_loss=0.0436 train_mIoU=0.9330 | val_loss=1.3689 val_mIoU=0.3712 val_mAcc=0.4143 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1121   Acc: 0.1178
+  [branch  ]  IoU: 0.8749   Acc: 0.9976
+  [wire    ]  IoU: 0.1431   Acc: 0.1439
+Epoch  733 | train_loss=0.0435 train_mIoU=0.9332 | val_loss=1.3455 val_mIoU=0.3767 val_mAcc=0.4198 val_allAcc=0.8750
+  [trunk   ]  IoU: 0.1137   Acc: 0.1193
+  [branch  ]  IoU: 0.8752   Acc: 0.9976
+  [wire    ]  IoU: 0.1452   Acc: 0.1464
+Epoch  734 | train_loss=0.0433 train_mIoU=0.9338 | val_loss=1.3034 val_mIoU=0.3780 val_mAcc=0.4211 val_allAcc=0.8753
+  [trunk   ]  IoU: 0.1150   Acc: 0.1205
+  [branch  ]  IoU: 0.8747   Acc: 0.9978
+  [wire    ]  IoU: 0.1309   Acc: 0.1318
+Epoch  735 | train_loss=0.0432 train_mIoU=0.9343 | val_loss=1.3280 val_mIoU=0.3735 val_mAcc=0.4167 val_allAcc=0.8747
+  [trunk   ]  IoU: 0.1114   Acc: 0.1168
+  [branch  ]  IoU: 0.8744   Acc: 0.9977
+  [wire    ]  IoU: 0.1341   Acc: 0.1351
+Epoch  736 | train_loss=0.0430 train_mIoU=0.9336 | val_loss=1.3279 val_mIoU=0.3733 val_mAcc=0.4165 val_allAcc=0.8745
+  [trunk   ]  IoU: 0.1091   Acc: 0.1143
+  [branch  ]  IoU: 0.8739   Acc: 0.9977
+  [wire    ]  IoU: 0.1297   Acc: 0.1307
+Epoch  737 | train_loss=0.0432 train_mIoU=0.9339 | val_loss=1.3522 val_mIoU=0.3709 val_mAcc=0.4142 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.1107   Acc: 0.1161
+  [branch  ]  IoU: 0.8740   Acc: 0.9977
+  [wire    ]  IoU: 0.1299   Acc: 0.1306
+Epoch  738 | train_loss=0.0433 train_mIoU=0.9340 | val_loss=1.3425 val_mIoU=0.3715 val_mAcc=0.4148 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1083   Acc: 0.1136
+  [branch  ]  IoU: 0.8736   Acc: 0.9978
+  [wire    ]  IoU: 0.1220   Acc: 0.1227
+Epoch  739 | train_loss=0.0432 train_mIoU=0.9340 | val_loss=1.3991 val_mIoU=0.3680 val_mAcc=0.4114 val_allAcc=0.8736
+  [trunk   ]  IoU: 0.1028   Acc: 0.1074
+  [branch  ]  IoU: 0.8736   Acc: 0.9978
+  [wire    ]  IoU: 0.1324   Acc: 0.1333
+Epoch  740 | train_loss=0.0429 train_mIoU=0.9343 | val_loss=1.3660 val_mIoU=0.3696 val_mAcc=0.4129 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1114   Acc: 0.1166
+  [branch  ]  IoU: 0.8737   Acc: 0.9977
+  [wire    ]  IoU: 0.1275   Acc: 0.1280
+Epoch  741 | train_loss=0.0428 train_mIoU=0.9344 | val_loss=1.3804 val_mIoU=0.3709 val_mAcc=0.4141 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1071   Acc: 0.1119
+  [branch  ]  IoU: 0.8737   Acc: 0.9979
+  [wire    ]  IoU: 0.1288   Acc: 0.1296
+Epoch  742 | train_loss=0.0429 train_mIoU=0.9344 | val_loss=1.3787 val_mIoU=0.3699 val_mAcc=0.4131 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1094   Acc: 0.1149
+  [branch  ]  IoU: 0.8733   Acc: 0.9977
+  [wire    ]  IoU: 0.1170   Acc: 0.1177
+Epoch  743 | train_loss=0.0433 train_mIoU=0.9342 | val_loss=1.3671 val_mIoU=0.3666 val_mAcc=0.4101 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1075   Acc: 0.1125
+  [branch  ]  IoU: 0.8742   Acc: 0.9977
+  [wire    ]  IoU: 0.1362   Acc: 0.1373
+Epoch  744 | train_loss=0.0428 train_mIoU=0.9340 | val_loss=1.3534 val_mIoU=0.3726 val_mAcc=0.4158 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.0979   Acc: 0.1022
+  [branch  ]  IoU: 0.8726   Acc: 0.9981
+  [wire    ]  IoU: 0.1179   Acc: 0.1184
+Epoch  745 | train_loss=0.0425 train_mIoU=0.9353 | val_loss=1.4280 val_mIoU=0.3628 val_mAcc=0.4062 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0979   Acc: 0.1020
+  [branch  ]  IoU: 0.8728   Acc: 0.9980
+  [wire    ]  IoU: 0.1238   Acc: 0.1248
+Epoch  746 | train_loss=0.0426 train_mIoU=0.9348 | val_loss=1.3805 val_mIoU=0.3649 val_mAcc=0.4083 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.0985   Acc: 0.1021
+  [branch  ]  IoU: 0.8718   Acc: 0.9982
+  [wire    ]  IoU: 0.1102   Acc: 0.1107
+Epoch  747 | train_loss=0.0426 train_mIoU=0.9346 | val_loss=1.4262 val_mIoU=0.3602 val_mAcc=0.4037 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1021   Acc: 0.1061
+  [branch  ]  IoU: 0.8727   Acc: 0.9981
+  [wire    ]  IoU: 0.1212   Acc: 0.1218
+Epoch  748 | train_loss=0.0429 train_mIoU=0.9341 | val_loss=1.3805 val_mIoU=0.3653 val_mAcc=0.4086 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.1088   Acc: 0.1137
+  [branch  ]  IoU: 0.8731   Acc: 0.9978
+  [wire    ]  IoU: 0.1171   Acc: 0.1178
+Epoch  749 | train_loss=0.0426 train_mIoU=0.9349 | val_loss=1.3931 val_mIoU=0.3663 val_mAcc=0.4098 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1131   Acc: 0.1188
+  [branch  ]  IoU: 0.8735   Acc: 0.9976
+  [wire    ]  IoU: 0.1174   Acc: 0.1182
+Epoch  750 | train_loss=0.0427 train_mIoU=0.9346 | val_loss=1.3853 val_mIoU=0.3680 val_mAcc=0.4115 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1075   Acc: 0.1121
+  [branch  ]  IoU: 0.8738   Acc: 0.9978
+  [wire    ]  IoU: 0.1345   Acc: 0.1352
+Epoch  751 | train_loss=0.0427 train_mIoU=0.9348 | val_loss=1.3678 val_mIoU=0.3719 val_mAcc=0.4150 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1077   Acc: 0.1127
+  [branch  ]  IoU: 0.8730   Acc: 0.9977
+  [wire    ]  IoU: 0.1194   Acc: 0.1200
+Epoch  752 | train_loss=0.0425 train_mIoU=0.9350 | val_loss=1.4071 val_mIoU=0.3667 val_mAcc=0.4101 val_allAcc=0.8733
+  [trunk   ]  IoU: 0.1019   Acc: 0.1061
+  [branch  ]  IoU: 0.8735   Acc: 0.9979
+  [wire    ]  IoU: 0.1334   Acc: 0.1346
+Epoch  753 | train_loss=0.0428 train_mIoU=0.9346 | val_loss=1.3798 val_mIoU=0.3696 val_mAcc=0.4129 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.0997   Acc: 0.1040
+  [branch  ]  IoU: 0.8726   Acc: 0.9979
+  [wire    ]  IoU: 0.1180   Acc: 0.1189
+Epoch  754 | train_loss=0.0424 train_mIoU=0.9349 | val_loss=1.4043 val_mIoU=0.3634 val_mAcc=0.4070 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.1015   Acc: 0.1056
+  [branch  ]  IoU: 0.8734   Acc: 0.9979
+  [wire    ]  IoU: 0.1343   Acc: 0.1353
+Epoch  755 | train_loss=0.0426 train_mIoU=0.9349 | val_loss=1.3610 val_mIoU=0.3697 val_mAcc=0.4130 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1016   Acc: 0.1053
+  [branch  ]  IoU: 0.8731   Acc: 0.9981
+  [wire    ]  IoU: 0.1274   Acc: 0.1283
+Epoch  756 | train_loss=0.0427 train_mIoU=0.9350 | val_loss=1.3978 val_mIoU=0.3673 val_mAcc=0.4106 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.0996   Acc: 0.1039
+  [branch  ]  IoU: 0.8725   Acc: 0.9979
+  [wire    ]  IoU: 0.1165   Acc: 0.1175
+Epoch  757 | train_loss=0.0426 train_mIoU=0.9348 | val_loss=1.4152 val_mIoU=0.3629 val_mAcc=0.4064 val_allAcc=0.8725
+  [trunk   ]  IoU: 0.1011   Acc: 0.1055
+  [branch  ]  IoU: 0.8722   Acc: 0.9979
+  [wire    ]  IoU: 0.1100   Acc: 0.1105
+Epoch  758 | train_loss=0.0421 train_mIoU=0.9354 | val_loss=1.4454 val_mIoU=0.3611 val_mAcc=0.4046 val_allAcc=0.8723
+  [trunk   ]  IoU: 0.1124   Acc: 0.1179
+  [branch  ]  IoU: 0.8740   Acc: 0.9976
+  [wire    ]  IoU: 0.1285   Acc: 0.1294
+Epoch  759 | train_loss=0.0423 train_mIoU=0.9356 | val_loss=1.3855 val_mIoU=0.3716 val_mAcc=0.4149 val_allAcc=0.8742
+  [trunk   ]  IoU: 0.1038   Acc: 0.1085
+  [branch  ]  IoU: 0.8738   Acc: 0.9978
+  [wire    ]  IoU: 0.1343   Acc: 0.1353
+Epoch  760 | train_loss=0.0422 train_mIoU=0.9359 | val_loss=1.3619 val_mIoU=0.3706 val_mAcc=0.4139 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.0995   Acc: 0.1034
+  [branch  ]  IoU: 0.8724   Acc: 0.9980
+  [wire    ]  IoU: 0.1153   Acc: 0.1163
+Epoch  761 | train_loss=0.0422 train_mIoU=0.9359 | val_loss=1.4082 val_mIoU=0.3624 val_mAcc=0.4059 val_allAcc=0.8726
+  [trunk   ]  IoU: 0.0976   Acc: 0.1013
+  [branch  ]  IoU: 0.8725   Acc: 0.9982
+  [wire    ]  IoU: 0.1202   Acc: 0.1210
+Epoch  762 | train_loss=0.0421 train_mIoU=0.9351 | val_loss=1.4016 val_mIoU=0.3634 val_mAcc=0.4068 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.0986   Acc: 0.1027
+  [branch  ]  IoU: 0.8728   Acc: 0.9982
+  [wire    ]  IoU: 0.1194   Acc: 0.1200
+Epoch  763 | train_loss=0.0429 train_mIoU=0.9344 | val_loss=1.4062 val_mIoU=0.3636 val_mAcc=0.4070 val_allAcc=0.8729
+  [trunk   ]  IoU: 0.0950   Acc: 0.0984
+  [branch  ]  IoU: 0.8727   Acc: 0.9982
+  [wire    ]  IoU: 0.1269   Acc: 0.1280
+Epoch  764 | train_loss=0.0425 train_mIoU=0.9349 | val_loss=1.3830 val_mIoU=0.3648 val_mAcc=0.4082 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.1056   Acc: 0.1101
+  [branch  ]  IoU: 0.8736   Acc: 0.9980
+  [wire    ]  IoU: 0.1291   Acc: 0.1298
+Epoch  765 | train_loss=0.0420 train_mIoU=0.9356 | val_loss=1.3823 val_mIoU=0.3694 val_mAcc=0.4126 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1004   Acc: 0.1050
+  [branch  ]  IoU: 0.8739   Acc: 0.9979
+  [wire    ]  IoU: 0.1374   Acc: 0.1388
+Epoch  766 | train_loss=0.0423 train_mIoU=0.9357 | val_loss=1.3527 val_mIoU=0.3706 val_mAcc=0.4139 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1087   Acc: 0.1139
+  [branch  ]  IoU: 0.8742   Acc: 0.9977
+  [wire    ]  IoU: 0.1340   Acc: 0.1351
+Epoch  767 | train_loss=0.0422 train_mIoU=0.9356 | val_loss=1.3412 val_mIoU=0.3723 val_mAcc=0.4156 val_allAcc=0.8743
+  [trunk   ]  IoU: 0.1093   Acc: 0.1144
+  [branch  ]  IoU: 0.8742   Acc: 0.9978
+  [wire    ]  IoU: 0.1357   Acc: 0.1364
+Epoch  768 | train_loss=0.0423 train_mIoU=0.9358 | val_loss=1.3536 val_mIoU=0.3730 val_mAcc=0.4162 val_allAcc=0.8744
+  [trunk   ]  IoU: 0.0979   Acc: 0.1016
+  [branch  ]  IoU: 0.8737   Acc: 0.9980
+  [wire    ]  IoU: 0.1419   Acc: 0.1434
+Epoch  769 | train_loss=0.0425 train_mIoU=0.9347 | val_loss=1.3695 val_mIoU=0.3711 val_mAcc=0.4143 val_allAcc=0.8740
+  [trunk   ]  IoU: 0.1043   Acc: 0.1090
+  [branch  ]  IoU: 0.8735   Acc: 0.9977
+  [wire    ]  IoU: 0.1322   Acc: 0.1332
+Epoch  770 | train_loss=0.0421 train_mIoU=0.9356 | val_loss=1.3770 val_mIoU=0.3700 val_mAcc=0.4133 val_allAcc=0.8738
+  [trunk   ]  IoU: 0.1000   Acc: 0.1040
+  [branch  ]  IoU: 0.8729   Acc: 0.9980
+  [wire    ]  IoU: 0.1263   Acc: 0.1273
+Epoch  771 | train_loss=0.0419 train_mIoU=0.9360 | val_loss=1.3939 val_mIoU=0.3664 val_mAcc=0.4097 val_allAcc=0.8732
+  [trunk   ]  IoU: 0.0946   Acc: 0.0982
+  [branch  ]  IoU: 0.8721   Acc: 0.9981
+  [wire    ]  IoU: 0.1181   Acc: 0.1191
+Epoch  772 | train_loss=0.0424 train_mIoU=0.9356 | val_loss=1.4288 val_mIoU=0.3616 val_mAcc=0.4051 val_allAcc=0.8724
+  [trunk   ]  IoU: 0.1067   Acc: 0.1116
+  [branch  ]  IoU: 0.8735   Acc: 0.9979
+  [wire    ]  IoU: 0.1251   Acc: 0.1257
+Epoch  773 | train_loss=0.0418 train_mIoU=0.9357 | val_loss=1.3762 val_mIoU=0.3684 val_mAcc=0.4117 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.0932   Acc: 0.0969
+  [branch  ]  IoU: 0.8729   Acc: 0.9981
+  [wire    ]  IoU: 0.1261   Acc: 0.1276
+Epoch  774 | train_loss=0.0424 train_mIoU=0.9355 | val_loss=1.4074 val_mIoU=0.3641 val_mAcc=0.4075 val_allAcc=0.8728
+  [trunk   ]  IoU: 0.1053   Acc: 0.1101
+  [branch  ]  IoU: 0.8738   Acc: 0.9980
+  [wire    ]  IoU: 0.1280   Acc: 0.1288
+Epoch  775 | train_loss=0.0421 train_mIoU=0.9356 | val_loss=1.3860 val_mIoU=0.3690 val_mAcc=0.4123 val_allAcc=0.8739
+  [trunk   ]  IoU: 0.1040   Acc: 0.1082
+  [branch  ]  IoU: 0.8733   Acc: 0.9980
+  [wire    ]  IoU: 0.1291   Acc: 0.1298
+Epoch  776 | train_loss=0.0422 train_mIoU=0.9352 | val_loss=1.3805 val_mIoU=0.3688 val_mAcc=0.4120 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1013   Acc: 0.1058
+  [branch  ]  IoU: 0.8732   Acc: 0.9978
+  [wire    ]  IoU: 0.1290   Acc: 0.1299
+Epoch  777 | train_loss=0.0420 train_mIoU=0.9358 | val_loss=1.3720 val_mIoU=0.3678 val_mAcc=0.4111 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1051   Acc: 0.1099
+  [branch  ]  IoU: 0.8743   Acc: 0.9978
+  [wire    ]  IoU: 0.1434   Acc: 0.1443
+Epoch  778 | train_loss=0.0419 train_mIoU=0.9358 | val_loss=1.3440 val_mIoU=0.3743 val_mAcc=0.4173 val_allAcc=0.8746
+  [trunk   ]  IoU: 0.1031   Acc: 0.1078
+  [branch  ]  IoU: 0.8733   Acc: 0.9978
+  [wire    ]  IoU: 0.1273   Acc: 0.1282
+Epoch  779 | train_loss=0.0417 train_mIoU=0.9360 | val_loss=1.3608 val_mIoU=0.3679 val_mAcc=0.4113 val_allAcc=0.8734
+  [trunk   ]  IoU: 0.1033   Acc: 0.1080
+  [branch  ]  IoU: 0.8737   Acc: 0.9978
+  [wire    ]  IoU: 0.1298   Acc: 0.1309
+Epoch  780 | train_loss=0.0424 train_mIoU=0.9355 | val_loss=1.3683 val_mIoU=0.3689 val_mAcc=0.4123 val_allAcc=0.8737
+  [trunk   ]  IoU: 0.1053   Acc: 0.1103
+  [branch  ]  IoU: 0.8735   Acc: 0.9978
+  [wire    ]  IoU: 0.1240   Acc: 0.1247
+Epoch  781 | train_loss=0.0424 train_mIoU=0.9354 | val_loss=1.3777 val_mIoU=0.3676 val_mAcc=0.4110 val_allAcc=0.8735
+  [trunk   ]  IoU: 0.1051   Acc: 0.1100
+  [branch  ]  IoU: 0.8727   Acc: 0.9979
+  [wire    ]  IoU: 0.1112   Acc: 0.1118
+Epoch  782 | train_loss=0.0423 train_mIoU=0.9350 | val_loss=1.3933 val_mIoU=0.3630 val_mAcc=0.4066 val_allAcc=0.8727
+  [trunk   ]  IoU: 0.0995   Acc: 0.1035
+  [branch  ]  IoU: 0.8727   Acc: 0.9981
+  [wire    ]  IoU: 0.1220   Acc: 0.1227
+Epoch  783 | train_loss=0.0418 train_mIoU=0.9359 | val_loss=1.4126 val_mIoU=0.3647 val_mAcc=0.4081 val_allAcc=0.8730
+  [trunk   ]  IoU: 0.1095   Acc: 0.1141
+  [branch  ]  IoU: 0.8738   Acc: 0.9981
+  [wire    ]  IoU: 0.1261   Acc: 0.1268
+Epoch  784 | train_loss=0.0422 train_mIoU=0.9354 | val_loss=1.3868 val_mIoU=0.3698 val_mAcc=0.4130 val_allAcc=0.8741
+  [trunk   ]  IoU: 0.1030   Acc: 0.1072
+  [branch  ]  IoU: 0.8733   Acc: 0.9979
+  [wire    ]  IoU: 0.1294   Acc: 0.1305
+Epoch  785 | train_loss=0.0418 train_mIoU=0.9360 | val_loss=1.3787 val_mIoU=0.3686 val_mAcc=0.4119 val_allAcc=0.8736
+Namespace(model='pointnet2', exp_name='pointnet2_scratch-combined-wce', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=8, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=True, loss='weighted_ce', focal_gamma=2.0, focal_alpha=[0.5], class_weights=[1.1704899, 0.17648609, 1.65302401], eval=False, no_cuda=False, wandb_project='pointcept', wandb_id=None, no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loss: weighted_ce  weights=[1.1704899, 0.17648609, 1.65302401]
+Train samples: 604  |  Val samples: 207
+Using 1 GPU(s)  |  log_softmax=True
+Resumed from checkpoints/pointnet2_scratch-combined-wce/best_mIoU_model.pth

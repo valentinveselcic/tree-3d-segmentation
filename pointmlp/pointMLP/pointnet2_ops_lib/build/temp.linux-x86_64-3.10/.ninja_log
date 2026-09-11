@@ -1,0 +1,10 @@
+# ninja log v5
+0	62625	1779192235979188910	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/sampling.o	a260ea8c8ccb6464
+0	64171	1779192237549199139	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/ball_query.o	2f15bf865059a6ca
+1	65461	1779192238822372973	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/group_points.o	5754c0922846c589
+0	67427	1779192240805220316	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/bindings.o	d10579c55c253d9b
+2	70187	1779192243565238226	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/interpolate.o	1ebda49024002c4c
+2	88372	1779192261762355390	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/group_points_gpu.o	9a4f9dd0001a3739
+0	88664	1779192262052357245	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/ball_query_gpu.o	8d09e816cd8ccb69
+2	88771	1779192262158357922	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/interpolate_gpu.o	169ad2c7488b2f5
+4	90144	1779192263529366683	/workspace/pointMLP/pointnet2_ops_lib/build/temp.linux-x86_64-3.10/pointnet2_ops/_ext-src/src/sampling_gpu.o	1e854278a07d7918

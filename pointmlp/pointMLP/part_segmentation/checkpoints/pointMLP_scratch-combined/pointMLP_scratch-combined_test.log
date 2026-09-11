@@ -1,0 +1,83 @@
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='tree_segmentation', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.5318
+  IoU [branch  ]: 0.9268
+  IoU [wire    ]: 0.8464
+
+Test results — mIoU: 0.7683  Acc: 0.9336
+  trunk   : 0.5318
+  branch  : 0.9268
+  wire    : 0.8464
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='tree_segmentation', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.5344
+  IoU [branch  ]: 0.9262
+  IoU [wire    ]: 0.8446
+
+Test results — mIoU: 0.7684  Acc: 0.9334
+  trunk   : 0.5344
+  branch  : 0.9262
+  wire    : 0.8446
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='tree_segmentation', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.4684
+  IoU [branch  ]: 0.9355
+  IoU [wire    ]: 0.7965
+
+Test results — mIoU: 0.7335  Acc: 0.9389
+  trunk   : 0.4684
+  branch  : 0.9355
+  wire    : 0.7965
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='tree_segmentation', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.4668
+  IoU [branch  ]: 0.9352
+  IoU [wire    ]: 0.7956
+
+Test results — mIoU: 0.7325  Acc: 0.9387
+  trunk   : 0.4668
+  branch  : 0.9352
+  wire    : 0.7956
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='tree_segmentation', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Testing...
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='pointcept', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.4829
+  IoU [branch  ]: 0.9345
+  IoU [wire    ]: 0.7905
+
+Test results — mIoU: 0.7359  mAcc: 0.8171  allAcc: 0.9383
+  trunk   : 0.4829
+  branch  : 0.9345
+  wire    : 0.7905
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='pointcept', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.4817
+  IoU [branch  ]: 0.9345
+  IoU [wire    ]: 0.7886
+
+Test results — mIoU: 0.7349  mAcc: 0.8162  allAcc: 0.9383
+
+Class           IoU      Acc
+----------------------------
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-combined', data_root='../data/combined', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, eval=True, no_cuda=False, wandb_project='pointcept', no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-combined/best_mIoU_model.pth
+  IoU [trunk   ]: 0.4834
+  IoU [branch  ]: 0.9348
+  IoU [wire    ]: 0.7908
+
+Test results — mIoU: 0.7363  mAcc: 0.8169  allAcc: 0.9385
+
+Class           IoU      Acc
+----------------------------
+  trunk        0.4834   0.5785
+  branch       0.9348   0.9756
+  wire         0.7908   0.8965
