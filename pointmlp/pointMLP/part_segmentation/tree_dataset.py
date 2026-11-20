@@ -24,8 +24,8 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-CLASS_NAMES  = ["trunk", "branch", "wire"]
-NUM_CLASSES  = 3
+CLASS_NAMES  = ["trunk", "branch", "wire", "grass"]
+NUM_CLASSES  = 4
 IGNORE_INDEX = -1
 
 

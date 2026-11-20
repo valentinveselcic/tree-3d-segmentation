@@ -1,5 +1,67 @@
 """
 main.py — PointMLP / PointNet++ training & evaluation for tree point cloud segmentation.
+
+python main.py --eval --exp_name scratch-partial-revised-wce  --model pointnet2 --data_root ../data/partial_revised
+
+python main.py --save_preds --exp_name scratch-combined --model pointMLP --data_root ../data/combined --num_points 8192
+    
+python main.py --model pointMLP \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised \
+            --epochs 400 \
+            --batch_size 8 \
+            --num_points 16384 \
+            --wandb_project pointcept
+
+
+python main.py --model pointnet2 \
+            --data_root ../data/combined \
+            --exp_name scratch-combined \
+            --epochs 800 \
+            --batch_size 8 \
+            --num_points 8192 \
+            --wandb_project pointcept \
+            --resume
+
+# With focal loss:
+python main.py --model pointnet2 \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-focal \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss focal --focal_gamma 2.0 --focal_alpha 0.892 0.3778 0.891 0.8392 \ ;
+
+python main.py --model pointMLP \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-focal \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss focal --focal_gamma 2.0 --focal_alpha 0.892 0.3778 0.891 0.8392
+
+# With weighted cross entropy:
+
+python main.py --model pointnet2 \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-focal \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss focal --focal_gamma 2.0 --focal_alpha 0.892 0.3778 0.891 0.8392 ;
+
+python main.py --model pointMLP \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-focal \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss focal --focal_gamma 2.0 --focal_alpha 0.892 0.3778 0.891 0.8392 ;
+
+
+python main.py --model pointMLP \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-wce \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss weighted_ce --class_weights 1.4104 0.2448 1.3975 0.9473 ;
+
+python main.py --model pointnet2 \
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-wce \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss weighted_ce --class_weights 1.4104 0.2448 1.3975 0.9473 ;
 """
 
 from __future__ import print_function
@@ -62,79 +124,45 @@ def build_model(args, device):
 # ─────────────────────────────────────────────────────────────────────────────
 
 class FocalLoss(nn.Module):
-    """
-    Multi-class Focal Loss (Lin et al., 2017).
-
-    Addresses class imbalance by down-weighting easy examples so the model
-    focuses training on hard, misclassified points.
-
-    gamma : float  focusing parameter.
-                   0   → identical to cross-entropy.
-                   1-2 → moderate focus on hard examples (recommended start).
-                   3-5 → aggressive focus; can destabilise training.
-    alpha : float  global foreground/background balance factor in [0, 1].
-                   0.5 → no class preference (default).
-                   >0.5 → up-weights the target class.
-                   Can also be a list [w0, w1, w2] for per-class alpha.
-    """
     def __init__(self, gamma=2.0, alpha=0.5, ignore_index=-1):
         super().__init__()
         self.gamma        = gamma
         self.alpha        = alpha
         self.ignore_index = ignore_index
 
-    def forward(self, logits, target):
-        """
-        logits : (N, C)  raw class scores (already flattened)
-        target : (N,)    int64 labels
-        """
-        valid      = target != self.ignore_index
-        logits     = logits[valid]
-        target     = target[valid]
+    def forward(self, inputs, target, log_softmax_input=False):
+        valid  = target != self.ignore_index
+        inputs = inputs[valid]
+        target = target[valid]
 
         if len(target) == 0:
-            return logits.sum() * 0.0
+            return inputs.sum() * 0.0
 
-        num_classes  = logits.size(1)
-        target_ohe   = F.one_hot(target, num_classes).float()   # (N, C)
+        num_classes = inputs.size(1)
+        target_ohe  = F.one_hot(target, num_classes).float()  # (N, C)
 
-        # sigmoid-based focal loss (works for multi-class via one-vs-rest)
-        pred_sigmoid     = torch.sigmoid(logits)                 # (N, C)
-        one_minus_pt     = (1 - pred_sigmoid) * target_ohe + pred_sigmoid * (1 - target_ohe)
-        focal_weight     = one_minus_pt.pow(self.gamma)
+        if log_softmax_input:
+            # inputs are already log(softmax(x)) -> convert to probabilities
+            probs = inputs.exp().clamp(min=1e-7, max=1.0 - 1e-7)
+            bce   = F.binary_cross_entropy(probs, target_ohe, reduction="none")
+        else:
+            # inputs are raw logits
+            probs = torch.sigmoid(inputs)
+            bce   = F.binary_cross_entropy_with_logits(inputs, target_ohe, reduction="none")
 
-        # per-class alpha weighting
+        one_minus_pt = (1 - probs) * target_ohe + probs * (1 - target_ohe)
+        focal_weight = one_minus_pt.pow(self.gamma)
+
         if isinstance(self.alpha, (list, tuple)):
-            alpha_t = logits.new_tensor(self.alpha)              # (C,)
-            alpha_w = (alpha_t * target_ohe + (1 - alpha_t) * (1 - target_ohe))
+            alpha_t = inputs.new_tensor(self.alpha)
+            alpha_w = alpha_t * target_ohe + (1 - alpha_t) * (1 - target_ohe)
         else:
             alpha_w = self.alpha * target_ohe + (1 - self.alpha) * (1 - target_ohe)
 
-        bce  = F.binary_cross_entropy_with_logits(logits, target_ohe, reduction="none")
-        loss = (alpha_w * focal_weight * bce).mean()
-        return loss
+        return (alpha_w * focal_weight * bce).mean()
 
 
 class WeightedCrossEntropyLoss(nn.Module):
-    """
-    Standard CrossEntropy with explicit per-class weights.
-
-    class_weights : list[float]  one per class in label order [trunk, branch, wire].
-                                 Higher weight = more penalty for misclassifying
-                                 that class. Use inverse-frequency weights for
-                                 imbalanced datasets.
-
-    Computing weights from your data (run once):
-        import numpy as np, glob
-        counts = np.zeros(3)
-        for f in glob.glob("data/.../train/**/segment.npy", recursive=True):
-            seg = np.load(f)
-            for c in range(3): counts[c] += (seg == c).sum()
-        freq    = counts / counts.sum()
-        weights = 1.0 / (freq * 3)
-        weights /= weights.mean()   # normalise so mean weight == 1
-        print(weights.tolist())     # paste these as --class_weights
-    """
     def __init__(self, class_weights, ignore_index=-1):
         super().__init__()
         self.ignore_index = ignore_index
@@ -143,38 +171,30 @@ class WeightedCrossEntropyLoss(nn.Module):
             torch.tensor(class_weights, dtype=torch.float32)
         )
 
-    def forward(self, logits, target):
-        """
-        logits : (N, C)
-        target : (N,)
-        """
-        return F.cross_entropy(
-            logits, target,
-            weight=self.weight.to(logits.device),
-            ignore_index=self.ignore_index,
-        )
+    def forward(self, inputs, target, log_softmax_input=False):
+        weight = self.weight.to(inputs.device)
+        if log_softmax_input:
+            return F.nll_loss(inputs, target, weight=weight, ignore_index=self.ignore_index)
+        return F.cross_entropy(inputs, target, weight=weight, ignore_index=self.ignore_index)
 
 
 def build_loss(args):
-    """
-    Factory that returns the configured loss callable.
-    Signature: loss_fn(flat_logits (N,C), flat_target (N,)) → scalar
-    """
     if args.loss == "ce":
-        def loss_fn(logits, target):
-            return F.cross_entropy(logits, target, ignore_index=IGNORE_INDEX)
+        def loss_fn(inputs, target, log_softmax_input=False):
+            if log_softmax_input:
+                return F.nll_loss(inputs, target, ignore_index=IGNORE_INDEX)
+            return F.cross_entropy(inputs, target, ignore_index=IGNORE_INDEX)
 
     elif args.loss == "weighted_ce":
         wce = WeightedCrossEntropyLoss(args.class_weights, ignore_index=IGNORE_INDEX)
-        def loss_fn(logits, target):
-            return wce(logits, target)
+        def loss_fn(inputs, target, log_softmax_input=False):
+            return wce(inputs, target, log_softmax_input=log_softmax_input)
 
     elif args.loss == "focal":
         alpha = args.focal_alpha[0] if len(args.focal_alpha) == 1 else args.focal_alpha
-        fl = FocalLoss(gamma=args.focal_gamma, alpha=alpha,
-                       ignore_index=IGNORE_INDEX)
-        def loss_fn(logits, target):
-            return fl(logits, target)
+        fl = FocalLoss(gamma=args.focal_gamma, alpha=alpha, ignore_index=IGNORE_INDEX)
+        def loss_fn(inputs, target, log_softmax_input=False):
+            return fl(inputs, target, log_softmax_input=log_softmax_input)
 
     else:
         raise ValueError(f"Unknown loss: {args.loss}")
@@ -183,22 +203,11 @@ def build_loss(args):
 
 
 def segmentation_loss(logits, target, loss_fn, log_softmax_input=False):
-    """
-    logits          : (B, C, N)
-    target          : (B, N)    int64
-    loss_fn         : callable  produced by build_loss()
-    log_softmax_input: bool     True for PointNet2 (output already log-softmaxed)
-    """
     B, C, N     = logits.shape
     flat_logits = logits.permute(0, 2, 1).reshape(-1, C)  # (B*N, C)
     flat_target = target.reshape(-1)                       # (B*N,)
 
-    if log_softmax_input:
-        # PointNet2 already applied log_softmax — nll_loss only, skip custom loss_fn
-        loss = F.nll_loss(flat_logits, flat_target, ignore_index=IGNORE_INDEX)
-    else:
-        loss = loss_fn(flat_logits, flat_target)
-
+    loss = loss_fn(flat_logits, flat_target, log_softmax_input=log_softmax_input)
     return loss, loss.item()
 
 
@@ -754,11 +763,10 @@ if __name__ == "__main__":
                              "0.5=neutral, >0.5=up-weight target class. Default: 0.5")
 
     # Weighted CE
-    parser.add_argument("--class_weights", type=float, nargs=3,
-                        default=[1.0, 1.0, 1.0],
-                        metavar=("TRUNK_W", "BRANCH_W", "WIRE_W"),
-                        help="Per-class weights for weighted_ce loss. "
-                             "Example: --class_weights 2.0 1.0 1.5")
+    # Weighted CE
+    parser.add_argument("--class_weights", type=float, nargs=NUM_CLASSES,
+                        default=[1.0] * NUM_CLASSES,
+                        help=f"Per-class weights for weighted_ce loss ({NUM_CLASSES} values).")
 
     parser.add_argument("--eval",    action="store_true")
     parser.add_argument("--no_cuda", action="store_true")

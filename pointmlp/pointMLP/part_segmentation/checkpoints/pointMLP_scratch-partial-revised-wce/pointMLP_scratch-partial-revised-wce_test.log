@@ -1,0 +1,16 @@
+Namespace(model='pointMLP', exp_name='pointMLP_scratch-partial-revised-wce', data_root='../data/partial_revised', num_points=8192, voxel_size=0.02, max_points=81920, batch_size=2, test_batch_size=2, epochs=800, lr=0.006, use_sgd=False, momentum=0.9, scheduler='onecycle', step=40, workers=12, amp=False, resume=False, save_preds=False, save_preds_split='val', loss='ce', focal_gamma=2.0, focal_alpha=[0.5], class_weights=[1.0, 1.0, 1.0, 1.0], eval=True, no_cuda=False, wandb_project='pointcept', wandb_id=None, no_wandb=False, seed=None, cuda=True)
+Using GPU
+Loaded checkpoint: checkpoints/pointMLP_scratch-partial-revised-wce/best_mIoU_model.pth
+  [trunk   ]  IoU: 0.6043   Acc: 0.9113
+  [branch  ]  IoU: 0.9185   Acc: 0.9318
+  [wire    ]  IoU: 0.8791   Acc: 0.9490
+  [grass   ]  IoU: 1.0000   Acc: 1.0000
+
+Test results — mIoU: 0.8505  mAcc: 0.9480  allAcc: 0.9640
+
+Class             IoU      Acc
+------------------------------
+  trunk          0.6043   0.9113
+  branch         0.9185   0.9318
+  wire           0.8791   0.9490
+  grass          1.0000   1.0000
