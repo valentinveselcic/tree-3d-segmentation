@@ -1,23 +1,38 @@
-# 3D Semantic Segmentation of Dormant Fruit Trees Using Point Clouds
+# Deep Learning-Based Semantic Segmentation of Fruit Tree Point Clouds for Autonomous Agriculture
 
-This repository contains the implementation, training configurations, and experimental evaluation for 3D semantic segmentation of dormant fruit trees using RGB-D point clouds.
+This repository contains the implementation, training configurations, and experimental evaluation for 3D semantic segmentation of dormant fruit trees using partial single-view RGB-D point clouds.
 
-The project benchmarks six deep learning architectures across transformer, sparse convolutional, and point-based paradigms on the **BRANCH v2** dataset, targeting automated agricultural pruning and infrastructure protection.
+The project benchmarks six deep learning architectures across transformer, sparse convolutional, and point-based paradigms on a 4-class dataset derived from **BRANCH v2** (663 manually annotated partial point clouds across 58 trees), targeting automated agricultural pruning and orchard infrastructure protection.
 
 ---
 
-## Benchmark Results (Combined Dataset)
+## Benchmark Results (4-Class Partial Dataset)
 
-All models were evaluated through an 800-epoch training schedule under identical test protocols on three target classes: **Trunk (D)**, **Branch (G)**, and **Support Structures (PS)**.
+All models were trained for 400 epochs using tree-level dataset splits across four semantic categories: **Trunk**, **Branches**, **Support Structures** (trellis wires and concrete poles), and **Grass**.
 
-| Model | Paradigm | mIoU (%) | IoU-D (%) | IoU-G (%) | IoU-PS (%) | mAcc (%) | allAcc (%) |
+### Baseline Segmentation (τ = 0 m) & Inference Throughput
+
+| Model | Paradigm | Optimal Loss | mIoU (%) | Trunk IoU (%) | Params (M) | Latency (ms) | Speed (FPS) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **OctFormer** | Transformer | **93.37** | **86.23** | **97.38** | 96.51 | **96.07** | **97.88** |
-| **PTv2** | Transformer | 93.17 | 85.19 | 97.27 | 97.06 | 95.97 | 97.78 |
-| **PTv3** | Transformer | 93.11 | 84.82 | 97.29 | **97.21** | 95.66 | 97.78 |
-| **SparseUNet** | Sparse CNN | 92.79 | 84.14 | 97.12 | 97.12 | 95.57 | 97.65 |
-| **PointMLP** | MLP (Geometric Affine) | 73.63 | 48.34 | 93.48 | 79.08 | 81.69 | 93.85 |
-| **PointNet++** | Hierarchical MLP | 48.54 | 18.19 | 89.03 | 38.41 | 54.21 | 88.93 |
+| **OctFormer** | Transformer | CE | **95.28** | **87.70** | 44.00 | 16.49 | 60.6 |
+| **PTv2** | Transformer | CE | 94.01 | 84.06 | 11.32 | 14.54 | 68.8 |
+| **PTv3** | Transformer | CE | 92.85 | 80.59 | 46.17 | 17.15 | 58.3 |
+| **SparseUNet** | Sparse CNN | WCE (CE) | 92.50 (92.02) | 80.42 (77.55) | 39.16 | **9.20** | **108.7** |
+| **PointMLP** | MLP (Geometric Affine) | CE | 86.65 | 63.67 | 16.75 | 12.26 | 81.6 |
+| **PointNet++** | Hierarchical MLP | Focal | 69.52 | 32.80 | **1.74** | 67.49 | 14.8 |
+
+*Note: Single-scene inference latency (median) and throughput (FPS) are measured over 100 forward passes without Test-Time Augmentation (TTA).*
+
+### Boundary-Sensitive Evaluation (τ, θ = 0.02 m, Cross-Entropy)
+
+Because trunk-to-branch transitions lack a sharp physical boundary, models are also evaluated within a 0.02 m tolerance band using **Don't-Care Margin (IoU<sub>DC</sub>)**, **Slack Relaxation (IoU<sub>Sl</sub>)**, and **Boundary F1 (BF<sub>1</sub>)**:
+
+| Model | mIoU<sub>DC</sub> (%) | mIoU<sub>Sl</sub> (%) | Trunk<sub>DC</sub> (%) | Trunk<sub>Sl</sub> (%) | Trunk BF<sub>1</sub> (%) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **OctFormer** | **96.89** | **97.20** | **92.69** | **94.25** | **81.49** |
+| **PTv2** | 95.88 | 96.39 | 89.90 | 92.07 | 75.59 |
+| **PTv3** | 94.59 | 95.31 | 86.50 | 89.40 | 72.44 |
+| **SparseUNet** | 93.90 | 94.80 | 83.39 | 86.99 | 72.08 |
 
 ---
 
@@ -31,12 +46,12 @@ All models were evaluated through an 800-epoch training schedule under identical
 │   └── pointmlp/
 │       └── Dockerfile          # Environment for PointMLP and PointNet++
 ├── pointcept/                  # Pointcept workspace with custom configs and tools
-│   ├── configs/custom_trees/   # Network configuration files
-│   ├── custom_tools/           # Class statistics and qualitative export scripts
-│   ├── data/                   # Embedded BRANCH v2 dataset splits
+│   ├── configs/custom_trees/   # 4-class network and loss ablation configs
+│   ├── custom_tools/           # Class statistics, boundary metrics, and export scripts
+│   ├── data/                   # Tree-level BRANCH v2 partial point cloud splits
 │   └── README.md               # Execution commands for Pointcept models
 ├── pointmlp/                   # PointMLP & PointNet++ workspace
-│   ├── data/                   # Embedded BRANCH v2 dataset splits
+│   ├── data/                   # Tree-level BRANCH v2 partial point cloud splits
 │   └── README.md               # Execution commands for MLP-based models
 └── README.md                   # Main documentation
 ```
@@ -54,8 +69,8 @@ All models were evaluated through an 800-epoch training schedule under identical
 
 ## Pretrained Checkpoints
 
-All trained model weights (`.pth`) are hosted on Hugging Face:  
-🔗 **[Hugging Face Model Repository](https://huggingface.co/lenlne/tree-3d-segmentation-models)**
+Trained model weights (`.pth`) are hosted on Hugging Face:  
+**[Hugging Face Model Repository](https://huggingface.co/lenlne/tree-3d-segmentation-models)**
 
 ---
 
@@ -94,14 +109,16 @@ docker run --gpus all -it --rm \
 ```
 
 Inside each container, navigate to the target workspace (`cd /workspace/pointcept` or `cd /workspace/pointmlp`) and follow the module documentation:
-* [`pointcept/README.md`](pointcept/README.md) — Training, evaluation, and configuration scripts for transformer and sparse CNN models.
+* [`pointcept/README.md`](pointcept/README.md) — Training, evaluation, boundary metric scripts, and configs for transformer and sparse CNN models.
 * [`pointmlp/README.md`](pointmlp/README.md) — Execution routines, loss ablations, and prediction exports for PointMLP and PointNet++.
 
 ---
 
 ## Acknowledgments
 
-This research incorporates and adapts components from:
+This research was funded by the European Union – NextGenerationEU through the project *"Advanced Machine Learning Methods for Optimization and Robotic Vision"* **SUPORT (581-UNIOS-36)**.
+
+This codebase incorporates and adapts components from:
 * [Pointcept](https://github.com/Pointcept/Pointcept)
 * [PointTransformerV3](https://github.com/Pointcept/PointTransformerV3)
 * [OctFormer](https://github.com/octree-nn/octformer)
