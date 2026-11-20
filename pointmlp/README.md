@@ -13,22 +13,21 @@ Example training commands for the `pointmlp` workspace:
 ```bash
 # PointNet++ baseline
 python main.py --model pointnet2 \
-               --data_root data/combined \
-               --exp_name scratch-combined \
-               --epochs 800 \
-               --batch_size 8 \
-               --num_points 8192 \
-               --wandb_project pointcept \
-               --resume
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised \
+            --epochs 400 \
+            --batch_size 8 \
+            --num_points 16384 \
+            --wandb_project pointcept
 
 # PointMLP baseline
 python main.py --model pointMLP \
-               --data_root data/combined \
-               --exp_name scratch-combined \
-               --epochs 800 \
-               --batch_size 8 \
-               --num_points 8192 \
-               --wandb_project pointcept
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised \
+            --epochs 400 \
+            --batch_size 8 \
+            --num_points 16384 \
+            --wandb_project pointcept
 ```
 
 ### 2. Loss Function Ablations
@@ -36,24 +35,17 @@ python main.py --model pointMLP \
 ```bash
 # PointNet++ with Focal Loss
 python main.py --model pointnet2 \
-               --data_root data/combined \
-               --exp_name scratch-combined-focal \
-               --epochs 800 \
-               --batch_size 8 \
-               --num_points 8192 \
-               --loss focal \
-               --focal_gamma 2.0 \
-               --focal_alpha 0.8801 0.2048 0.9151
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-focal \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss focal --focal_gamma 2.0 --focal_alpha 0.892 0.3778 0.891 0.8392 \ ;
 
 # PointMLP with Weighted Cross-Entropy
 python main.py --model pointMLP \
-               --data_root data/combined \
-               --exp_name scratch-combined-wce \
-               --epochs 800 \
-               --batch_size 8 \
-               --num_points 8192 \
-               --loss weighted_ce \
-               --class_weights 1.1704899 0.17648609 1.65302401
+            --data_root ../data/partial_revised \
+            --exp_name scratch-partial-revised-wce \
+            --epochs 400 --batch_size 8 --num_points 16384 \
+            --loss weighted_ce --class_weights 1.4104 0.2448 1.3975 0.9473 ;
 ```
 
 ---
@@ -65,13 +57,13 @@ Example evaluation commands for the `pointmlp` workspace:
 # Evaluate checkpoint performance
 python main.py --eval \
                --model pointnet2 \
-               --data_root data/combined \
-               --exp_name scratch-combined
+               --data_root data/partial_revised \
+               --exp_name scratch-partial-revised
 
 # Export predictions (.npy / .ply) for qualitative visual analysis
 python main.py --save_preds \
                --model pointMLP \
-               --data_root data/combined \
-               --exp_name scratch-combined \
-               --num_points 8192
+               --data_root data/partial_revised \
+               --exp_name scratch-partial-revised \
+               --num_points 16384
 ```
