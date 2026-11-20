@@ -1,5 +1,5 @@
 """
-Tester
+Tester with Spatial Boundary Metrics (Slack IoU & Boundary F1)
 
 Author: Xiaoyang Wu (xiaoyang.wu.cs@gmail.com)
 Please cite our work if the code is helpful to you.
@@ -15,6 +15,7 @@ import torch
 import torch.distributed as dist
 import torch.nn.functional as F
 import torch.utils.data
+from scipy.spatial import cKDTree
 
 from .defaults import create_ddp_model
 import pointcept.utils.comm as comm
@@ -38,6 +39,156 @@ except:
 TESTERS = Registry("testers")
 
 
+import numpy as np
+from scipy.spatial import cKDTree
+
+def compute_slack_metrics(
+    coord: np.ndarray,
+    target: np.ndarray,
+    pred: np.ndarray,
+    num_classes: int = 4,
+    tau: float = 0.02,
+    class_pair: tuple = (0, 1),
+    ignore_index: int = -1,
+):
+    """
+    Računa presjek, uniju i target za OBJE metode:
+    1. Don't-Care Margin (isključenje točaka unutar tau)
+    2. Slack Relaxation (prihvaćanje bilo koje kontaktne klase unutar tau)
+    """
+    valid_mask = target != ignore_index
+    c_val = coord[valid_mask]
+    t_val = target[valid_mask]
+    p_val = pred[valid_mask]
+
+    c1, c2 = class_pair
+    mask_c1 = t_val == c1
+    mask_c2 = t_val == c2
+
+    # Inicijalizacija matrica: dc = Don't Care, sr = Slack Relaxation
+    inter_dc = np.zeros(num_classes, dtype=np.int64)
+    union_dc = np.zeros(num_classes, dtype=np.int64)
+    target_dc = np.zeros(num_classes, dtype=np.int64)
+
+    inter_sr = np.zeros(num_classes, dtype=np.int64)
+    union_sr = np.zeros(num_classes, dtype=np.int64)
+    target_sr = np.zeros(num_classes, dtype=np.int64)
+
+    if not np.any(mask_c1) or not np.any(mask_c2):
+        for c in range(num_classes):
+            t_c = t_val == c
+            p_c = p_val == c
+            cnt = np.logical_and(t_c, p_c).sum()
+            u_cnt = np.logical_or(t_c, p_c).sum()
+            t_cnt = t_c.sum()
+            inter_dc[c] = inter_sr[c] = cnt
+            union_dc[c] = union_sr[c] = u_cnt
+            target_dc[c] = target_sr[c] = t_cnt
+        return (inter_dc, union_dc, target_dc), (inter_sr, union_sr, target_sr)
+
+    tree_c1 = cKDTree(c_val[mask_c1])
+    tree_c2 = cKDTree(c_val[mask_c2])
+
+    dists_c1, _ = tree_c2.query(c_val[mask_c1], k=1, workers=-1)
+    dists_c2, _ = tree_c1.query(c_val[mask_c2], k=1, workers=-1)
+
+    # Identifikacija točaka unutar tampon-zone
+    in_buffer = np.zeros(len(t_val), dtype=bool)
+    idx_c1 = np.where(mask_c1)[0]
+    idx_c2 = np.where(mask_c2)[0]
+    in_buffer[idx_c1[dists_c1 <= tau]] = True
+    in_buffer[idx_c2[dists_c2 <= tau]] = True
+
+    # --- METODA 1: Don't-Care Margin (isključenje) ---
+    eval_mask_dc = ~in_buffer
+    for c in range(num_classes):
+        t_c = t_val == c
+        p_c = p_val == c
+        inter_dc[c] = np.logical_and(t_c, np.logical_and(p_c, eval_mask_dc)).sum()
+        union_dc[c] = np.logical_or(np.logical_and(t_c, eval_mask_dc), np.logical_and(p_c, eval_mask_dc)).sum()
+        target_dc[c] = np.logical_and(t_c, eval_mask_dc).sum()
+
+    # --- METODA 2: Slack Relaxation (prihvaćanje alternacije bez penalizacije unije) ---
+    # Kreiramo prilagođeni pred vektor u kojem se unutar tampon-zone predikcija 
+    # kontaktne klase usklađuje sa stvarnom klasom
+    p_relaxed = p_val.copy()
+    
+    # Gdje je stvarno c1 (deblo), a model rekao c2 (grana) unutar tampon-zone -> priznaj kao c1
+    mask_relax_c1 = in_buffer & (t_val == c1) & (p_val == c2)
+    p_relaxed[mask_relax_c1] = c1
+    
+    # Gdje je stvarno c2 (grana), a model rekao c1 (deblo) unutar tampon-zone -> priznaj kao c2
+    mask_relax_c2 = in_buffer & (t_val == c2) & (p_val == c1)
+    p_relaxed[mask_relax_c2] = c2
+
+    for c in range(num_classes):
+        t_c = t_val == c
+        p_c = p_relaxed == c
+        inter_sr[c] = np.logical_and(t_c, p_c).sum()
+        union_sr[c] = np.logical_or(t_c, p_c).sum()
+        target_sr[c] = t_c.sum()
+
+    return (inter_dc, union_dc, target_dc), (inter_sr, union_sr, target_sr)
+
+
+def compute_boundary_f1_multithresh(
+    coord: np.ndarray,
+    target: np.ndarray,
+    pred: np.ndarray,
+    thetas: tuple = (0.00, 0.01, 0.02, 0.03, 0.05),
+    edge_width: float = 0.02,
+    class_pair: tuple = (0, 1),
+    ignore_index: int = -1,
+):
+    """
+    Računa Boundary Precision, Recall i F1-score za višestruke pragove tolerancije (thetas).
+    """
+    valid_mask = target != ignore_index
+    c_val = coord[valid_mask]
+    t_val = target[valid_mask]
+    p_val = pred[valid_mask]
+
+    c1, c2 = class_pair
+    mask_t_c1 = t_val == c1
+    mask_t_c2 = t_val == c2
+
+    empty_res = {th: (0.0, 0.0, 0.0) for th in thetas}
+    if not np.any(mask_t_c1) or not np.any(mask_t_c2):
+        return empty_res
+
+    tree_t_c2 = cKDTree(c_val[mask_t_c2])
+    dists_t, _ = tree_t_c2.query(c_val[mask_t_c1], k=1, workers=-1)
+    gt_boundary = c_val[mask_t_c1][dists_t <= edge_width]
+
+    mask_p_c1 = p_val == c1
+    mask_p_c2 = p_val == c2
+    if not np.any(mask_p_c1) or not np.any(mask_p_c2):
+        return empty_res
+
+    tree_p_c2 = cKDTree(c_val[mask_p_c2])
+    dists_p, _ = tree_p_c2.query(c_val[mask_p_c1], k=1, workers=-1)
+    pred_boundary = c_val[mask_p_c1][dists_p <= edge_width]
+
+    if len(gt_boundary) == 0 or len(pred_boundary) == 0:
+        return empty_res
+
+    tree_gt = cKDTree(gt_boundary)
+    tree_pred = cKDTree(pred_boundary)
+
+    # Izračun udaljenosti jednom za sve pragove
+    dists_pred_to_gt, _ = tree_gt.query(pred_boundary, k=1, workers=-1)
+    dists_gt_to_pred, _ = tree_pred.query(gt_boundary, k=1, workers=-1)
+
+    results = {}
+    for th in thetas:
+        prec = float(np.mean(dists_pred_to_gt <= th))
+        rec = float(np.mean(dists_gt_to_pred <= th))
+        f1 = float(2 * (prec * rec) / (prec + rec)) if (prec + rec) > 0 else 0.0
+        results[th] = (prec, rec, f1)
+
+    return results
+
+
 class TesterBase:
     def __init__(self, cfg, model=None, test_loader=None, verbose=False) -> None:
         torch.multiprocessing.set_sharing_strategy("file_system")
@@ -49,7 +200,6 @@ class TesterBase:
         self.cfg = cfg
         self.verbose = verbose
         if self.verbose and model is None:
-            # if model is not none, trigger tester with trainer, no need to print config
             self.logger.info(f"Save path: {cfg.save_path}")
             self.logger.info(f"Config:\n{cfg.pretty_text}")
         if model is None:
@@ -121,10 +271,24 @@ class TesterBase:
 
 @TESTERS.register_module()
 class SemSegTester(TesterBase):
+    def __init__(
+        self,
+        eval_boundary=True,
+        tolerances=(0.01, 0.02, 0.03, 0.05),
+        thetas=(0.00, 0.01, 0.02, 0.03, 0.05),
+        class_pair=(0, 1),
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.eval_boundary = eval_boundary
+        self.tolerances = tolerances
+        self.thetas = thetas
+        self.class_pair = tuple(class_pair)
+
     def test(self):
         assert self.test_loader.batch_size == 1
         logger = get_root_logger()
-        logger.info(">>>>>>>>>>>>>>>> Start Evaluation >>>>>>>>>>>>>>>>")
+        logger.info(">>>>>>>>>>>>>>>> Start Revised Evaluation 1 >>>>>>>>>>>>>>>>")
 
         batch_time = AverageMeter()
         intersection_meter = AverageMeter()
@@ -134,7 +298,6 @@ class SemSegTester(TesterBase):
 
         save_path = os.path.join(self.cfg.save_path, "result")
         make_dirs(save_path)
-        # create submit folder only on main process
         if (
             self.cfg.data.test.type == "ScanNetDataset"
             or self.cfg.data.test.type == "ScanNet200Dataset"
@@ -222,6 +385,7 @@ class SemSegTester(TesterBase):
                     pred = pred[data_dict["inverse"]]
                     segment = data_dict["origin_segment"]
                 np.save(pred_save_path, pred)
+            logger.info(">>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>")
             if (
                 self.cfg.data.test.type == "ScanNetDataset"
                 or self.cfg.data.test.type == "ScanNet200Dataset"
@@ -238,9 +402,8 @@ class SemSegTester(TesterBase):
                     delimiter=",",
                     fmt="%d",
                 )
-                pred = pred[:, 0]  # for mIoU, TODO: support top3 mIoU
+                pred = pred[:, 0]
             elif self.cfg.data.test.type == "SemanticKITTIDataset":
-                # 00_000000 -> 00, 000000
                 sequence_name, frame_name = data_name.split("_")
                 os.makedirs(
                     os.path.join(
@@ -279,9 +442,55 @@ class SemSegTester(TesterBase):
             intersection_meter.update(intersection)
             union_meter.update(union)
             target_meter.update(target)
-            record[data_name] = dict(
+
+            scene_record = dict(
                 intersection=intersection, union=union, target=target
             )
+
+            # -----------------------------------------------------------------
+            # DODATAK: Izračun Slack IoU i Boundary F1 nad sirovom geometrijom
+            # -----------------------------------------------------------------
+            if self.eval_boundary:
+                if "origin_coord" in data_dict.keys():
+                    raw_coord = data_dict["origin_coord"]
+                elif "coord" in data_dict.keys():
+                    raw_coord = data_dict["coord"]
+                else:
+                    raw_data = self.test_loader.dataset.get_data(idx)
+                    raw_coord = raw_data["coord"]
+
+                if isinstance(raw_coord, torch.Tensor):
+                    raw_coord = raw_coord.cpu().numpy()
+
+                slack_res_dc = {}
+                slack_res_sr = {}
+                for tau in self.tolerances:
+                    dc_tuple, sr_tuple = compute_slack_metrics(
+                        coord=raw_coord,
+                        target=segment,
+                        pred=pred,
+                        num_classes=self.cfg.data.num_classes,
+                        tau=tau,
+                        class_pair=self.class_pair,
+                        ignore_index=self.cfg.data.ignore_index,
+                    )
+                    slack_res_dc[tau] = dc_tuple
+                    slack_res_sr[tau] = sr_tuple
+
+                b_f1_res = compute_boundary_f1_multithresh(
+                    coord=raw_coord,
+                    target=segment,
+                    pred=pred,
+                    thetas=self.thetas,
+                    edge_width=0.02,
+                    class_pair=self.class_pair,
+                    ignore_index=self.cfg.data.ignore_index,
+                )
+                scene_record["slack_dc"] = slack_res_dc
+                scene_record["slack_sr"] = slack_res_sr
+                scene_record["boundary_f1"] = b_f1_res
+
+            record[data_name] = scene_record
 
             mask = union != 0
             iou_class = intersection / (union + 1e-10)
@@ -338,7 +547,7 @@ class SemSegTester(TesterBase):
             allAcc = sum(intersection) / (sum(target) + 1e-10)
 
             logger.info(
-                "Val result: mIoU/mAcc/allAcc {:.4f}/{:.4f}/{:.4f}".format(
+                "Val result (Standard, tau=0.00m): mIoU/mAcc/allAcc {:.4f}/{:.4f}/{:.4f}".format(
                     mIoU, mAcc, allAcc
                 )
             )
@@ -351,6 +560,76 @@ class SemSegTester(TesterBase):
                         accuracy=accuracy_class[i],
                     )
                 )
+
+            # -----------------------------------------------------------------
+            # USPOREDNI ISPIS: DON'T-CARE MARGIN vs. SLACK RELAXATION & THETAS
+            # -----------------------------------------------------------------
+            if self.eval_boundary:
+                c1_idx, c2_idx = self.class_pair
+                c1_name = self.cfg.data.names[c1_idx]
+                c2_name = self.cfg.data.names[c2_idx]
+
+                logger.info("\n" + "=" * 50)
+                logger.info(f"Border analysis: {c1_name.upper()} <---> {c2_name.upper()}")
+                logger.info("=" * 50)
+
+                # 1. Don't-Care Margin (Isključenje točaka - Core IoU)
+                logger.info("--- Method 1: Don't-care margin---")
+                for tau in self.tolerances:
+                    s_inter = np.sum([m["slack_dc"][tau][0] for _, m in record.items()], axis=0)
+                    s_uni = np.sum([m["slack_dc"][tau][1] for _, m in record.items()], axis=0)
+                    s_tgt = np.sum([m["slack_dc"][tau][2] for _, m in record.items()], axis=0)
+                    
+                    iou_c = s_inter / (s_uni + 1e-10)
+                    acc_c = s_inter / (s_tgt + 1e-10)
+                    miou = np.mean(iou_c)
+                    macc = np.mean(acc_c)
+                    allacc = np.sum(s_inter) / (np.sum(s_tgt) + 1e-10)
+
+                    logger.info(
+                        f"[Tau = {tau*100:4.1f} cm] Core mIoU/mAcc/allAcc: "
+                        f"{miou:.4f}/{macc:.4f}/{allacc:.4f}"
+                    )
+                    for i in range(self.cfg.data.num_classes):
+                        logger.info(
+                            f"    Class_{i} - {self.cfg.data.names[i]:<8} "
+                            f"Result: iou/accuracy {iou_c[i]:.4f}/{acc_c[i]:.4f}"
+                        )
+
+                # 2. Slack Relaxation (Prihvaćanje alternacije unutar pojasa)
+                logger.info("\n--- Methoda 1: Slack relaxation ---")
+                for tau in self.tolerances:
+                    s_inter = np.sum([m["slack_sr"][tau][0] for _, m in record.items()], axis=0)
+                    s_uni = np.sum([m["slack_sr"][tau][1] for _, m in record.items()], axis=0)
+                    s_tgt = np.sum([m["slack_sr"][tau][2] for _, m in record.items()], axis=0)
+                    
+                    iou_c = s_inter / (s_uni + 1e-10)
+                    acc_c = s_inter / (s_tgt + 1e-10)
+                    miou = np.mean(iou_c)
+                    macc = np.mean(acc_c)
+                    allacc = np.sum(s_inter) / (np.sum(s_tgt) + 1e-10)
+
+                    logger.info(
+                        f"[Tau = {tau*100:4.1f} cm] Slack mIoU/mAcc/allAcc: "
+                        f"{miou:.4f}/{macc:.4f}/{allacc:.4f}"
+                    )
+                    for i in range(self.cfg.data.num_classes):
+                        logger.info(
+                            f"    Class_{i} - {self.cfg.data.names[i]:<8} "
+                            f"Result: iou/accuracy {iou_c[i]:.4f}/{acc_c[i]:.4f}"
+                        )
+
+                # 3. Boundary F1 za više theta pragova
+                logger.info("\n--- Boundary F1-score ---")
+                for th in self.thetas:
+                    precs = [m["boundary_f1"][th][0] for _, m in record.items()]
+                    recs = [m["boundary_f1"][th][1] for _, m in record.items()]
+                    f1s = [m["boundary_f1"][th][2] for _, m in record.items()]
+                    logger.info(
+                        f"[Theta = {th*100:4.1f} cm] Boundary F1: {np.mean(f1s):.4f} "
+                        f"(Precision: {np.mean(precs):.4f}, Recall: {np.mean(recs):.4f})"
+                    )
+
             logger.info("<<<<<<<<<<<<<<<<< End Evaluation <<<<<<<<<<<<<<<<<")
 
     @staticmethod
@@ -363,7 +642,7 @@ class DINOSemSegTester(TesterBase):
     def test(self):
         assert self.test_loader.batch_size == 1
         logger = get_root_logger()
-        logger.info(">>>>>>>>>>>>>>>> Start Evaluation >>>>>>>>>>>>>>>>")
+        logger.info(">>>>>>>>>>>>>>>> Start Revised Evaluation 2 >>>>>>>>>>>>>>>>")
 
         batch_time = AverageMeter()
         intersection_meter = AverageMeter()
@@ -373,7 +652,6 @@ class DINOSemSegTester(TesterBase):
 
         save_path = os.path.join(self.cfg.save_path, "result")
         make_dirs(save_path)
-        # create submit folder only on main process
         if (
             self.cfg.data.test.type == "ScanNetDataset"
             or self.cfg.data.test.type == "ScanNet200Dataset"
@@ -404,10 +682,9 @@ class DINOSemSegTester(TesterBase):
                 json.dump(submission, f, indent=4)
         comm.synchronize()
         record = {}
-        # fragment inference
         for idx, data_dict in enumerate(self.test_loader):
             end = time.time()
-            data_dict = data_dict[0]  # current assume batch size is 1
+            data_dict = data_dict[0]
             fragment_list = data_dict.pop("fragment_list")
             segment = data_dict.pop("segment")
             data_name = data_dict.pop("name")
@@ -440,7 +717,7 @@ class DINOSemSegTester(TesterBase):
                     input_dict["dino_offset"] = dino_offset
                     idx_part = input_dict["index"]
                     with torch.no_grad():
-                        pred_part = self.model(input_dict)["seg_logits"]  # (n, k)
+                        pred_part = self.model(input_dict)["seg_logits"]
                         pred_part = F.softmax(pred_part, -1)
                         if self.cfg.empty_cache:
                             torch.cuda.empty_cache()
@@ -483,9 +760,8 @@ class DINOSemSegTester(TesterBase):
                     delimiter=",",
                     fmt="%d",
                 )
-                pred = pred[:, 0]  # for mIoU, TODO: support top3 mIoU
+                pred = pred[:, 0]
             elif self.cfg.data.test.type == "SemanticKITTIDataset":
-                # 00_000000 -> 00, 000000
                 sequence_name, frame_name = data_name.split("_")
                 os.makedirs(
                     os.path.join(
@@ -607,7 +883,7 @@ class DINOSemSegTester(TesterBase):
 class ClsTester(TesterBase):
     def test(self):
         logger = get_root_logger()
-        logger.info(">>>>>>>>>>>>>>>> Start Evaluation >>>>>>>>>>>>>>>>")
+        logger.info(">>>>>>>>>>>>>>>> Start Revised Evaluation 3 >>>>>>>>>>>>>>>>")
         batch_time = AverageMeter()
         intersection_meter = AverageMeter()
         union_meter = AverageMeter()
@@ -699,7 +975,7 @@ class ClsVotingTester(TesterBase):
     def test(self):
         for i in range(self.num_repeat):
             logger = get_root_logger()
-            logger.info(f">>>>>>>>>>>>>>>> Start Evaluation {i + 1} >>>>>>>>>>>>>>>>")
+            logger.info(f">>>>>>>>>>>>>>>> Start Revised Evaluation {i + 1} >>>>>>>>>>>>>>>>")
             record = self.test_once()
             if comm.is_main_process():
                 if record[self.metric] > self.best_metric:
@@ -721,18 +997,10 @@ class ClsVotingTester(TesterBase):
 
         for idx, data_dict in enumerate(self.test_loader):
             end = time.time()
-            data_dict = data_dict[0]  # current assume batch size is 1
+            data_dict = data_dict[0]
             voting_list = data_dict.pop("voting_list")
             category = data_dict.pop("category")
             data_name = data_dict.pop("name")
-            # pred = torch.zeros([1, self.cfg.data.num_classes]).cuda()
-            # for i in range(len(voting_list)):
-            #     input_dict = voting_list[i]
-            #     for key in input_dict.keys():
-            #         if isinstance(input_dict[key], torch.Tensor):
-            #             input_dict[key] = input_dict[key].cuda(non_blocking=True)
-            #     with torch.no_grad():
-            #         pred += F.softmax(self.model(input_dict)["cls_logits"], -1)
             input_dict = collate_fn(voting_list)
             for key in input_dict.keys():
                 if isinstance(input_dict[key], torch.Tensor):
@@ -803,7 +1071,7 @@ class PartSegTester(TesterBase):
     def test(self):
         test_dataset = self.test_loader.dataset
         logger = get_root_logger()
-        logger.info(">>>>>>>>>>>>>>>> Start Evaluation >>>>>>>>>>>>>>>>")
+        logger.info(">>>>>>>>>>>>>>>> Start Revised Evaluation 4 >>>>>>>>>>>>>>>>")
 
         batch_time = AverageMeter()
 
@@ -917,7 +1185,7 @@ class InsSegTester(TesterBase):
     def test(self):
         assert self.test_loader.batch_size == 1
         logger = get_root_logger()
-        logger.info(">>>>>>>>>>>>>>>> Start Evaluation >>>>>>>>>>>>>>>>")
+        logger.info(">>>>>>>>>>>>>>>> Start Revised Evaluation 5 >>>>>>>>>>>>>>>>")
 
         batch_time = AverageMeter()
 
@@ -1050,7 +1318,6 @@ class InsSegTester(TesterBase):
             == pred["pred_masks"].shape[0]
         )
         assert pred["pred_masks"].shape[1] == segment.shape[0] == instance.shape[0]
-        # get gt instances
         gt_instances = dict()
         for i in range(self.cfg.data.num_classes):
             if i not in self.segment_ignore_index:
@@ -1073,7 +1340,6 @@ class InsSegTester(TesterBase):
             gt_inst["matched_pred"] = []
             gt_instances[self.cfg.data.names[segment_ids[i]]].append(gt_inst)
 
-        # get pred instances and associate with gt
         pred_instances = dict()
         for i in range(self.cfg.data.num_classes):
             if i not in self.segment_ignore_index:
@@ -1093,7 +1359,7 @@ class InsSegTester(TesterBase):
                 np.logical_and(void_mask, pred_inst["mask"])
             )
             if pred_inst["vert_count"] < self.min_region_sizes:
-                continue  # skip if empty
+                continue
             segment_name = self.cfg.data.names[pred_inst["segment_id"]]
             matched_gt = []
             for gt_idx, gt_inst in enumerate(gt_instances[segment_name]):
@@ -1120,7 +1386,6 @@ class InsSegTester(TesterBase):
         dist_threshes = [self.distance_threshes]
         dist_confs = [self.distance_confs]
 
-        # results: class x overlap
         ap_table = np.zeros(
             (len(dist_threshes), len(self.valid_class_names), len(overlaps)), float
         )
@@ -1144,7 +1409,6 @@ class InsSegTester(TesterBase):
                     for scene in scenes:
                         pred_instances = scene["pred"][label_name]
                         gt_instances = scene["gt"][label_name]
-                        # filter groups in ground truth
                         gt_instances = [
                             gt
                             for gt in gt_instances
@@ -1160,11 +1424,9 @@ class InsSegTester(TesterBase):
                         cur_true = np.ones(len(gt_instances))
                         cur_score = np.ones(len(gt_instances)) * (-float("inf"))
                         cur_match = np.zeros(len(gt_instances), dtype=bool)
-                        # collect matches
                         for gti, gt in enumerate(gt_instances):
                             found_match = False
                             for pred in gt["matched_pred"]:
-                                # greedy assignments
                                 if pred_visited[pred["uuid"]]:
                                     continue
                                 overlap = float(pred["intersection"]) / (
@@ -1174,17 +1436,13 @@ class InsSegTester(TesterBase):
                                 )
                                 if overlap > overlap_th:
                                     confidence = pred["confidence"]
-                                    # if already have a prediction for this gt,
-                                    # the prediction with the lower score is automatically a false positive
                                     if cur_match[gti]:
                                         max_score = max(cur_score[gti], confidence)
                                         min_score = min(cur_score[gti], confidence)
                                         cur_score[gti] = max_score
-                                        # append false positive
                                         cur_true = np.append(cur_true, 0)
                                         cur_score = np.append(cur_score, min_score)
                                         cur_match = np.append(cur_match, True)
-                                    # otherwise set score
                                     else:
                                         found_match = True
                                         cur_match[gti] = True
@@ -1192,11 +1450,9 @@ class InsSegTester(TesterBase):
                                         pred_visited[pred["uuid"]] = True
                             if not found_match:
                                 hard_false_negatives += 1
-                        # remove non-matched ground truth instances
                         cur_true = cur_true[cur_match]
                         cur_score = cur_score[cur_match]
 
-                        # collect non-matched predictions as false positive
                         for pred in pred_instances:
                             found_gt = False
                             for gt in pred["matched_gt"]:
@@ -1213,7 +1469,6 @@ class InsSegTester(TesterBase):
                                 for gt in pred["matched_gt"]:
                                     if gt["segment_id"] in self.segment_ignore_index:
                                         num_ignore += gt["intersection"]
-                                    # small ground truth instances
                                     if (
                                         gt["vert_count"] < min_region_size
                                         or gt["med_dist"] > distance_thresh
@@ -1223,38 +1478,26 @@ class InsSegTester(TesterBase):
                                 proportion_ignore = (
                                     float(num_ignore) / pred["vert_count"]
                                 )
-                                # if not ignored append false positive
                                 if proportion_ignore <= overlap_th:
                                     cur_true = np.append(cur_true, 0)
                                     confidence = pred["confidence"]
                                     cur_score = np.append(cur_score, confidence)
 
-                        # append to overall results
                         y_true = np.append(y_true, cur_true)
                         y_score = np.append(y_score, cur_score)
 
-                    # compute average precision
                     if has_gt and has_pred:
-                        # compute precision recall curve first
-
-                        # sorting and cumsum
                         score_arg_sort = np.argsort(y_score)
                         y_score_sorted = y_score[score_arg_sort]
                         y_true_sorted = y_true[score_arg_sort]
                         y_true_sorted_cumsum = np.cumsum(y_true_sorted)
 
-                        # unique thresholds
                         thresholds, unique_indices = np.unique(
                             y_score_sorted, return_index=True
                         )
                         num_prec_recall = len(unique_indices) + 1
 
-                        # prepare precision recall
                         num_examples = len(y_score_sorted)
-                        # https://github.com/ScanNet/ScanNet/pull/26
-                        # all predictions are non-matched but also all of them are ignored and not counted as FP
-                        # y_true_sorted_cumsum is empty
-                        # num_true_examples = y_true_sorted_cumsum[-1]
                         num_true_examples = (
                             y_true_sorted_cumsum[-1]
                             if len(y_true_sorted_cumsum) > 0
@@ -1263,9 +1506,7 @@ class InsSegTester(TesterBase):
                         precision = np.zeros(num_prec_recall)
                         recall = np.zeros(num_prec_recall)
 
-                        # deal with the first point
                         y_true_sorted_cumsum = np.append(y_true_sorted_cumsum, 0)
-                        # deal with remaining
                         for idx_res, idx_scores in enumerate(unique_indices):
                             cumsum = y_true_sorted_cumsum[idx_scores - 1]
                             tp = num_true_examples - cumsum
@@ -1276,11 +1517,9 @@ class InsSegTester(TesterBase):
                             precision[idx_res] = p
                             recall[idx_res] = r
 
-                        # first point in curve is artificial
                         precision[-1] = 1.0
                         recall[-1] = 0.0
 
-                        # compute average of precision-recall curve
                         recall_for_conv = np.copy(recall)
                         recall_for_conv = np.append(recall_for_conv[0], recall_for_conv)
                         recall_for_conv = np.append(recall_for_conv, 0.0)
@@ -1288,7 +1527,6 @@ class InsSegTester(TesterBase):
                         stepWidths = np.convolve(
                             recall_for_conv, [-0.5, 0, 0.5], "valid"
                         )
-                        # integrate is now simply a dot product
                         ap_current = np.dot(precision, stepWidths)
 
                     elif has_gt:
@@ -1320,5 +1558,4 @@ class InsSegTester(TesterBase):
 
     @staticmethod
     def collate_fn(batch):
-        # Restrict to bs 1
         return batch[0]

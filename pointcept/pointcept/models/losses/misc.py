@@ -221,3 +221,161 @@ class DiceLoss(nn.Module):
                 total_loss += dice_loss
         loss = total_loss / num_classes
         return self.loss_weight * loss
+
+# Newly added loss functions for handling noisy labels and boundary-aware losses.
+
+@LOSSES.register_module()
+class LabelSmoothingCrossEntropyLoss(nn.Module):
+    """Cross-Entropy s ugrađenim zaglađivanjem oznaka (Label Smoothing).
+
+    Ublažava overconfidence modela na kontaktnim točkama račvanja
+    gdje su anotacije među različitim kutovima snimanja nekonzistentne.
+    """
+
+    def __init__(
+        self,
+        label_smoothing=0.1,
+        reduction="mean",
+        loss_weight=1.0,
+        ignore_index=-1,
+    ):
+        super(LabelSmoothingCrossEntropyLoss, self).__init__()
+        assert 0.0 <= label_smoothing < 1.0, "label_smoothing mora biti u [0, 1)"
+        assert reduction in ("mean", "sum", "none")
+        self.label_smoothing = label_smoothing
+        self.reduction = reduction
+        self.loss_weight = loss_weight
+        self.ignore_index = ignore_index
+
+    def forward(self, pred, target, **kwargs):
+        # Poravnanje tenzora u oblik [N, C] i [N]
+        if pred.dim() > 2:
+            pred = pred.transpose(0, 1).reshape(pred.size(1), -1).transpose(0, 1)
+        target = target.view(-1)
+
+        valid_mask = target != self.ignore_index
+        target = target[valid_mask]
+        pred = pred[valid_mask]
+
+        if target.numel() == 0:
+            return pred.sum() * 0.0
+
+        loss = F.cross_entropy(
+            pred,
+            target,
+            label_smoothing=self.label_smoothing,
+            reduction=self.reduction,
+        )
+        return self.loss_weight * loss
+
+
+@LOSSES.register_module()
+class SymmetricCrossEntropyLoss(nn.Module):
+    """Symmetric Cross Entropy (SCE = alpha * CE + beta * RCE).
+
+    Izvor: Wang et al., 'Symmetric Cross Entropy for Robust Learning with Noisy Labels', ICCV 2019.
+    RCE (Reverse Cross-Entropy) je omeđen faktorom A, što sprječava eksploziju gradijenata
+    na točkama gdje je anotator povukao rez nekoliko centimetara više ili niže.
+    """
+
+    def __init__(
+        self,
+        alpha=1.0,
+        beta=1.0,
+        A=1.0,
+        loss_weight=1.0,
+        ignore_index=-1,
+    ):
+        super(SymmetricCrossEntropyLoss, self).__init__()
+        self.alpha = alpha
+        self.beta = beta
+        self.A = A
+        self.loss_weight = loss_weight
+        self.ignore_index = ignore_index
+
+    def forward(self, pred, target, **kwargs):
+        if pred.dim() > 2:
+            pred = pred.transpose(0, 1).reshape(pred.size(1), -1).transpose(0, 1)
+        target = target.view(-1)
+
+        valid_mask = target != self.ignore_index
+        target = target[valid_mask]
+        pred = pred[valid_mask]
+
+        if target.numel() == 0:
+            return pred.sum() * 0.0
+
+        num_classes = pred.size(1)
+
+        # 1. Standardni Cross-Entropy (CE)
+        ce_loss = F.cross_entropy(pred, target, reduction="mean")
+
+        # 2. Reverse Cross-Entropy (RCE)
+        prob = F.softmax(pred, dim=-1)
+        prob = torch.clamp(prob, min=1e-7, max=1.0)
+
+        one_hot = F.one_hot(target, num_classes=num_classes).float()
+        p_c = torch.sum(one_hot * prob, dim=-1)
+
+        # RCE zatvorena forma: A * (1 - p_c)
+        rce_loss = torch.mean(self.A * (1.0 - p_c))
+
+        total_loss = self.alpha * ce_loss + self.beta * rce_loss
+        return self.loss_weight * total_loss
+
+
+@LOSSES.register_module()
+class BoundaryDistanceAwareLoss(nn.Module):
+    """Granični gubitak utemeljen na mapi euklidske udaljenosti od spojeva klasa.
+
+    Inspiriran Kervadec et al. (Boundary loss). Ako je točka unutar tolerancije
+    (npr. 2-3 cm od račvanja), njezina penalizacija se dinamički ublažava
+    kako nekonzistentni šum u ground truthu ne bi iskrivio geometrijske težine modela.
+    """
+
+    def __init__(
+        self,
+        margin=0.03,
+        boundary_weight=0.2,
+        loss_weight=1.0,
+        ignore_index=-1,
+    ):
+        super(BoundaryDistanceAwareLoss, self).__init__()
+        self.margin = margin
+        self.boundary_weight = boundary_weight
+        self.loss_weight = loss_weight
+        self.ignore_index = ignore_index
+
+    def forward(self, pred, target, dist_map=None, **kwargs):
+        """
+        Args:
+            pred: Logiti modela [N, C]
+            target: Indeksi klasa [N]
+            dist_map: Opcionalni tenzor [N] s euklidskim udaljenostima (u metrima)
+                      svake točke do najbliže točke druge klase.
+        """
+        if pred.dim() > 2:
+            pred = pred.transpose(0, 1).reshape(pred.size(1), -1).transpose(0, 1)
+        target = target.view(-1)
+
+        valid_mask = target != self.ignore_index
+        target = target[valid_mask]
+        pred = pred[valid_mask]
+
+        if target.numel() == 0:
+            return pred.sum() * 0.0
+
+        # Elementarni Cross-Entropy gubitak bez redukcije: [N]
+        ce_loss = F.cross_entropy(pred, target, reduction="none")
+
+        if dist_map is not None:
+            dist_map = dist_map.view(-1)[valid_mask]
+            # Točke unutar margine dobivaju faktor (dist / margin), minimalno boundary_weight.
+            # Točke daleko od granice dobivaju puni faktor 1.0.
+            distance_scale = torch.clamp(dist_map / self.margin, min=self.boundary_weight, max=1.0)
+            loss = torch.mean(ce_loss * distance_scale)
+        else:
+            # Fallback ako dist_map nije proslijeđen u batchu
+            loss = torch.mean(ce_loss)
+
+        return self.loss_weight * loss

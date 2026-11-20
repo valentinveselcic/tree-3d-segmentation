@@ -1,0 +1,7 @@
+model_name,architecture,regime,dataset,loss,short_label,method,tau_cm,mIoU,mAcc,allAcc,trunk_iou,trunk_acc,branch_iou,branch_acc,wire_iou,wire_acc,grass_iou,grass_acc
+PointMLP-scratch-partial-revised-CE,PointMLP,scratch,partial-revised,CE,PointMLP (CE),standard,0.0,0.8665,0.922,0.9724,0.6367,0.7838,0.939,0.9683,0.8903,0.936,1.0,1.0
+PointMLP-scratch-partial-revised-Focal,PointMLP,scratch,partial-revised,Focal,PointMLP (Focal),standard,0.0,0.8648,0.9339,0.9702,0.635,0.8418,0.9328,0.956,0.8915,0.938,1.0,1.0
+PointMLP-scratch-partial-revised-WCE,PointMLP,scratch,partial-revised,WCE,PointMLP (WCE),standard,0.0,0.8505,0.948,0.964,0.6043,0.9113,0.9185,0.9318,0.8791,0.949,1.0,1.0
+PointNet++-scratch-partial-revised-CE,PointNet++,scratch,partial-revised,CE,PointNet++ (CE),standard,0.0,0.6768,0.7484,0.932,0.3278,0.4419,0.8692,0.9539,0.514,0.5999,0.9961,0.9978
+PointNet++-scratch-partial-revised-Focal,PointNet++,scratch,partial-revised,Focal,PointNet++ (Focal),standard,0.0,0.6952,0.7691,0.9318,0.3439,0.4997,0.8626,0.9433,0.5784,0.6363,0.9961,0.9969
+PointNet++-scratch-partial-revised-WCE,PointNet++,scratch,partial-revised,WCE,PointNet++ (WCE),standard,0.0,0.691,0.7845,0.9248,0.368,0.6173,0.8485,0.9185,0.5542,0.6076,0.9932,0.9946

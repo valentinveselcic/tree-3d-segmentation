@@ -1,0 +1,725 @@
+[2026-10-22 13:11:19,094 INFO test.py line 199 128722] => Loading config ...
+[2026-10-22 13:11:19,094 INFO test.py line 203 128722] Save path: exp/custom_trees/spunet-scratch-partial-revised-focal
+[2026-10-22 13:11:19,498 INFO test.py line 204 128722] Config:
+weight = 'exp/custom_trees/spunet-scratch-partial-revised-focal/model/model_best.pth'
+resume = False
+evaluate = True
+test_only = False
+seed = 18859725
+save_path = 'exp/custom_trees/spunet-scratch-partial-revised-focal'
+num_worker = 16
+batch_size = 12
+gradient_accumulation_steps = 1
+batch_size_val = None
+batch_size_test = None
+epoch = 400
+eval_epoch = 100
+clip_grad = None
+sync_bn = False
+enable_amp = False
+amp_dtype = 'float16'
+empty_cache = False
+empty_cache_per_epoch = False
+find_unused_parameters = False
+enable_wandb = True
+wandb_project = 'pointcept'
+wandb_key = None
+mix_prob = 0.8
+param_dicts = None
+hooks = [
+    dict(type='CheckpointLoader'),
+    dict(type='ModelHook'),
+    dict(type='IterationTimer', warmup_iter=2),
+    dict(type='InformationWriter'),
+    dict(
+        type='SemSegEvaluator',
+        write_cls_iou=True,
+        eval_boundary=True,
+        tau=0.02,
+        theta=0.02,
+        class_pair=(0, 1)),
+    dict(type='CheckpointSaver', save_freq=None),
+    dict(type='PreciseEvaluator', test_last=False)
+]
+train = dict(type='DefaultTrainer')
+test = dict(type='SemSegTester', verbose=True)
+model = dict(
+    type='DefaultSegmentor',
+    backbone=dict(
+        type='SpUNet-v1m1',
+        in_channels=6,
+        num_classes=4,
+        channels=(32, 64, 128, 256, 256, 128, 96, 96),
+        layers=(2, 3, 4, 6, 2, 2, 2, 2)),
+    criteria=[
+        dict(
+            type='FocalLoss',
+            gamma=2.0,
+            alpha=[0.892, 0.3778, 0.891, 0.8392],
+            loss_weight=1.0,
+            ignore_index=-1)
+    ])
+optimizer = dict(
+    type='SGD', lr=0.05, momentum=0.9, weight_decay=0.0001, nesterov=True)
+scheduler = dict(
+    type='OneCycleLR',
+    max_lr=0.05,
+    pct_start=0.05,
+    anneal_strategy='cos',
+    div_factor=10.0,
+    final_div_factor=10000.0)
+dataset_type = 'DefaultDataset'
+data_root = 'data/Pregledan dataset/data'
+data = dict(
+    num_classes=4,
+    ignore_index=-1,
+    names=['trunk', 'branch', 'wire', 'grass'],
+    train=dict(
+        type='DefaultDataset',
+        split='train',
+        data_root='data/Pregledan dataset/data',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(
+                type='RandomDropout',
+                dropout_ratio=0.2,
+                dropout_application_ratio=0.2),
+            dict(
+                type='RandomRotate',
+                angle=[-1, 1],
+                axis='z',
+                center=[0, 0, 0],
+                p=0.5),
+            dict(
+                type='RandomRotate',
+                angle=[-0.015625, 0.015625],
+                axis='x',
+                p=0.5),
+            dict(
+                type='RandomRotate',
+                angle=[-0.015625, 0.015625],
+                axis='y',
+                p=0.5),
+            dict(type='RandomScale', scale=[0.9, 1.1]),
+            dict(type='RandomFlip', p=0.5),
+            dict(type='RandomJitter', sigma=0.005, clip=0.02),
+            dict(
+                type='ElasticDistortion',
+                distortion_params=[[0.2, 0.4], [0.8, 1.6]]),
+            dict(type='ChromaticAutoContrast', p=0.2, blend_factor=None),
+            dict(type='ChromaticTranslation', p=0.95, ratio=0.05),
+            dict(type='ChromaticJitter', p=0.95, std=0.05),
+            dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='train',
+                return_grid_coord=True),
+            dict(type='SphereCrop', point_max=100000, mode='random'),
+            dict(type='CenterShift', apply_z=False),
+            dict(type='NormalizeColor'),
+            dict(type='ShufflePoint'),
+            dict(type='ToTensor'),
+            dict(
+                type='Collect',
+                keys=('coord', 'grid_coord', 'segment'),
+                feat_keys=['coord', 'color'])
+        ],
+        test_mode=False,
+        loop=4),
+    val=dict(
+        type='DefaultDataset',
+        split='val',
+        data_root='data/Pregledan dataset/data',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(
+                type='Copy',
+                keys_dict=dict(segment='origin_segment',
+                               coord='origin_coord')),
+            dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='train',
+                return_grid_coord=True,
+                return_inverse=True),
+            dict(type='CenterShift', apply_z=False),
+            dict(type='NormalizeColor'),
+            dict(type='ToTensor'),
+            dict(
+                type='Collect',
+                keys=('coord', 'grid_coord', 'segment', 'origin_segment',
+                      'inverse'),
+                feat_keys=['coord', 'color'])
+        ],
+        test_mode=False),
+    test=dict(
+        type='DefaultDataset',
+        split='val',
+        data_root='data/Pregledan dataset/data',
+        transform=[
+            dict(type='CenterShift', apply_z=True),
+            dict(type='NormalizeColor')
+        ],
+        test_mode=True,
+        test_cfg=dict(
+            voxelize=dict(
+                type='GridSample',
+                grid_size=0.02,
+                hash_type='fnv',
+                mode='test',
+                return_grid_coord=True),
+            crop=None,
+            post_transform=[
+                dict(type='CenterShift', apply_z=False),
+                dict(type='ToTensor'),
+                dict(
+                    type='Collect',
+                    keys=('coord', 'grid_coord', 'index'),
+                    feat_keys=['coord', 'color'])
+            ],
+            aug_transform=[[{
+                'type': 'RandomRotateTargetAngle',
+                'angle': [0],
+                'axis': 'z',
+                'center': [0, 0, 0],
+                'p': 1
+            }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [0.95, 0.95]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [0.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }],
+                           [{
+                               'type': 'RandomRotateTargetAngle',
+                               'angle': [1.5],
+                               'axis': 'z',
+                               'center': [0, 0, 0],
+                               'p': 1
+                           }, {
+                               'type': 'RandomScale',
+                               'scale': [1.05, 1.05]
+                           }], [{
+                               'type': 'RandomFlip',
+                               'p': 1
+                           }]])))
+num_worker_per_gpu = 16
+batch_size_per_gpu = 12
+batch_size_val_per_gpu = 1
+batch_size_test_per_gpu = 1
+
+[2026-10-22 13:11:19,498 INFO test.py line 206 128722] => Building model ...
+[2026-10-22 13:11:19,671 INFO test.py line 219 128722] Num params: 39156292
+[2026-10-22 13:11:19,765 INFO test.py line 226 128722] Loading weight at: exp/custom_trees/spunet-scratch-partial-revised-focal/model/model_best.pth
+[2026-10-22 13:11:20,337 INFO test.py line 238 128722] => Loaded weight 'exp/custom_trees/spunet-scratch-partial-revised-focal/model/model_best.pth' (epoch 80)
+[2026-10-22 13:11:20,341 INFO test.py line 211 128722] => Building test dataset & dataloader ...
+[2026-10-22 13:11:20,341 INFO defaults.py line 80 128722] Totally 120 x 1 samples in data val set.
+[2026-10-22 13:11:20,341 INFO test.py line 291 128722] >>>>>>>>>>>>>>>> Start Revised Evaluation 1 >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:21,183 INFO test.py line 340 128722] 1/120: tree_1_V_0008_2, loaded pred and label.
+[2026-10-22 13:11:21,185 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:21,287 INFO test.py line 504 128722] Test: tree_1_V_0008_2 [1/120]-24519 Batch 0.104 (0.104) Accuracy 0.8564 (0.3028) mIoU 0.3567 (0.2676)
+[2026-10-22 13:11:23,249 INFO test.py line 340 128722] 2/120: tree_1_V_0014_1, loaded pred and label.
+[2026-10-22 13:11:23,251 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:23,611 INFO test.py line 504 128722] Test: tree_1_V_0014_1 [2/120]-68704 Batch 0.366 (0.235) Accuracy 0.9493 (0.6358) mIoU 0.8617 (0.6047)
+[2026-10-22 13:11:24,175 INFO test.py line 340 128722] 3/120: tree_1_V_0135_4, loaded pred and label.
+[2026-10-22 13:11:24,177 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:24,449 INFO test.py line 504 128722] Test: tree_1_V_0135_4 [3/120]-84421 Batch 0.281 (0.250) Accuracy 0.9059 (0.8003) mIoU 0.5717 (0.7689)
+[2026-10-22 13:11:25,436 INFO test.py line 340 128722] 4/120: tree_1_V_0007_0, loaded pred and label.
+[2026-10-22 13:11:25,438 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:25,679 INFO test.py line 504 128722] Test: tree_1_V_0007_0 [4/120]-86198 Batch 0.349 (0.275) Accuracy 0.9449 (0.8052) mIoU 0.6701 (0.7714)
+[2026-10-22 13:11:25,709 INFO test.py line 340 128722] 5/120: tree_1_V_0001_2, loaded pred and label.
+[2026-10-22 13:11:25,711 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:25,861 INFO test.py line 504 128722] Test: tree_1_V_0001_2 [5/120]-37769 Batch 0.156 (0.251) Accuracy 0.8123 (0.7745) mIoU 0.5644 (0.7385)
+[2026-10-22 13:11:29,388 INFO test.py line 340 128722] 6/120: tree_1_V_0165_9, loaded pred and label.
+[2026-10-22 13:11:29,391 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:29,736 INFO test.py line 504 128722] Test: tree_1_V_0165_9 [6/120]-124940 Batch 0.355 (0.269) Accuracy 0.9587 (0.8389) mIoU 0.8957 (0.8020)
+[2026-10-22 13:11:33,562 INFO test.py line 340 128722] 7/120: tree_1_V_0173_15, loaded pred and label.
+[2026-10-22 13:11:33,567 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:33,858 INFO test.py line 504 128722] Test: tree_1_V_0173_15 [7/120]-118048 Batch 0.785 (0.342) Accuracy 0.9623 (0.8362) mIoU 0.7018 (0.8028)
+[2026-10-22 13:11:33,870 INFO test.py line 340 128722] 8/120: tree_1_V_0180_15, loaded pred and label.
+[2026-10-22 13:11:33,871 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:34,100 INFO test.py line 504 128722] Test: tree_1_V_0180_15 [8/120]-52124 Batch 0.241 (0.330) Accuracy 0.9590 (0.8453) mIoU 0.5713 (0.8124)
+[2026-10-22 13:11:35,608 INFO test.py line 340 128722] 9/120: tree_1_V_0014_4, loaded pred and label.
+[2026-10-22 13:11:35,610 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:35,867 INFO test.py line 504 128722] Test: tree_1_V_0014_4 [9/120]-88186 Batch 0.269 (0.323) Accuracy 0.9613 (0.8515) mIoU 0.8822 (0.8192)
+[2026-10-22 13:11:40,599 INFO test.py line 340 128722] 10/120: tree_1_V_0165_12, loaded pred and label.
+[2026-10-22 13:11:40,602 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:41,201 INFO test.py line 504 128722] Test: tree_1_V_0165_12 [10/120]-127390 Batch 0.886 (0.379) Accuracy 0.8375 (0.8115) mIoU 0.6278 (0.7731)
+[2026-10-22 13:11:41,216 INFO test.py line 340 128722] 11/120: tree_1_V_0165_2, loaded pred and label.
+[2026-10-22 13:11:41,218 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:41,480 INFO test.py line 504 128722] Test: tree_1_V_0165_2 [11/120]-80582 Batch 0.279 (0.370) Accuracy 0.8918 (0.8189) mIoU 0.7493 (0.7773)
+[2026-10-22 13:11:42,622 INFO test.py line 340 128722] 12/120: tree_1_V_0180_3, loaded pred and label.
+[2026-10-22 13:11:42,624 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:43,016 INFO test.py line 504 128722] Test: tree_1_V_0180_3 [12/120]-77749 Batch 0.403 (0.373) Accuracy 0.9553 (0.8264) mIoU 0.7141 (0.7853)
+[2026-10-22 13:11:45,855 INFO test.py line 340 128722] 13/120: tree_1_V_0173_9, loaded pred and label.
+[2026-10-22 13:11:45,857 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:46,249 INFO test.py line 504 128722] Test: tree_1_V_0173_9 [13/120]-126553 Batch 0.405 (0.375) Accuracy 0.9659 (0.8255) mIoU 0.8150 (0.7856)
+[2026-10-22 13:11:46,807 INFO test.py line 340 128722] 14/120: tree_1_V_0006_0, loaded pred and label.
+[2026-10-22 13:11:46,810 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:47,380 INFO test.py line 504 128722] Test: tree_1_V_0006_0 [14/120]-130761 Batch 0.582 (0.390) Accuracy 0.9846 (0.8490) mIoU 0.9645 (0.8113)
+[2026-10-22 13:11:54,641 INFO test.py line 340 128722] 15/120: tree_1_V_0165_14, loaded pred and label.
+[2026-10-22 13:11:54,645 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:55,598 INFO test.py line 504 128722] Test: tree_1_V_0165_14 [15/120]-167092 Batch 1.104 (0.438) Accuracy 0.8316 (0.8423) mIoU 0.7594 (0.7977)
+[2026-10-22 13:11:55,619 INFO test.py line 340 128722] 16/120: tree_1_V_0006_4, loaded pred and label.
+[2026-10-22 13:11:55,621 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:55,792 INFO test.py line 504 128722] Test: tree_1_V_0006_4 [16/120]-66141 Batch 0.194 (0.422) Accuracy 0.9680 (0.8519) mIoU 0.9176 (0.8080)
+[2026-10-22 13:11:56,426 INFO test.py line 340 128722] 17/120: tree_1_V_0014_3, loaded pred and label.
+[2026-10-22 13:11:56,427 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:56,631 INFO test.py line 504 128722] Test: tree_1_V_0014_3 [17/120]-38975 Batch 0.210 (0.410) Accuracy 0.8532 (0.8461) mIoU 0.2914 (0.8029)
+[2026-10-22 13:11:57,947 INFO test.py line 340 128722] 18/120: tree_1_V_0165_7, loaded pred and label.
+[2026-10-22 13:11:57,949 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:11:58,326 INFO test.py line 504 128722] Test: tree_1_V_0165_7 [18/120]-99877 Batch 0.384 (0.409) Accuracy 0.8908 (0.8460) mIoU 0.7570 (0.7985)
+[2026-10-22 13:12:00,503 INFO test.py line 340 128722] 19/120: tree_1_V_0001_5, loaded pred and label.
+[2026-10-22 13:12:00,505 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:00,681 INFO test.py line 504 128722] Test: tree_1_V_0001_5 [19/120]-87404 Batch 0.541 (0.415) Accuracy 0.8983 (0.8385) mIoU 0.5384 (0.7913)
+[2026-10-22 13:12:00,690 INFO test.py line 340 128722] 20/120: tree_1_V_0026_3, loaded pred and label.
+[2026-10-22 13:12:00,692 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:00,835 INFO test.py line 504 128722] Test: tree_1_V_0026_3 [20/120]-67160 Batch 0.154 (0.402) Accuracy 0.9210 (0.8408) mIoU 0.5368 (0.7931)
+[2026-10-22 13:12:01,714 INFO test.py line 340 128722] 21/120: tree_1_V_0001_3, loaded pred and label.
+[2026-10-22 13:12:01,715 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:01,802 INFO test.py line 504 128722] Test: tree_1_V_0001_3 [21/120]-49936 Batch 0.096 (0.388) Accuracy 0.9199 (0.8376) mIoU 0.4660 (0.7904)
+[2026-10-22 13:12:03,968 INFO test.py line 340 128722] 22/120: tree_1_V_0007_1, loaded pred and label.
+[2026-10-22 13:12:03,971 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:04,395 INFO test.py line 504 128722] Test: tree_1_V_0007_1 [22/120]-136660 Batch 0.433 (0.390) Accuracy 0.9664 (0.8374) mIoU 0.7616 (0.7913)
+[2026-10-22 13:12:05,849 INFO test.py line 340 128722] 23/120: tree_1_V_0173_11, loaded pred and label.
+[2026-10-22 13:12:05,852 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:06,420 INFO test.py line 504 128722] Test: tree_1_V_0173_11 [23/120]-94756 Batch 0.577 (0.398) Accuracy 0.9174 (0.8332) mIoU 0.7257 (0.7884)
+[2026-10-22 13:12:07,428 INFO test.py line 340 128722] 24/120: tree_1_V_0001_6, loaded pred and label.
+[2026-10-22 13:12:07,430 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:07,578 INFO test.py line 504 128722] Test: tree_1_V_0001_6 [24/120]-67507 Batch 0.160 (0.388) Accuracy 0.8946 (0.8284) mIoU 0.4607 (0.7841)
+[2026-10-22 13:12:10,235 INFO test.py line 340 128722] 25/120: tree_1_V_0135_1, loaded pred and label.
+[2026-10-22 13:12:10,238 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:10,852 INFO test.py line 504 128722] Test: tree_1_V_0135_1 [25/120]-148865 Batch 0.627 (0.398) Accuracy 0.9621 (0.8336) mIoU 0.8870 (0.7905)
+[2026-10-22 13:12:11,152 INFO test.py line 340 128722] 26/120: tree_1_V_0015_6, loaded pred and label.
+[2026-10-22 13:12:11,154 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:11,359 INFO test.py line 504 128722] Test: tree_1_V_0015_6 [26/120]-95665 Batch 0.217 (0.391) Accuracy 0.9614 (0.8390) mIoU 0.8778 (0.7965)
+[2026-10-22 13:12:12,258 INFO test.py line 340 128722] 27/120: tree_1_V_0008_5, loaded pred and label.
+[2026-10-22 13:12:12,260 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:12,513 INFO test.py line 504 128722] Test: tree_1_V_0008_5 [27/120]-51149 Batch 0.260 (0.386) Accuracy 0.9127 (0.8374) mIoU 0.3997 (0.7953)
+[2026-10-22 13:12:13,821 INFO test.py line 340 128722] 28/120: tree_1_V_0135_9, loaded pred and label.
+[2026-10-22 13:12:13,823 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:14,258 INFO test.py line 504 128722] Test: tree_1_V_0135_9 [28/120]-100556 Batch 0.447 (0.388) Accuracy 0.9161 (0.8364) mIoU 0.4659 (0.7953)
+[2026-10-22 13:12:15,087 INFO test.py line 340 128722] 29/120: tree_1_V_0165_17, loaded pred and label.
+[2026-10-22 13:12:15,089 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:15,281 INFO test.py line 504 128722] Test: tree_1_V_0165_17 [29/120]-78715 Batch 0.206 (0.382) Accuracy 0.7854 (0.8282) mIoU 0.3322 (0.7825)
+[2026-10-22 13:12:16,693 INFO test.py line 340 128722] 30/120: tree_1_V_0135_3, loaded pred and label.
+[2026-10-22 13:12:16,696 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:17,230 INFO test.py line 504 128722] Test: tree_1_V_0135_3 [30/120]-98071 Batch 0.549 (0.387) Accuracy 0.9056 (0.8264) mIoU 0.7192 (0.7817)
+[2026-10-22 13:12:17,978 INFO test.py line 340 128722] 31/120: tree_1_V_0180_2, loaded pred and label.
+[2026-10-22 13:12:17,980 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:18,287 INFO test.py line 504 128722] Test: tree_1_V_0180_2 [31/120]-56579 Batch 0.322 (0.385) Accuracy 0.9163 (0.8273) mIoU 0.6303 (0.7830)
+[2026-10-22 13:12:18,841 INFO test.py line 340 128722] 32/120: tree_1_V_0006_6, loaded pred and label.
+[2026-10-22 13:12:18,843 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:19,079 INFO test.py line 504 128722] Test: tree_1_V_0006_6 [32/120]-74117 Batch 0.246 (0.381) Accuracy 0.9144 (0.8290) mIoU 0.8075 (0.7843)
+[2026-10-22 13:12:20,194 INFO test.py line 340 128722] 33/120: tree_1_V_0001_0, loaded pred and label.
+[2026-10-22 13:12:20,196 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:20,293 INFO test.py line 504 128722] Test: tree_1_V_0001_0 [33/120]-76328 Batch 0.107 (0.373) Accuracy 0.9149 (0.8265) mIoU 0.5617 (0.7815)
+[2026-10-22 13:12:21,128 INFO test.py line 340 128722] 34/120: tree_1_V_0026_2, loaded pred and label.
+[2026-10-22 13:12:21,130 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:21,338 INFO test.py line 504 128722] Test: tree_1_V_0026_2 [34/120]-75073 Batch 0.217 (0.368) Accuracy 0.9521 (0.8288) mIoU 0.7588 (0.7845)
+[2026-10-22 13:12:25,111 INFO test.py line 340 128722] 35/120: tree_1_V_0165_13, loaded pred and label.
+[2026-10-22 13:12:25,114 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:25,574 INFO test.py line 504 128722] Test: tree_1_V_0165_13 [35/120]-97891 Batch 0.600 (0.375) Accuracy 0.8126 (0.8208) mIoU 0.4354 (0.7767)
+[2026-10-22 13:12:25,586 INFO test.py line 340 128722] 36/120: tree_1_V_0006_3, loaded pred and label.
+[2026-10-22 13:12:25,587 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:25,779 INFO test.py line 504 128722] Test: tree_1_V_0006_3 [36/120]-58179 Batch 0.205 (0.370) Accuracy 0.9777 (0.8261) mIoU 0.6979 (0.7820)
+[2026-10-22 13:12:26,819 INFO test.py line 340 128722] 37/120: tree_1_V_0165_4, loaded pred and label.
+[2026-10-22 13:12:26,821 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:27,001 INFO test.py line 504 128722] Test: tree_1_V_0165_4 [37/120]-76056 Batch 0.189 (0.365) Accuracy 0.8576 (0.8232) mIoU 0.3976 (0.7780)
+[2026-10-22 13:12:28,549 INFO test.py line 340 128722] 38/120: tree_1_V_0006_2, loaded pred and label.
+[2026-10-22 13:12:28,552 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:29,163 INFO test.py line 504 128722] Test: tree_1_V_0006_2 [38/120]-122337 Batch 0.622 (0.372) Accuracy 0.9461 (0.8277) mIoU 0.8407 (0.7831)
+[2026-10-22 13:12:32,072 INFO test.py line 340 128722] 39/120: tree_1_V_0169_10, loaded pred and label.
+[2026-10-22 13:12:32,075 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:32,890 INFO test.py line 504 128722] Test: tree_1_V_0169_10 [39/120]-141329 Batch 0.830 (0.384) Accuracy 0.9659 (0.8321) mIoU 0.7360 (0.7876)
+[2026-10-22 13:12:33,725 INFO test.py line 340 128722] 40/120: tree_1_V_0001_4, loaded pred and label.
+[2026-10-22 13:12:33,727 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:33,862 INFO test.py line 504 128722] Test: tree_1_V_0001_4 [40/120]-85478 Batch 0.144 (0.378) Accuracy 0.9497 (0.8306) mIoU 0.6365 (0.7865)
+[2026-10-22 13:12:36,095 INFO test.py line 340 128722] 41/120: tree_1_V_0173_6, loaded pred and label.
+[2026-10-22 13:12:36,098 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:37,149 INFO test.py line 504 128722] Test: tree_1_V_0173_6 [41/120]-124219 Batch 1.064 (0.394) Accuracy 0.9044 (0.8271) mIoU 0.6734 (0.7839)
+[2026-10-22 13:12:37,161 INFO test.py line 340 128722] 42/120: tree_1_V_0180_6, loaded pred and label.
+[2026-10-22 13:12:37,162 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:37,525 INFO test.py line 504 128722] Test: tree_1_V_0180_6 [42/120]-48668 Batch 0.376 (0.394) Accuracy 0.9560 (0.8289) mIoU 0.5746 (0.7858)
+[2026-10-22 13:12:38,748 INFO test.py line 340 128722] 43/120: tree_1_V_0007_4, loaded pred and label.
+[2026-10-22 13:12:38,750 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:39,049 INFO test.py line 504 128722] Test: tree_1_V_0007_4 [43/120]-76428 Batch 0.312 (0.392) Accuracy 0.9074 (0.8276) mIoU 0.7309 (0.7849)
+[2026-10-22 13:12:40,025 INFO test.py line 340 128722] 44/120: tree_1_V_0180_13, loaded pred and label.
+[2026-10-22 13:12:40,027 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:40,199 INFO test.py line 504 128722] Test: tree_1_V_0180_13 [44/120]-54718 Batch 0.183 (0.387) Accuracy 0.9400 (0.8305) mIoU 0.6759 (0.7879)
+[2026-10-22 13:12:41,948 INFO test.py line 340 128722] 45/120: tree_1_V_0026_4, loaded pred and label.
+[2026-10-22 13:12:41,950 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:42,373 INFO test.py line 504 128722] Test: tree_1_V_0026_4 [45/120]-103943 Batch 0.438 (0.388) Accuracy 0.9835 (0.8344) mIoU 0.9488 (0.7924)
+[2026-10-22 13:12:43,397 INFO test.py line 340 128722] 46/120: tree_1_V_0135_6, loaded pred and label.
+[2026-10-22 13:12:43,399 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:43,850 INFO test.py line 504 128722] Test: tree_1_V_0135_6 [46/120]-106109 Batch 0.464 (0.390) Accuracy 0.9146 (0.8340) mIoU 0.7834 (0.7924)
+[2026-10-22 13:12:44,550 INFO test.py line 340 128722] 47/120: tree_1_V_0026_1, loaded pred and label.
+[2026-10-22 13:12:44,553 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:45,063 INFO test.py line 504 128722] Test: tree_1_V_0026_1 [47/120]-87190 Batch 0.644 (0.395) Accuracy 0.9952 (0.8380) mIoU 0.9811 (0.7968)
+[2026-10-22 13:12:45,070 INFO test.py line 340 128722] 48/120: tree_1_V_0015_2, loaded pred and label.
+[2026-10-22 13:12:45,072 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:45,197 INFO test.py line 504 128722] Test: tree_1_V_0015_2 [48/120]-57895 Batch 0.133 (0.390) Accuracy 0.9383 (0.8400) mIoU 0.7943 (0.7989)
+[2026-10-22 13:12:47,424 INFO test.py line 340 128722] 49/120: tree_1_V_0165_10, loaded pred and label.
+[2026-10-22 13:12:47,425 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:47,797 INFO test.py line 504 128722] Test: tree_1_V_0165_10 [49/120]-69617 Batch 0.385 (0.390) Accuracy 0.8976 (0.8394) mIoU 0.7708 (0.7986)
+[2026-10-22 13:12:48,751 INFO test.py line 340 128722] 50/120: tree_1_V_0169_5, loaded pred and label.
+[2026-10-22 13:12:48,752 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:49,097 INFO test.py line 504 128722] Test: tree_1_V_0169_5 [50/120]-48445 Batch 0.361 (0.389) Accuracy 0.8366 (0.8385) mIoU 0.4040 (0.7977)
+[2026-10-22 13:12:49,710 INFO test.py line 340 128722] 51/120: tree_1_V_0015_4, loaded pred and label.
+[2026-10-22 13:12:49,712 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:49,869 INFO test.py line 504 128722] Test: tree_1_V_0015_4 [51/120]-84445 Batch 0.172 (0.385) Accuracy 0.9544 (0.8407) mIoU 0.8726 (0.7998)
+[2026-10-22 13:12:53,650 INFO test.py line 340 128722] 52/120: tree_1_V_0173_13, loaded pred and label.
+[2026-10-22 13:12:53,652 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:53,666 INFO test.py line 504 128722] Test: tree_1_V_0173_13 [52/120]-101683 Batch 0.113 (0.380) Accuracy 1.0000 (0.8408) mIoU 1.0000 (0.8007)
+[2026-10-22 13:12:53,865 INFO test.py line 340 128722] 53/120: tree_1_V_0015_1, loaded pred and label.
+[2026-10-22 13:12:53,868 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:54,048 INFO test.py line 504 128722] Test: tree_1_V_0015_1 [53/120]-89843 Batch 0.197 (0.376) Accuracy 0.9613 (0.8431) mIoU 0.8882 (0.8032)
+[2026-10-22 13:12:54,722 INFO test.py line 340 128722] 54/120: tree_1_V_0008_4, loaded pred and label.
+[2026-10-22 13:12:54,723 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:54,924 INFO test.py line 504 128722] Test: tree_1_V_0008_4 [54/120]-52030 Batch 0.209 (0.373) Accuracy 0.9043 (0.8427) mIoU 0.7359 (0.8029)
+[2026-10-22 13:12:56,680 INFO test.py line 340 128722] 55/120: tree_1_V_0165_5, loaded pred and label.
+[2026-10-22 13:12:56,682 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:57,053 INFO test.py line 504 128722] Test: tree_1_V_0165_5 [55/120]-101363 Batch 0.382 (0.373) Accuracy 0.8256 (0.8391) mIoU 0.3862 (0.7967)
+[2026-10-22 13:12:58,073 INFO test.py line 340 128722] 56/120: tree_1_V_0014_5, loaded pred and label.
+[2026-10-22 13:12:58,075 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:12:58,406 INFO test.py line 504 128722] Test: tree_1_V_0014_5 [56/120]-80753 Batch 0.346 (0.373) Accuracy 0.9560 (0.8402) mIoU 0.8299 (0.7979)
+[2026-10-22 13:13:00,483 INFO test.py line 340 128722] 57/120: tree_1_V_0015_0, loaded pred and label.
+[2026-10-22 13:13:00,486 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:00,761 INFO test.py line 504 128722] Test: tree_1_V_0015_0 [57/120]-133302 Batch 0.289 (0.371) Accuracy 0.9858 (0.8427) mIoU 0.9328 (0.8005)
+[2026-10-22 13:13:02,392 INFO test.py line 340 128722] 58/120: tree_1_V_0180_1, loaded pred and label.
+[2026-10-22 13:13:02,394 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:03,010 INFO test.py line 504 128722] Test: tree_1_V_0180_1 [58/120]-95230 Batch 0.632 (0.376) Accuracy 0.9779 (0.8452) mIoU 0.7160 (0.8033)
+[2026-10-22 13:13:07,091 INFO test.py line 340 128722] 59/120: tree_1_V_0173_10, loaded pred and label.
+[2026-10-22 13:13:07,095 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:07,455 INFO test.py line 504 128722] Test: tree_1_V_0173_10 [59/120]-141785 Batch 0.703 (0.381) Accuracy 0.9477 (0.8446) mIoU 0.5958 (0.8021)
+[2026-10-22 13:13:07,469 INFO test.py line 340 128722] 60/120: tree_1_V_0008_0, loaded pred and label.
+[2026-10-22 13:13:07,471 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:07,663 INFO test.py line 504 128722] Test: tree_1_V_0008_0 [60/120]-91578 Batch 0.207 (0.379) Accuracy 0.9610 (0.8444) mIoU 0.5935 (0.8021)
+[2026-10-22 13:13:08,564 INFO test.py line 340 128722] 61/120: tree_1_V_0014_2, loaded pred and label.
+[2026-10-22 13:13:08,565 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:08,742 INFO test.py line 504 128722] Test: tree_1_V_0014_2 [61/120]-37276 Batch 0.186 (0.375) Accuracy 0.8972 (0.8444) mIoU 0.4694 (0.8021)
+[2026-10-22 13:13:12,585 INFO test.py line 340 128722] 62/120: tree_1_V_0180_12, loaded pred and label.
+[2026-10-22 13:13:12,587 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:13,390 INFO test.py line 504 128722] Test: tree_1_V_0180_12 [62/120]-92053 Batch 1.094 (0.387) Accuracy 0.9451 (0.8458) mIoU 0.6723 (0.8037)
+[2026-10-22 13:13:13,406 INFO test.py line 340 128722] 63/120: tree_1_V_0169_6, loaded pred and label.
+[2026-10-22 13:13:13,408 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:13,766 INFO test.py line 504 128722] Test: tree_1_V_0169_6 [63/120]-44569 Batch 0.375 (0.387) Accuracy 0.8281 (0.8443) mIoU 0.3255 (0.8022)
+[2026-10-22 13:13:17,647 INFO test.py line 340 128722] 64/120: tree_1_V_0180_10, loaded pred and label.
+[2026-10-22 13:13:17,650 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:18,316 INFO test.py line 504 128722] Test: tree_1_V_0180_10 [64/120]-123282 Batch 1.063 (0.397) Accuracy 0.9692 (0.8458) mIoU 0.6873 (0.8042)
+[2026-10-22 13:13:18,329 INFO test.py line 340 128722] 65/120: tree_1_V_0180_4, loaded pred and label.
+[2026-10-22 13:13:18,334 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:18,785 INFO test.py line 504 128722] Test: tree_1_V_0180_4 [65/120]-84758 Batch 0.469 (0.398) Accuracy 0.9781 (0.8473) mIoU 0.9011 (0.8058)
+[2026-10-22 13:13:20,027 INFO test.py line 340 128722] 66/120: tree_1_V_0169_3, loaded pred and label.
+[2026-10-22 13:13:20,031 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:20,616 INFO test.py line 504 128722] Test: tree_1_V_0169_3 [66/120]-72291 Batch 0.703 (0.403) Accuracy 0.9493 (0.8475) mIoU 0.6324 (0.8063)
+[2026-10-22 13:13:20,682 INFO test.py line 340 128722] 67/120: tree_1_V_0169_4, loaded pred and label.
+[2026-10-22 13:13:20,684 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:20,891 INFO test.py line 504 128722] Test: tree_1_V_0169_4 [67/120]-40272 Batch 0.223 (0.400) Accuracy 0.8087 (0.8457) mIoU 0.2719 (0.8046)
+[2026-10-22 13:13:22,593 INFO test.py line 340 128722] 68/120: tree_1_V_0135_8, loaded pred and label.
+[2026-10-22 13:13:22,595 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:23,091 INFO test.py line 504 128722] Test: tree_1_V_0135_8 [68/120]-70458 Batch 0.509 (0.402) Accuracy 0.8455 (0.8435) mIoU 0.4812 (0.8025)
+[2026-10-22 13:13:24,791 INFO test.py line 340 128722] 69/120: tree_1_V_0165_15, loaded pred and label.
+[2026-10-22 13:13:24,793 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:25,075 INFO test.py line 504 128722] Test: tree_1_V_0165_15 [69/120]-96848 Batch 0.299 (0.400) Accuracy 0.6291 (0.8341) mIoU 0.2916 (0.7885)
+[2026-10-22 13:13:25,862 INFO test.py line 340 128722] 70/120: tree_1_V_0173_14, loaded pred and label.
+[2026-10-22 13:13:25,863 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:25,866 INFO test.py line 504 128722] Test: tree_1_V_0173_14 [70/120]-47314 Batch 0.021 (0.395) Accuracy 1.0000 (0.8341) mIoU 1.0000 (0.7888)
+[2026-10-22 13:13:27,245 INFO test.py line 340 128722] 71/120: tree_1_V_0169_0, loaded pred and label.
+[2026-10-22 13:13:27,247 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:27,508 INFO test.py line 504 128722] Test: tree_1_V_0169_0 [71/120]-80732 Batch 0.276 (0.393) Accuracy 0.9444 (0.8343) mIoU 0.8368 (0.7893)
+[2026-10-22 13:13:29,342 INFO test.py line 340 128722] 72/120: tree_1_V_0015_3, loaded pred and label.
+[2026-10-22 13:13:29,344 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:29,571 INFO test.py line 504 128722] Test: tree_1_V_0015_3 [72/120]-106793 Batch 0.239 (0.391) Accuracy 0.9216 (0.8343) mIoU 0.7656 (0.7887)
+[2026-10-22 13:13:30,629 INFO test.py line 340 128722] 73/120: tree_1_V_0180_8, loaded pred and label.
+[2026-10-22 13:13:30,632 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:31,258 INFO test.py line 504 128722] Test: tree_1_V_0180_8 [73/120]-95222 Batch 0.639 (0.395) Accuracy 0.9793 (0.8359) mIoU 0.9401 (0.7906)
+[2026-10-22 13:13:33,969 INFO test.py line 340 128722] 74/120: tree_1_V_0180_11, loaded pred and label.
+[2026-10-22 13:13:33,972 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:34,361 INFO test.py line 504 128722] Test: tree_1_V_0180_11 [74/120]-100094 Batch 0.404 (0.395) Accuracy 0.9566 (0.8370) mIoU 0.7575 (0.7919)
+[2026-10-22 13:13:35,465 INFO test.py line 340 128722] 75/120: tree_1_V_0173_8, loaded pred and label.
+[2026-10-22 13:13:35,467 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:35,812 INFO test.py line 504 128722] Test: tree_1_V_0173_8 [75/120]-91623 Batch 0.359 (0.394) Accuracy 0.9001 (0.8352) mIoU 0.6977 (0.7904)
+[2026-10-22 13:13:37,237 INFO test.py line 340 128722] 76/120: tree_1_V_0026_6, loaded pred and label.
+[2026-10-22 13:13:37,240 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:37,664 INFO test.py line 504 128722] Test: tree_1_V_0026_6 [76/120]-132752 Batch 0.436 (0.395) Accuracy 0.9806 (0.8375) mIoU 0.8783 (0.7930)
+[2026-10-22 13:13:40,185 INFO test.py line 340 128722] 77/120: tree_1_V_0173_1, loaded pred and label.
+[2026-10-22 13:13:40,187 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:40,443 INFO test.py line 504 128722] Test: tree_1_V_0173_1 [77/120]-113255 Batch 0.268 (0.393) Accuracy 0.9678 (0.8378) mIoU 0.7743 (0.7933)
+[2026-10-22 13:13:41,085 INFO test.py line 340 128722] 78/120: tree_1_V_0180_14, loaded pred and label.
+[2026-10-22 13:13:41,087 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:41,360 INFO test.py line 504 128722] Test: tree_1_V_0180_14 [78/120]-72266 Batch 0.285 (0.392) Accuracy 0.9417 (0.8382) mIoU 0.8583 (0.7940)
+[2026-10-22 13:13:42,092 INFO test.py line 340 128722] 79/120: tree_1_V_0026_5, loaded pred and label.
+[2026-10-22 13:13:42,094 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:42,472 INFO test.py line 504 128722] Test: tree_1_V_0026_5 [79/120]-109257 Batch 0.391 (0.392) Accuracy 0.9882 (0.8405) mIoU 0.9596 (0.7967)
+[2026-10-22 13:13:43,971 INFO test.py line 340 128722] 80/120: tree_1_V_0135_7, loaded pred and label.
+[2026-10-22 13:13:43,973 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:44,764 INFO test.py line 504 128722] Test: tree_1_V_0135_7 [80/120]-104838 Batch 0.804 (0.397) Accuracy 0.9656 (0.8427) mIoU 0.9118 (0.7990)
+[2026-10-22 13:13:45,063 INFO test.py line 340 128722] 81/120: tree_1_V_0180_5, loaded pred and label.
+[2026-10-22 13:13:45,065 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:45,401 INFO test.py line 504 128722] Test: tree_1_V_0180_5 [81/120]-63620 Batch 0.350 (0.396) Accuracy 0.9812 (0.8435) mIoU 0.6056 (0.7999)
+[2026-10-22 13:13:46,502 INFO test.py line 340 128722] 82/120: tree_1_V_0165_3, loaded pred and label.
+[2026-10-22 13:13:46,505 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:46,832 INFO test.py line 504 128722] Test: tree_1_V_0165_3 [82/120]-106423 Batch 0.340 (0.396) Accuracy 0.8910 (0.8420) mIoU 0.5724 (0.7978)
+[2026-10-22 13:13:49,414 INFO test.py line 340 128722] 83/120: tree_1_V_0180_9, loaded pred and label.
+[2026-10-22 13:13:49,416 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:50,008 INFO test.py line 504 128722] Test: tree_1_V_0180_9 [83/120]-111256 Batch 0.605 (0.398) Accuracy 0.9668 (0.8438) mIoU 0.8094 (0.7996)
+[2026-10-22 13:13:52,853 INFO test.py line 340 128722] 84/120: tree_1_V_0165_8, loaded pred and label.
+[2026-10-22 13:13:52,857 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:54,161 INFO test.py line 504 128722] Test: tree_1_V_0165_8 [84/120]-142411 Batch 1.324 (0.409) Accuracy 0.8847 (0.8442) mIoU 0.7868 (0.7990)
+[2026-10-22 13:13:55,551 INFO test.py line 340 128722] 85/120: tree_1_V_0165_11, loaded pred and label.
+[2026-10-22 13:13:55,553 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:55,979 INFO test.py line 504 128722] Test: tree_1_V_0165_11 [85/120]-89724 Batch 0.618 (0.412) Accuracy 0.9399 (0.8450) mIoU 0.8524 (0.7998)
+[2026-10-22 13:13:55,991 INFO test.py line 340 128722] 86/120: tree_1_V_0007_5, loaded pred and label.
+[2026-10-22 13:13:55,992 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:56,158 INFO test.py line 504 128722] Test: tree_1_V_0007_5 [86/120]-41126 Batch 0.180 (0.409) Accuracy 0.8810 (0.8447) mIoU 0.4341 (0.7995)
+[2026-10-22 13:13:58,139 INFO test.py line 340 128722] 87/120: tree_1_V_0135_2, loaded pred and label.
+[2026-10-22 13:13:58,141 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:13:58,703 INFO test.py line 504 128722] Test: tree_1_V_0135_2 [87/120]-109829 Batch 0.568 (0.411) Accuracy 0.8863 (0.8432) mIoU 0.6994 (0.7982)
+[2026-10-22 13:14:00,982 INFO test.py line 340 128722] 88/120: tree_1_V_0135_10, loaded pred and label.
+[2026-10-22 13:14:00,985 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:01,517 INFO test.py line 504 128722] Test: tree_1_V_0135_10 [88/120]-129761 Batch 0.883 (0.416) Accuracy 0.9292 (0.8438) mIoU 0.8180 (0.7988)
+[2026-10-22 13:14:01,525 INFO test.py line 340 128722] 89/120: tree_1_V_0008_3, loaded pred and label.
+[2026-10-22 13:14:01,526 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:01,622 INFO test.py line 504 128722] Test: tree_1_V_0008_3 [89/120]-49871 Batch 0.104 (0.413) Accuracy 0.9049 (0.8430) mIoU 0.6244 (0.7981)
+[2026-10-22 13:14:04,302 INFO test.py line 340 128722] 90/120: tree_1_V_0169_9, loaded pred and label.
+[2026-10-22 13:14:04,304 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:04,729 INFO test.py line 504 128722] Test: tree_1_V_0169_9 [90/120]-102555 Batch 0.432 (0.413) Accuracy 0.9619 (0.8440) mIoU 0.7943 (0.7991)
+[2026-10-22 13:14:06,262 INFO test.py line 340 128722] 91/120: tree_1_V_0165_0, loaded pred and label.
+[2026-10-22 13:14:06,265 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:06,514 INFO test.py line 504 128722] Test: tree_1_V_0165_0 [91/120]-133593 Batch 0.261 (0.411) Accuracy 0.9770 (0.8467) mIoU 0.9300 (0.8016)
+[2026-10-22 13:14:08,527 INFO test.py line 340 128722] 92/120: tree_1_V_0026_0, loaded pred and label.
+[2026-10-22 13:14:08,531 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:09,190 INFO test.py line 504 128722] Test: tree_1_V_0026_0 [92/120]-167098 Batch 0.672 (0.414) Accuracy 0.9577 (0.8477) mIoU 0.8631 (0.8026)
+[2026-10-22 13:14:11,332 INFO test.py line 340 128722] 93/120: tree_1_V_0169_2, loaded pred and label.
+[2026-10-22 13:14:11,335 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:11,820 INFO test.py line 504 128722] Test: tree_1_V_0169_2 [93/120]-111042 Batch 0.497 (0.415) Accuracy 0.9579 (0.8480) mIoU 0.8576 (0.8031)
+[2026-10-22 13:14:14,305 INFO test.py line 340 128722] 94/120: tree_1_V_0135_0, loaded pred and label.
+[2026-10-22 13:14:14,308 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:14,873 INFO test.py line 504 128722] Test: tree_1_V_0135_0 [94/120]-153691 Batch 0.580 (0.417) Accuracy 0.9602 (0.8492) mIoU 0.8754 (0.8044)
+[2026-10-22 13:14:16,551 INFO test.py line 340 128722] 95/120: tree_1_V_0173_2, loaded pred and label.
+[2026-10-22 13:14:16,554 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:16,970 INFO test.py line 504 128722] Test: tree_1_V_0173_2 [95/120]-111730 Batch 0.430 (0.417) Accuracy 0.9571 (0.8487) mIoU 0.5671 (0.8043)
+[2026-10-22 13:14:18,617 INFO test.py line 340 128722] 96/120: tree_1_V_0007_3, loaded pred and label.
+[2026-10-22 13:14:18,619 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:19,062 INFO test.py line 504 128722] Test: tree_1_V_0007_3 [96/120]-124460 Batch 0.456 (0.417) Accuracy 0.9349 (0.8493) mIoU 0.8572 (0.8051)
+[2026-10-22 13:14:19,933 INFO test.py line 340 128722] 97/120: tree_1_V_0006_5, loaded pred and label.
+[2026-10-22 13:14:19,937 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:20,272 INFO test.py line 504 128722] Test: tree_1_V_0006_5 [97/120]-133571 Batch 0.348 (0.417) Accuracy 0.9415 (0.8500) mIoU 0.8513 (0.8059)
+[2026-10-22 13:14:21,020 INFO test.py line 340 128722] 98/120: tree_1_V_0135_5, loaded pred and label.
+[2026-10-22 13:14:21,022 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:21,502 INFO test.py line 504 128722] Test: tree_1_V_0135_5 [98/120]-66636 Batch 0.491 (0.417) Accuracy 0.8335 (0.8480) mIoU 0.2209 (0.8038)
+[2026-10-22 13:14:21,628 INFO test.py line 340 128722] 99/120: tree_1_V_0001_1, loaded pred and label.
+[2026-10-22 13:14:21,629 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:21,836 INFO test.py line 504 128722] Test: tree_1_V_0001_1 [99/120]-48588 Batch 0.215 (0.415) Accuracy 0.8250 (0.8466) mIoU 0.5277 (0.8024)
+[2026-10-22 13:14:25,101 INFO test.py line 340 128722] 100/120: tree_1_V_0165_1, loaded pred and label.
+[2026-10-22 13:14:25,105 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:25,476 INFO test.py line 504 128722] Test: tree_1_V_0165_1 [100/120]-149343 Batch 0.385 (0.415) Accuracy 0.9694 (0.8484) mIoU 0.9218 (0.8042)
+[2026-10-22 13:14:26,742 INFO test.py line 340 128722] 101/120: tree_1_V_0180_0, loaded pred and label.
+[2026-10-22 13:14:26,744 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:27,518 INFO test.py line 504 128722] Test: tree_1_V_0180_0 [101/120]-124270 Batch 0.943 (0.420) Accuracy 0.9573 (0.8496) mIoU 0.5946 (0.8056)
+[2026-10-22 13:14:27,527 INFO test.py line 340 128722] 102/120: tree_1_V_0173_3, loaded pred and label.
+[2026-10-22 13:14:27,528 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:27,589 INFO test.py line 504 128722] Test: tree_1_V_0173_3 [102/120]-30177 Batch 0.072 (0.417) Accuracy 0.8949 (0.8492) mIoU 0.3755 (0.8054)
+[2026-10-22 13:14:32,083 INFO test.py line 340 128722] 103/120: tree_1_V_0173_12, loaded pred and label.
+[2026-10-22 13:14:32,086 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:32,557 INFO test.py line 504 128722] Test: tree_1_V_0173_12 [103/120]-97377 Batch 0.811 (0.421) Accuracy 0.9136 (0.8484) mIoU 0.7372 (0.8048)
+[2026-10-22 13:14:32,570 INFO test.py line 340 128722] 104/120: tree_1_V_0014_6, loaded pred and label.
+[2026-10-22 13:14:32,572 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:32,678 INFO test.py line 504 128722] Test: tree_1_V_0014_6 [104/120]-54115 Batch 0.121 (0.418) Accuracy 0.9616 (0.8488) mIoU 0.8939 (0.8052)
+[2026-10-22 13:14:35,005 INFO test.py line 340 128722] 105/120: tree_1_V_0173_7, loaded pred and label.
+[2026-10-22 13:14:35,008 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:35,524 INFO test.py line 504 128722] Test: tree_1_V_0173_7 [105/120]-100240 Batch 0.595 (0.419) Accuracy 0.9064 (0.8475) mIoU 0.6296 (0.8041)
+[2026-10-22 13:14:35,534 INFO test.py line 340 128722] 106/120: tree_1_V_0008_1, loaded pred and label.
+[2026-10-22 13:14:35,536 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:35,716 INFO test.py line 504 128722] Test: tree_1_V_0008_1 [106/120]-67401 Batch 0.192 (0.417) Accuracy 0.9566 (0.8476) mIoU 0.6896 (0.8044)
+[2026-10-22 13:14:38,465 INFO test.py line 340 128722] 107/120: tree_1_V_0014_0, loaded pred and label.
+[2026-10-22 13:14:38,468 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:38,732 INFO test.py line 504 128722] Test: tree_1_V_0014_0 [107/120]-117238 Batch 0.274 (0.416) Accuracy 0.9828 (0.8485) mIoU 0.9232 (0.8053)
+[2026-10-22 13:14:40,543 INFO test.py line 340 128722] 108/120: tree_1_V_0169_8, loaded pred and label.
+[2026-10-22 13:14:40,546 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:41,305 INFO test.py line 504 128722] Test: tree_1_V_0169_8 [108/120]-96059 Batch 0.772 (0.419) Accuracy 0.9627 (0.8492) mIoU 0.9025 (0.8061)
+[2026-10-22 13:14:41,347 INFO test.py line 340 128722] 109/120: tree_1_V_0015_5, loaded pred and label.
+[2026-10-22 13:14:41,349 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:41,583 INFO test.py line 504 128722] Test: tree_1_V_0015_5 [109/120]-85053 Batch 0.247 (0.418) Accuracy 0.9548 (0.8503) mIoU 0.8757 (0.8073)
+[2026-10-22 13:14:44,770 INFO test.py line 340 128722] 110/120: tree_1_V_0180_7, loaded pred and label.
+[2026-10-22 13:14:44,772 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:45,642 INFO test.py line 504 128722] Test: tree_1_V_0180_7 [110/120]-98707 Batch 0.884 (0.422) Accuracy 0.9799 (0.8515) mIoU 0.9242 (0.8087)
+[2026-10-22 13:14:48,091 INFO test.py line 340 128722] 111/120: tree_1_V_0169_11, loaded pred and label.
+[2026-10-22 13:14:48,094 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:48,490 INFO test.py line 504 128722] Test: tree_1_V_0169_11 [111/120]-111972 Batch 0.409 (0.422) Accuracy 0.9261 (0.8515) mIoU 0.6201 (0.8086)
+[2026-10-22 13:14:50,275 INFO test.py line 340 128722] 112/120: tree_1_V_0169_1, loaded pred and label.
+[2026-10-22 13:14:50,278 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:50,716 INFO test.py line 504 128722] Test: tree_1_V_0169_1 [112/120]-134531 Batch 0.455 (0.422) Accuracy 0.9792 (0.8521) mIoU 0.8166 (0.8093)
+[2026-10-22 13:14:51,692 INFO test.py line 340 128722] 113/120: tree_1_V_0169_7, loaded pred and label.
+[2026-10-22 13:14:51,694 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:52,131 INFO test.py line 504 128722] Test: tree_1_V_0169_7 [113/120]-78943 Batch 0.451 (0.422) Accuracy 0.8912 (0.8514) mIoU 0.7434 (0.8087)
+[2026-10-22 13:14:53,686 INFO test.py line 340 128722] 114/120: tree_1_V_0006_1, loaded pred and label.
+[2026-10-22 13:14:53,689 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:54,260 INFO test.py line 504 128722] Test: tree_1_V_0006_1 [114/120]-125758 Batch 0.732 (0.425) Accuracy 0.9677 (0.8531) mIoU 0.9335 (0.8104)
+[2026-10-22 13:14:54,269 INFO test.py line 340 128722] 115/120: tree_1_V_0007_2, loaded pred and label.
+[2026-10-22 13:14:54,271 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:54,459 INFO test.py line 504 128722] Test: tree_1_V_0007_2 [115/120]-42661 Batch 0.198 (0.423) Accuracy 0.8858 (0.8528) mIoU 0.4260 (0.8102)
+[2026-10-22 13:14:57,972 INFO test.py line 340 128722] 116/120: tree_1_V_0173_0, loaded pred and label.
+[2026-10-22 13:14:57,974 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:58,405 INFO test.py line 504 128722] Test: tree_1_V_0173_0 [116/120]-95161 Batch 0.582 (0.424) Accuracy 0.9617 (0.8528) mIoU 0.7664 (0.8103)
+[2026-10-22 13:14:58,472 INFO test.py line 340 128722] 117/120: tree_1_V_0173_5, loaded pred and label.
+[2026-10-22 13:14:58,473 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:58,641 INFO test.py line 504 128722] Test: tree_1_V_0173_5 [117/120]-45419 Batch 0.182 (0.422) Accuracy 0.8609 (0.8519) mIoU 0.2885 (0.8095)
+[2026-10-22 13:14:58,938 INFO test.py line 340 128722] 118/120: tree_1_V_0173_4, loaded pred and label.
+[2026-10-22 13:14:58,940 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:14:59,048 INFO test.py line 504 128722] Test: tree_1_V_0173_4 [118/120]-47428 Batch 0.118 (0.420) Accuracy 0.9392 (0.8517) mIoU 0.6085 (0.8094)
+[2026-10-22 13:15:01,029 INFO test.py line 340 128722] 119/120: tree_1_V_0165_16, loaded pred and label.
+[2026-10-22 13:15:01,031 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:15:01,239 INFO test.py line 504 128722] Test: tree_1_V_0165_16 [119/120]-76276 Batch 0.219 (0.418) Accuracy 0.7774 (0.8497) mIoU 0.3638 (0.8062)
+[2026-10-22 13:15:01,806 INFO test.py line 340 128722] 120/120: tree_1_V_0165_6, loaded pred and label.
+[2026-10-22 13:15:01,808 INFO test.py line 388 128722] >>>>>>>>>>>>>>>> End Evaluation >>>>>>>>>>>>>>>>
+[2026-10-22 13:15:01,958 INFO test.py line 504 128722] Test: tree_1_V_0165_6 [120/120]-83423 Batch 0.164 (0.416) Accuracy 0.8249 (0.8482) mIoU 0.5042 (0.8036)
+[2026-10-22 13:15:02,080 INFO test.py line 521 128722] Syncing ...
+[2026-10-22 13:15:02,080 INFO test.py line 549 128722] Val result (Standard, tau=0.00m): mIoU/mAcc/allAcc 0.8036/0.8482/0.9297
+[2026-10-22 13:15:02,080 INFO test.py line 555 128722] Class_0 - trunk Result: iou/accuracy 0.5150/0.6035
+[2026-10-22 13:15:02,080 INFO test.py line 555 128722] Class_1 - branch Result: iou/accuracy 0.9129/0.9878
+[2026-10-22 13:15:02,080 INFO test.py line 555 128722] Class_2 - wire Result: iou/accuracy 0.7875/0.8017
+[2026-10-22 13:15:02,080 INFO test.py line 555 128722] Class_3 - grass Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,080 INFO test.py line 572 128722] 
+==================================================
+[2026-10-22 13:15:02,080 INFO test.py line 573 128722] Border analysis: TRUNK <---> BRANCH
+[2026-10-22 13:15:02,080 INFO test.py line 574 128722] ==================================================
+[2026-10-22 13:15:02,080 INFO test.py line 577 128722] --- Method 1: Don't-care margin---
+[2026-10-22 13:15:02,080 INFO test.py line 589 128722] [Tau =  1.0 cm] Core mIoU/mAcc/allAcc: 0.8085/0.8510/0.9348
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_0 - trunk    Result: iou/accuracy 0.5267/0.6109
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_1 - branch   Result: iou/accuracy 0.9207/0.9916
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_2 - wire     Result: iou/accuracy 0.7876/0.8017
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,081 INFO test.py line 589 128722] [Tau =  2.0 cm] Core mIoU/mAcc/allAcc: 0.8126/0.8537/0.9424
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_0 - trunk    Result: iou/accuracy 0.5306/0.6181
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_1 - branch   Result: iou/accuracy 0.9328/0.9950
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_2 - wire     Result: iou/accuracy 0.7877/0.8017
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,081 INFO test.py line 589 128722] [Tau =  3.0 cm] Core mIoU/mAcc/allAcc: 0.8107/0.8536/0.9506
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_0 - trunk    Result: iou/accuracy 0.5097/0.6158
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_1 - branch   Result: iou/accuracy 0.9460/0.9968
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_2 - wire     Result: iou/accuracy 0.7878/0.8017
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,081 INFO test.py line 589 128722] [Tau =  5.0 cm] Core mIoU/mAcc/allAcc: 0.7888/0.8465/0.9615
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_0 - trunk    Result: iou/accuracy 0.4040/0.5871
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_1 - branch   Result: iou/accuracy 0.9636/0.9973
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_2 - wire     Result: iou/accuracy 0.7884/0.8017
+[2026-10-22 13:15:02,081 INFO test.py line 594 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,081 INFO test.py line 600 128722] 
+--- Methoda 1: Slack relaxation ---
+[2026-10-22 13:15:02,081 INFO test.py line 612 128722] [Tau =  1.0 cm] Slack mIoU/mAcc/allAcc: 0.8158/0.8578/0.9357
+[2026-10-22 13:15:02,081 INFO test.py line 617 128722]     Class_0 - trunk    Result: iou/accuracy 0.5552/0.6378
+[2026-10-22 13:15:02,081 INFO test.py line 617 128722]     Class_1 - branch   Result: iou/accuracy 0.9214/0.9917
+[2026-10-22 13:15:02,081 INFO test.py line 617 128722]     Class_2 - wire     Result: iou/accuracy 0.7875/0.8017
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,082 INFO test.py line 612 128722] [Tau =  2.0 cm] Slack mIoU/mAcc/allAcc: 0.8358/0.8748/0.9445
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_0 - trunk    Result: iou/accuracy 0.6224/0.7024
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_1 - branch   Result: iou/accuracy 0.9341/0.9951
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_2 - wire     Result: iou/accuracy 0.7875/0.8017
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,082 INFO test.py line 612 128722] [Tau =  3.0 cm] Slack mIoU/mAcc/allAcc: 0.8584/0.8951/0.9539
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_0 - trunk    Result: iou/accuracy 0.6992/0.7818
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_1 - branch   Result: iou/accuracy 0.9478/0.9969
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_2 - wire     Result: iou/accuracy 0.7875/0.8017
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,082 INFO test.py line 612 128722] [Tau =  5.0 cm] Slack mIoU/mAcc/allAcc: 0.8888/0.9234/0.9660
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_0 - trunk    Result: iou/accuracy 0.8024/0.8945
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_1 - branch   Result: iou/accuracy 0.9659/0.9974
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_2 - wire     Result: iou/accuracy 0.7875/0.8017
+[2026-10-22 13:15:02,082 INFO test.py line 617 128722]     Class_3 - grass    Result: iou/accuracy 0.9992/1.0000
+[2026-10-22 13:15:02,082 INFO test.py line 623 128722] 
+--- Boundary F1-score ---
+[2026-10-22 13:15:02,082 INFO test.py line 628 128722] [Theta =  0.0 cm] Boundary F1: 0.2006 (Precision: 0.2208, Recall: 0.2089)
+[2026-10-22 13:15:02,082 INFO test.py line 628 128722] [Theta =  1.0 cm] Boundary F1: 0.3744 (Precision: 0.4073, Recall: 0.3781)
+[2026-10-22 13:15:02,082 INFO test.py line 628 128722] [Theta =  2.0 cm] Boundary F1: 0.5356 (Precision: 0.5868, Recall: 0.5293)
+[2026-10-22 13:15:02,082 INFO test.py line 628 128722] [Theta =  3.0 cm] Boundary F1: 0.6279 (Precision: 0.7018, Recall: 0.6084)
+[2026-10-22 13:15:02,083 INFO test.py line 628 128722] [Theta =  5.0 cm] Boundary F1: 0.6941 (Precision: 0.7978, Recall: 0.6641)
+[2026-10-22 13:15:02,083 INFO test.py line 633 128722] <<<<<<<<<<<<<<<<< End Evaluation <<<<<<<<<<<<<<<<<
